@@ -4,6 +4,40 @@ What we built, what broke, and how we fixed it. Newest entries at the top.
 
 ---
 
+## 2026-10-25 — Screen 2: Setup
+
+**Built**
+- `components/FamilySofa.tsx`: Raise's own illustration of an Indian family on a sofa in lamp light, both parents turned towards the teen.
+- Setup screen (`app/setup/page.tsx`), covering D1 and FR1: 7 short questions, one per screen, mostly tap-to-answer, with a progress bar and back button. Every question says why it's asked.
+  1. Nickname (optional) · 2. Mother / father / guardian · 3. Age band 13–15 / 16–18 · 4. Girl / boy / prefer not to say · 5. Hinglish / Hindi / English · 6. Gentle / open · 7. "Is there something you'd like to talk about?" (optional free text)
+- Answers are saved **only on the phone** (`lib/profile.ts`). No phone number, email or password.
+- Safety check for the free-text box (`lib/safety.ts`), running on the phone:
+  - **Danger signs** (suicide, self-harm, abuse, photo blackmail, drugs, in English, Hinglish and Hindi) → "This sounds serious. Would you like help from a professional?" with tap-to-call numbers 112, 14416, 1098, 1930. The parent can say "Not now". **The crisis text is not saved.**
+  - **Refusals** (spying, medicines/diagnosis, finding out or changing sexuality) → a short "Raise doesn't…" line plus a better topic to start with.
+  - Otherwise, the words suggest a starting topic (e.g. "crush" → Relationships).
+- `tests/safety-setup.test.mjs`: 24 example messages. Run with `node tests/safety-setup.test.mjs`.
+- Placeholder Privacy page so setup has somewhere to finish.
+
+**Broke**
+- The safety test caught 2 misses out of 24: "cutting herself" wasn't seen as a danger sign, and "uski chats kaise padhu" (Hinglish word order) wasn't seen as spying.
+- The production build caught a type mistake in the setup screen.
+- The browser pane jumped back to the Welcome page once during testing (a page reload while files were saving); no app bug.
+
+**Fix**
+- Widened the self-harm pattern to catch every form of "cut/hurt/harm … herself", and added a Hinglish verb-last pattern for spying. Now 24 of 24 pass.
+- Tightened the type so the result box only ever gets a refusal or a crisis.
+
+**Checked**
+- Went through all 7 questions as a father of a 16–18 daughter in Hinglish: every answer saved correctly.
+- Spying request → refusal + Online safety offer. Blackmail → help card; nothing about it saved.
+- Fits 375 × 812 and 320 × 640. Production build passes.
+
+**Still to do**
+- The crisis card for photo blackmail should also say what to do now (don't pay, don't delete messages, don't blame your teen). That belongs on the full Help screen, coming later.
+- The 30-message safety test set needs 6 more messages, plus reflection-box cases when we build Reflection.
+
+---
+
 ## 2026-10-25 — Illustration plan
 
 **Decided**
