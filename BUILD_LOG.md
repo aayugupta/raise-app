@@ -4,7 +4,7 @@ What we built, what broke, and how we fixed it. Newest entries at the top.
 
 ---
 
-## 2026-10-25 — Step 0: blank app live (in progress)
+## 2026-10-25 — Step 0: blank app (deploy moved to the end)
 
 **Built**
 - A blank Next.js 16 app (React 19, TypeScript) with one placeholder page: "Raise · Coming soon · Step 0 test page".
@@ -21,8 +21,11 @@ What we built, what broke, and how we fixed it. Newest entries at the top.
 **Decided**
 - GitHub repository will be **private** (the docs include personal details). The app link stays public.
 
+**Changed plan**
+- GitHub push skipped for now (repo link never came through), and deployment moved to the end: build the app first, then deploy. Vercel CLI 65.2 is downloaded and ready for that step.
+
 **Next**
-- Aayushi creates an empty private GitHub repo → Claude pushes the code → connect Vercel → open the public link on her phone on mobile data.
+- Build the screens one at a time from Aayushi's designs. Deploy (GitHub + Vercel) and test on her phone on mobile data once the app is ready.
 
 ---
 
