@@ -241,6 +241,9 @@ function CheckResult({
             </li>
           ))}
         </ul>
+        <a href="/help" className="btn-primary btn-block" style={{ marginBottom: 10 }}>
+          See what to do now
+        </a>
         <button className="btn-secondary btn-block" onClick={onContinue}>
           Not now, continue setup
         </button>

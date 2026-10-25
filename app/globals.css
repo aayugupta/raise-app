@@ -190,6 +190,69 @@ h3 {
   font-size: 16px;
 }
 
+.section-title {
+  font-size: 20px;
+  margin: 22px 0 10px;
+}
+
+.help-pill {
+  background: #fdeee9;
+  color: #b4472f;
+  font-weight: 700;
+  font-size: 15px;
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+}
+
+.topic-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--card);
+  border: 2px solid #eadfcd;
+  border-radius: var(--radius);
+  padding: 14px;
+  text-decoration: none;
+}
+
+.topic-card:active {
+  border-color: var(--teal);
+}
+
+.topic-dot {
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  align-self: flex-start;
+  margin-top: 5px;
+}
+
+.match-tag {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--teal);
+  background: #e6f2f0;
+  padding: 3px 10px;
+  border-radius: 10px;
+}
+
+.crisis-link {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: #fdeee9;
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 15px;
+  text-decoration: none;
+}
+
 /* Keeps a screen's main button visible at the bottom while the content scrolls. */
 .sticky-action {
   position: sticky;

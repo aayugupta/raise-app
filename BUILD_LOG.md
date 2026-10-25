@@ -4,6 +4,34 @@ What we built, what broke, and how we fixed it. Newest entries at the top.
 
 ---
 
+## 2026-10-25 — Screen 4: Pick a topic (+ basic Help screen)
+
+**Built**
+- `components/TopicBubbles.tsx`: a parent and teen sitting on floor cushions, with thought bubbles holding a heart, a cloud and two friends.
+- Pick a topic screen (`app/topics/page.tsx`), covering D1:
+  - **Suggested for you:** 3 topics. Relationships, Stress and Friends come first (what teens most want), but a topic matched from the setup text box moves to the top with a "Matches what you wrote" tag.
+  - **More topics:** the other 3.
+  - Every topic shows the teen's question ("How do you know if someone is good for you?"), so it starts from the teen's side.
+  - **"Is something serious happening?"** section: self-harm, abuse, photo blackmail, addiction. These open Help, never a Talk Card.
+  - A **Help** button at the top.
+- Basic Help screen (`app/help/page.tsx`), covering FR12: all helplines as tap-to-call. When opened from a crisis topic, it adds "Say this now", "What to do" and "What not to do" for that situation (e.g. blackmail: don't pay, don't delete messages, don't contact the person, don't blame your teen). Nothing is saved.
+- Setup's crisis card now also has "See what to do now", which opens Help.
+- Placeholder Talk Card page at `/card/[topic]`.
+
+**Broke**
+- Nothing in the app. One screenshot was taken before the Help page had loaded.
+
+**Checked**
+- No setup answers → Relationships, Stress, Friends suggested. Setup matched "periods" → Body moves to the top with the tag.
+- Photo blackmail → Help with the blackmail guide and Cybercrime 1930 first.
+- 375 × 812 and 320 × 640. Production build passes. Safety test still 24 of 24.
+
+**Still to do**
+- **Help wording is a draft.** Step 3 says the expert advisor must write and approve help screens before launch.
+- The Help button needs to appear on every screen (so far only Pick a topic, plus Setup's crisis card).
+
+---
+
 ## 2026-10-25 — Screen 3: Privacy promise
 
 **Built**
