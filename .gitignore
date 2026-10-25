@@ -1,0 +1,19 @@
+# Installed packages (recreated by npm install)
+node_modules/
+
+# Build output
+.next/
+out/
+
+# Secrets: never commit these
+.env
+.env*.local
+
+# Vercel
+.vercel/
+
+# Misc
+*.log
+.DS_Store
+next-env.d.ts
+*.tsbuildinfo
