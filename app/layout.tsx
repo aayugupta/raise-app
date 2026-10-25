@@ -1,5 +1,9 @@
 import type { Metadata, Viewport } from "next";
+import { DM_Serif_Display, Nunito } from "next/font/google";
 import "./globals.css";
+
+const serif = DM_Serif_Display({ subsets: ["latin"], weight: "400", variable: "--font-serif" });
+const body = Nunito({ subsets: ["latin"], variable: "--font-body" });
 
 export const metadata: Metadata = {
   title: "Raise",
@@ -9,11 +13,12 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
+  themeColor: "#f9d898",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${serif.variable} ${body.variable}`}>
       <body>{children}</body>
     </html>
   );

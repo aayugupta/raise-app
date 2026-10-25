@@ -45,6 +45,17 @@ The research and decisions live in `docs/` (Steps 1–4; also bundled in `docs/r
 | Accounts | GitHub exists. Vercel, Supabase and a Gemini API key still need creating; walk her through each when needed |
 | Designs | **Wait for her design before building each screen** (Figma, screenshot or sketch). Behind-the-scenes work (Gemini, Supabase, safety checks) can go ahead meanwhile |
 
+## Visual design
+
+Aayushi's reference design (25 Oct 2026) is a warm, illustrated parenting app: a peach welcome screen with a big serif headline, a teal button and a flat illustration filling the bottom; a cream home screen with a greeting, rounded illustrated cards and serif section titles.
+
+- **Colours** are tokens in `app/globals.css`: peach `#f9d898`, cream `#fbf4ea`, teal `#0e716d` (buttons), ink `#1f2340` (headlines), coral `#e8735a`, mustard `#e7b04a`, leaf `#4e8a5e`.
+- **Fonts:** DM Serif Display for headlines, Nunito for everything else (loaded in `app/layout.tsx`).
+- **Illustrations** are Raise's own flat SVGs in the same style (e.g. `components/WalkTogether.tsx`). Never copy the reference's artwork, and show parents with teens, not babies.
+- **Copy follows Raise's rules, not the reference.** No worry or fear hooks ("Are you worried…?").
+- **Parts of the reference home screen that break the product rules are left out:** "Your friends" (Raise is private, no social features) and "Activities done / Incomplete" (no failure labels). Ask Aayushi what replaces them when we reach Home.
+- Every screen must fit a 320 px-wide phone without sideways scrolling.
+
 ## What the MVP must do (Step 5 brief)
 
 1. Onboarding that captures the teen's age band and what the parent wants to talk about.

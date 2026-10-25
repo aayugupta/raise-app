@@ -4,6 +4,30 @@ What we built, what broke, and how we fixed it. Newest entries at the top.
 
 ---
 
+## 2026-10-25 — Screen 1: Welcome
+
+**Built**
+- The Raise look, from Aayushi's reference design: peach and cream colours, teal buttons, DM Serif Display headlines and Nunito body text.
+- `components/WalkTogether.tsx`: Raise's own flat illustration of a parent and teen walking side by side among leaves and flowers. It replaces the reference's mother-and-baby artwork, which isn't ours and doesn't show teens.
+- Welcome screen: "Every hard talk starts with one line", a short subtitle, a "Get started" button and "No sign-up. Stays private on your phone."
+- A placeholder Setup page so the button has somewhere to go.
+
+**Broke**
+- The last word of the headline ("line") sat alone on its own line.
+- On a small phone (320 × 640), the illustration was pushed below the screen.
+
+**Fix**
+- Balanced the headline so its words spread evenly across the lines.
+- Trimmed the empty sky from the top of the illustration, and let the headline and top spacing shrink on narrow screens.
+
+**Checked**
+- Looks right at 375 × 812 and 320 × 640. "Get started" opens `/setup`. Production build passes.
+
+**Next**
+- Aayushi reviews the Welcome screen. Then the Setup screen design.
+
+---
+
 ## 2026-10-25 — Base Talk Cards drafted
 
 **Built**

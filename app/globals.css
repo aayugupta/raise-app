@@ -1,11 +1,68 @@
-/* Placeholder styles until Aayushi's designs arrive. */
+/* Raise look, based on Aayushi's reference design (25 Oct 2026):
+   warm peach and cream, a serif headline, teal buttons, flat illustrations. */
+:root {
+  --peach: #f9d898;
+  --cream: #fbf4ea;
+  --card: #ffffff;
+  --teal: #0e716d;
+  --teal-dark: #0b5e5a;
+  --ink: #1f2340;
+  --text: #3a3a4a;
+  --muted: #6b6b7b;
+  --coral: #e8735a;
+  --mustard: #e7b04a;
+  --leaf: #4e8a5e;
+  --radius: 16px;
+}
+
 * {
   box-sizing: border-box;
 }
 
+html,
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  background: #fffaf5;
-  color: #2b2b2b;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-body), system-ui, sans-serif;
+  background: var(--cream);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-serif), Georgia, serif;
+  font-weight: 400;
+  color: var(--ink);
+  margin: 0;
+}
+
+/* The main action button on every screen. */
+.btn-primary {
+  display: inline-block;
+  background: var(--teal);
+  color: #fff;
+  font-family: inherit;
+  font-size: 20px;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 14px 34px;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 0 var(--teal-dark);
+  cursor: pointer;
+}
+
+.btn-primary:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 var(--teal-dark);
+}
+
+.btn-primary:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 3px;
 }
