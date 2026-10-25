@@ -4,6 +4,28 @@ What we built, what broke, and how we fixed it. Newest entries at the top.
 
 ---
 
+## 2026-10-25 — Step 0: blank app live (in progress)
+
+**Built**
+- A blank Next.js 16 app (React 19, TypeScript) with one placeholder page: "Raise · Coming soon · Step 0 test page".
+- Tested a production build (`npm run build`): passes.
+- Viewed it at phone size (375 × 812) on this computer: looks right.
+- Git repository created with the first commit. `.gitignore` keeps installed packages and secret files (`.env*.local`) out of GitHub.
+
+**Broke**
+- Git wasn't installed on the computer.
+
+**Fix**
+- Installed Git 2.56 with Windows' own installer (`winget install Git.Git`).
+
+**Decided**
+- GitHub repository will be **private** (the docs include personal details). The app link stays public.
+
+**Next**
+- Aayushi creates an empty private GitHub repo → Claude pushes the code → connect Vercel → open the public link on her phone on mobile data.
+
+---
+
 ## 2026-10-25 — Planning
 
 **Built**
