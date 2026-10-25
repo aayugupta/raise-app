@@ -190,6 +190,29 @@ h3 {
   font-size: 16px;
 }
 
+/* Keeps a screen's main button visible at the bottom while the content scrolls. */
+.sticky-action {
+  position: sticky;
+  bottom: 0;
+  padding: 12px 0 16px;
+  background: linear-gradient(to bottom, rgba(251, 244, 234, 0), var(--cream) 30%);
+}
+
+.tick {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--teal);
+  color: #fff;
+  font-weight: 700;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+}
+
 .help-line {
   display: flex;
   flex-direction: column;

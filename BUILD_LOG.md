@@ -4,6 +4,33 @@ What we built, what broke, and how we fixed it. Newest entries at the top.
 
 ---
 
+## 2026-10-25 — Screen 3: Privacy promise
+
+**Built**
+- `components/PhoneLock.tsx`: a phone with a heart-shaped lock among leaves.
+- Privacy screen (`app/privacy/page.tsx`), covering D1 ("see a privacy promise before choosing a topic"). "Your talks stay yours", with 6 promises, each true to how Raise is built:
+  1. Your notes stay on this phone (never sent, not even to the AI)
+  2. Your teen never sees Raise (reminders never name the topic)
+  3. A talk tool, never a spy tool
+  4. No talks are recorded
+  5. The AI only sees your taps (role, age band, language), never your nickname or anything you type
+  6. We count taps, not people (anonymous events only)
+- "Got it, choose a topic" button, pinned to the bottom of the screen. Placeholder Pick a topic page.
+
+**Broke**
+- With 6 promises, the button fell below the screen on a phone.
+
+**Fix**
+- Pinned the button to the bottom so it's always visible while the promises scroll underneath.
+
+**Checked**
+- 375 × 812 and 320 × 640. Button goes to `/topics`. Production build passes.
+
+**Rule for later**
+- Promise 5 means the Talk Card AI call must send only the tapped answers. The nickname and the setup text box stay on the phone.
+
+---
+
 ## 2026-10-25 — Screen 2: Setup
 
 **Built**
