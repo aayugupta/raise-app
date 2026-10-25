@@ -49,11 +49,13 @@ The research and decisions live in `docs/` (Steps 1–4; also bundled in `docs/r
 
 Aayushi's reference design (25 Oct 2026) is a warm, illustrated parenting app: a peach welcome screen with a big serif headline, a teal button and a flat illustration filling the bottom; a cream home screen with a greeting, rounded illustrated cards and serif section titles.
 
+**The reference is for look only: colours, fonts, illustration style and layout feel. All content, sections and screens come from Raise's docs and flows, never from the reference.**
+
 - **Colours** are tokens in `app/globals.css`: peach `#f9d898`, cream `#fbf4ea`, teal `#0e716d` (buttons), ink `#1f2340` (headlines), coral `#e8735a`, mustard `#e7b04a`, leaf `#4e8a5e`.
 - **Fonts:** DM Serif Display for headlines, Nunito for everything else (loaded in `app/layout.tsx`).
 - **Illustrations** are Raise's own flat SVGs in the same style (e.g. `components/WalkTogether.tsx`). Never copy the reference's artwork, and show parents with teens, not babies.
 - **Copy follows Raise's rules, not the reference.** No worry or fear hooks ("Are you worried…?").
-- **Parts of the reference home screen that break the product rules are left out:** "Your friends" (Raise is private, no social features) and "Activities done / Incomplete" (no failure labels). Ask Aayushi what replaces them when we reach Home.
+- Reference sections like "Your friends" or "Activities done / Incomplete" are not Raise content. Home shows Raise's own sections (e.g. next planned talk, open topics, follow-up due, Help).
 - Every screen must fit a 320 px-wide phone without sideways scrolling.
 
 ## What the MVP must do (Step 5 brief)
