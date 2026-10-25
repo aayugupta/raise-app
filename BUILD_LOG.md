@@ -4,6 +4,16 @@ What we built, what broke, and how we fixed it. Newest entries at the top.
 
 ---
 
+## 2026-10-25 — Illustration plan
+
+**Decided**
+- Aayushi shared 3 mood pictures (two photos of families talking on a sofa, one flat illustration with thought bubbles). They set the feeling: calm, side by side, warm evening light, a parent who listens.
+- We draw **Raise's own flat illustrations** of these scenes rather than using the pictures, because their owners are unknown and the app will be public.
+- **Flat illustrations throughout, no photos.** Lighter on mobile data, and every family can look Indian.
+- Scene plan per screen recorded in `CLAUDE.md` (Visual design).
+
+---
+
 ## 2026-10-25 — Screen 1: Welcome
 
 **Built**

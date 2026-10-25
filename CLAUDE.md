@@ -54,6 +54,16 @@ Aayushi's reference design (25 Oct 2026) is a warm, illustrated parenting app: a
 - **Colours** are tokens in `app/globals.css`: peach `#f9d898`, cream `#fbf4ea`, teal `#0e716d` (buttons), ink `#1f2340` (headlines), coral `#e8735a`, mustard `#e7b04a`, leaf `#4e8a5e`.
 - **Fonts:** DM Serif Display for headlines, Nunito for everything else (loaded in `app/layout.tsx`).
 - **Illustrations** are Raise's own flat SVGs in the same style (e.g. `components/WalkTogether.tsx`). Never copy the reference's artwork, and show parents with teens, not babies.
+- **Flat illustrations only, no photos** (decided 25 Oct 2026). Families look Indian: skin tones, clothes, homes. Show fathers as well as mothers, and sons as well as daughters.
+- **Scene ideas from Aayushi's mood pictures** (drawn as our own, never copied):
+
+  | Screen | Scene |
+  | --- | --- |
+  | Welcome | Parent and teen walking side by side (done) |
+  | Setup / late-evening moment | Family on a sofa in warm lamp light, parents listening |
+  | Pick a topic | Family sitting together, each topic in a thought bubble |
+  | Recovery / repair | Parent's hand on the teen's shoulder, both smiling |
+
 - **Copy follows Raise's rules, not the reference.** No worry or fear hooks ("Are you worried…?").
 - Reference sections like "Your friends" or "Activities done / Incomplete" are not Raise content. Home shows Raise's own sections (e.g. next planned talk, open topics, follow-up due, Help).
 - Every screen must fit a 320 px-wide phone without sideways scrolling.
