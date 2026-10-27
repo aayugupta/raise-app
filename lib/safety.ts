@@ -35,7 +35,24 @@ const CRISIS = [
   /\b(drugs?|nasha|ganja|weed|smack)\b/,
   /आत्महत्या/,
   /मरना/,
+  // Warning signs from the stress card, as a parent might note them after a talk.
+  /want(s|ed)? to die/,
+  /(wish|wishes|wished) (she|he|they|i) (was|were) dead/,
+  /no point (in )?(living|life)/,
+  /life (is|feels|seems) (pointless|meaningless)/,
+  /feel(s|ing)? (so )?hopeless/,
+  /(not|stopped|isn'?t|hasn'?t)( been)? eating (properly|anything|at all|for (days|weeks))/,
+  /skipping (all )?(her|his|their)? ?meals/,
+  /jeene ka (mann|man) nahi/,
+  /mar jaun|mar jaaun|khatam kar (dun|doon|lun|loon)/,
+  /मर जाऊ|जीने का मन नहीं/,
 ];
+
+// Danger signs in any text the parent writes, e.g. a reflection. Checked on the phone.
+export function hasDangerSign(text: string): boolean {
+  const t = text.toLowerCase();
+  return CRISIS.some((p) => p.test(t));
+}
 
 // Things Raise won't do, each with a better alternative (Step 3, section 6B).
 const REFUSALS: { patterns: RegExp[]; message: string; offer: TopicId; offerText: string }[] = [

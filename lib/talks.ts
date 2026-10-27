@@ -58,6 +58,7 @@ export type Plan = {
   startedAt?: string; // Talk mode "Start"
   doneAt?: string; // Talk mode "Done"
   reflectedAt?: string; // set once the parent has said how it went
+  closedAt?: string; // "Not yet": this moment is closed, the topic goes to recovery
 };
 
 export function loadPlan(id: string): Plan | undefined {
@@ -95,7 +96,7 @@ const WINDOW_AFTER_MS = 3 * 60 * 60_000;
 export type PlanStage = "upcoming" | "now" | "check-in" | "done";
 
 export function planStage(plan: Plan, now = Date.now()): PlanStage {
-  if (plan.reflectedAt) return "done";
+  if (plan.reflectedAt || plan.closedAt) return "done";
   if (plan.doneAt) return "check-in";
   const at = new Date(plan.when).getTime();
   if (now < at - WINDOW_BEFORE_MS) return "upcoming";

@@ -4,6 +4,45 @@ What we built, what broke, and how we fixed it. Newest entries at the top.
 
 ---
 
+## 2026-10-27 — Screen 9: Reflection
+
+**Built**
+- Reflection (`app/reflect/[planId]`): brief item 3, plus D4, FR7, FR10 and FR12. "How did it go? 30 seconds. It stays on your phone. Please don't write names or private details."
+  1. Did the talk happen? Yes / Partly / Not yet
+  2. What did you talk about? (short note)
+  3. Who talked more? Me / My teen / About equal
+  4. One thing you learned about your teen (short note)
+  5. How did your teen respond? 😊 Went well / 😐 Okay / 😣 Hard
+- Save needs both notes (3+ letters), so "Done" with nothing learned doesn't count, as the metric requires.
+- `lib/reflections.ts`: reflections saved **only on the phone**, with a 3-day follow-up date (FR8). Never sent to the AI or Supabase.
+- Where each answer leads:
+  - **Yes, and it went well or okay** → "You did it. Thank you for trying." If the parent talked more: "Next time, try asking one more question, then waiting." If the teen talked more: "That's a great sign." Then the follow-up day and a gentle next topic.
+  - **Partly, or 😣** → repair path (FR10). No "failed" label anywhere.
+  - **Not yet** → "That's okay. Most talks take more than one try." → recovery path (FR9).
+  - **A danger sign in the notes** → "This sounds serious. Would you like help from a professional?" **Yes** opens Help; **No** continues. **What they wrote about it is not saved** (only that help was offered), and no follow-up is scheduled.
+- `lib/safety.ts`: new warning signs from the stress card ("wants to die", "life feels pointless", "not eating properly for weeks", Hinglish and Hindi too).
+- `tests/reflection-danger.test.mjs`: 12 danger notes (must **all** show the offer: the launch rule) and 8 ordinary notes (must not).
+- Placeholder for the recovery screen (`/recover/[planId]`).
+
+**Broke**
+1. "He has not been eating properly for weeks" was missed as a danger sign.
+2. My first draft would have flagged everyday phrases like "she's hopeless at maths" or "not eating junk food".
+3. After a serious disclosure, the screen still said "You did it. Thank you for trying.", which is the wrong tone.
+4. The 😊 😐 😣 buttons had no name for screen readers.
+
+**Fix**
+1. and 2. Tighter patterns ("feels hopeless", "not (been) eating properly / for weeks"). Now 20/20.
+3. After a danger sign: "Thank you for listening to your teen… Help is always one tap away", with See who can help. No next topic.
+4. Added labels ("Went well", "Okay", "Hard").
+
+**Checked**
+- Yes + 😊 → saved on the phone, follow-up in 3 days, plan marked reflected.
+- Danger sign → offer → No → calm screen; the note is nowhere in storage.
+- Not yet → recovery. Partly + 😣 → repair.
+- Build passes. All tests: setup 24/24, card safety 23/23, reflection danger 20/20, metric 15/15.
+
+---
+
 ## 2026-10-27 — Screen 8: Talk mode
 
 **Built**
