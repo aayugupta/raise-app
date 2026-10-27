@@ -19,7 +19,8 @@ export async function POST(request: Request) {
       headers: {
         "Content-Type": "application/json",
         apikey: key,
-        Authorization: `Bearer ${key}`,
+        // Older "service_role" keys (eyJ…) also go in Authorization; newer "sb_secret_" keys go in apikey only.
+        ...(key.startsWith("eyJ") ? { Authorization: `Bearer ${key}` } : {}),
         Prefer: "return=minimal",
       },
       body: JSON.stringify({
