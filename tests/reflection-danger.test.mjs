@@ -26,6 +26,10 @@ const ordinary = [
   "We talked about Instagram and reels",
   "She was quiet at first, then opened up about her group",
   "He said he would die for a PS5 (joking)",
+  "He just wants to disappear into his room after school",
+  "She gave away her old clothes to her cousin",
+  "We stay in touch with her friends' parents",
+  "He was saying goodbye to his cousins after the wedding",
   "",
 ];
 

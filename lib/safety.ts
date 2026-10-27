@@ -46,6 +46,14 @@ const CRISIS = [
   /jeene ka (mann|man) nahi/,
   /mar jaun|mar jaaun|khatam kar (dun|doon|lun|loon)/,
   /मर जाऊ|जीने का मन नहीं/,
+  // Hidden warning signs (Step 3, 6D): things a teen may say or do before self-harm, and abuse said softly.
+  /khud ko (khatam|maar)/,
+  /better off without (me|her|him|them)/,
+  /(bina|baghair) (sab )?khush (rahenge|rahoge|honge)/,
+  /(gave|giving|given) away (all )?(his|her|their) (favou?rite|things|stuff|belongings|possessions)/,
+  /(want|wants|wanted|wish|wishes) to disappear (forever|for good|from (everyone|everything|this world|life))/,
+  /saying goodbye(s)? to (everyone|his friends|her friends|their friends|people|us)/,
+  /\btouch(es|ing)? (him|her|them)\b/,
 ];
 
 // Danger signs in any text the parent writes, e.g. a reflection. Checked on the phone.
@@ -66,6 +74,7 @@ const REFUSALS: { patterns: RegExp[]; message: string; offer: TopicId; offerText
       /\blocation\b/,
       /\bmonitor/,
       /parental\s+control/,
+      /(see|know|find out|check) (who|what) (she|he|they) (chats?|talks?|messages?|texts?)/,
     ],
     message: "Raise doesn't help with monitoring. Teens hide more when they feel watched.",
     offer: "online-safety",

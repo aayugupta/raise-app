@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import HelpPill from "@/components/HelpPill";
 import PhoneLock from "@/components/PhoneLock";
 
 // Screen 3: Privacy promise (D1: shown before choosing a topic).
@@ -39,9 +40,12 @@ export default function Privacy() {
   return (
     <main style={{ minHeight: "100dvh", background: "var(--cream)" }}>
       <div style={{ width: "100%", maxWidth: 480, margin: "0 auto", padding: "16px 16px 0" }}>
-        <button onClick={() => router.push("/setup")} className="icon-btn" aria-label="Back">
-          ←
-        </button>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <button onClick={() => router.push("/setup")} className="icon-btn" aria-label="Back">
+            ←
+          </button>
+          <HelpPill />
+        </div>
 
         <div className="illustration-panel">
           <PhoneLock />

@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import FamilySofa from "@/components/FamilySofa";
+import HelpPill from "@/components/HelpPill";
+import { track } from "@/lib/events";
 import { saveProfile, type Profile } from "@/lib/profile";
 import { checkSetupText, HELP_LINES, type TextCheck } from "@/lib/safety";
 import { topicName, type TopicId } from "@/lib/topics";
@@ -117,12 +119,20 @@ export default function Setup() {
       suggestedTopic,
       createdAt: new Date().toISOString(),
     });
+    // Tapped answers only: never the nickname or what the parent typed.
+    track("setup_completed", {
+      role: answers.role ?? "guardian",
+      age_band: answers.ageBand ?? "16-18",
+      language: answers.language ?? "hinglish",
+      comfort: answers.comfort ?? "gentle",
+    });
     router.push("/privacy");
   }
 
   function submitWish() {
     const result = checkSetupText(wish);
     if (result.kind === "ok") return finish(wish.trim(), result.suggestedTopic);
+    if (result.kind === "crisis") track("help_shown", { from: "setup" });
     setCheck(result);
   }
 
@@ -137,9 +147,10 @@ export default function Setup() {
           <div className="progress" aria-label={`Question ${stepIndex + 1} of ${STEPS.length}`}>
             <div style={{ width: `${((stepIndex + 1) / STEPS.length) * 100}%` }} />
           </div>
-          <span style={{ fontSize: 14, color: "var(--muted)", minWidth: 36, textAlign: "right" }}>
+          <span style={{ fontSize: 14, color: "var(--muted)", minWidth: 32, textAlign: "right" }}>
             {stepIndex + 1}/{STEPS.length}
           </span>
+          <HelpPill />
         </div>
 
         <div className="illustration-panel">

@@ -4,6 +4,40 @@ What we built, what broke, and how we fixed it. Newest entries at the top.
 
 ---
 
+## 2026-10-27 — Safety and polish pass
+
+**Built**
+- **Help on every screen.** Added a shared Help button (`components/HelpPill.tsx`) to Welcome, Setup, Privacy, the card's loading view, and the "done" screens of the Planner, Reflection and Follow-up. Help's back button now returns to wherever the parent came from (it always went to topics before). The general Help screen also lists cybercrime.gov.in, Take It Down and NIMHANS (SHUT clinic).
+- **The 30-message safety test** (`tests/safety-30.test.mjs`), from Step 3 section 6D: 17 danger signs (9 plain, 8 hidden warning signs), 6 spying requests, 5 diagnosis or medicine questions, 2 identity questions, in English, Hinglish and Hindi. **Every danger sign is tested in both places a parent can type** (setup box and reflection). It prints the two launch numbers.
+- **Anonymous events**, phone → our server → Supabase:
+  - `lib/eventSchema.ts`: **the only things that can ever leave the phone.** 10 fixed events (setup_completed, card_viewed, topic_not_now, plan_set, talk_started, talk_done, reflection_saved, follow_up_answered, recovery_chosen, help_shown) with fixed-choice fields only. The server **refuses** any event with an unknown field or free text (e.g. a nickname or reflection notes).
+  - `lib/events.ts`: a random anonymous ID made on the phone; sending never slows or breaks the app.
+  - `app/api/event/route.ts`: checks each event, then saves it to Supabase with a secret key that never reaches the phone. **Until Supabase is set up, events are accepted and dropped.**
+  - `help_shown` records only *that* help was shown and where, never which crisis.
+  - Every screen sends its event at the right moment, e.g. `talk_done` carries `on_time` (the 5-minute and window rule).
+- `supabase/schema.sql`: the `events` table (locked: nothing can read or write it from a browser) and 3 dashboard views: **funnel** (parents per step), **topic_outcomes** and **completion_rate**, which works out the Step 2 completed-conversation rate (planned → on time and 5+ min → reflected within 24 h → follow-up matched, within 14 days; help-offered topics excluded).
+- `tests/events.test.mjs`: 12 checks that only allowed labels get through.
+
+**Broke**
+1. **The first run of the 30-message test: only 10 of 17 danger signs (59%) showed the help offer.** It missed every *hidden* warning sign ("better off without her", "gave away his favourite things", "saying goodbye to his friends", "wants to disappear forever", "sab uske bina khush rahenge"), plus "khud ko khatam kar dega" and "teacher touches her". It also missed one spying request ("see who he chats with").
+2. My first "disappear" pattern would have flagged "he just wants to disappear into his room", which is normal teen behaviour.
+3. Opening Help sent its event twice in the test version of the app.
+
+**Fix**
+1. Added patterns for each hidden warning sign, Hinglish forms, "touches", and "see who … chats". **Now 30 of 30: 100% of danger signs show the offer; 100% of refusals offer a better topic.**
+2. Narrowed it to "disappear forever / for good / from everyone", and added ordinary examples to the reflection test (24/24).
+3. One event per visit (a guard in `TrackOnView`).
+
+**Checked**
+- Welcome and Setup with Help fit a 320 px phone.
+- Events go out from screens; valid → accepted (204); with nickname or notes → refused (400).
+- `npm test`: **8 of 8 files, 164 checks.** Build passes.
+
+**Still to do**
+- Aayushi creates a Supabase project, runs `supabase/schema.sql`, and pastes the URL and secret key into `.env.local` (later also into Vercel).
+
+---
+
 ## 2026-10-27 — Screen 12: Content engine (AI agent + panic test)
 
 **Built**

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import HandOnShoulder from "@/components/HandOnShoulder";
 import type { Language } from "@/lib/cards";
+import { track } from "@/lib/events";
 import { loadProfile } from "@/lib/profile";
 import { BLOCKERS, REPAIR_LINE, SOFTER_RESTART, type BlockerId } from "@/lib/recovery";
 import { updateReflection } from "@/lib/reflections";
@@ -19,10 +20,12 @@ export default function RecoverView({ planId, why }: { planId: string; why: "not
   const [blocker, setBlocker] = useState<BlockerId | null>(null);
 
   useEffect(() => {
-    setPlan(loadPlan(planId) ?? null);
+    const p = loadPlan(planId) ?? null;
+    setPlan(p);
     const saved = loadProfile()?.language;
     if (saved) setLanguage(saved);
-  }, [planId]);
+    if (p && why === "repair") track("recovery_chosen", { topic: p.topic, plan_id: planId, reason: "repair" });
+  }, [planId, why]);
 
   if (plan === undefined) return <main style={{ minHeight: "100dvh", background: "var(--cream)" }} />;
   if (plan === null) {
@@ -42,6 +45,7 @@ export default function RecoverView({ planId, why }: { planId: string; why: "not
   function choose(id: BlockerId) {
     setBlocker(id);
     updateReflection(planId, { gotInTheWay: id });
+    track("recovery_chosen", { topic: plan!.topic, plan_id: planId, reason: id });
   }
 
   function notNow() {

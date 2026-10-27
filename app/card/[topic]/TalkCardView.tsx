@@ -4,7 +4,9 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { baseTalkCard, cardCacheKey, getBaseCard, SAFETY_PROMISE, type Language, type TalkCard } from "@/lib/cards";
+import HelpPill from "@/components/HelpPill";
 import type { Family } from "@/lib/cardPrompt";
+import { track } from "@/lib/events";
 import { loadProfile } from "@/lib/profile";
 import { addOpenTopic } from "@/lib/talks";
 import { TOPICS, type TopicId } from "@/lib/topics";
@@ -92,13 +94,22 @@ export default function TalkCardView({ topic }: { topic: TopicId }) {
     };
   }, [topic, base]);
 
+  // Counted once the card is on screen: which topic, and whether the AI or the base card was shown.
+  const shownSource = loaded?.source;
+  useEffect(() => {
+    if (shownSource) track("card_viewed", { topic, source: shownSource });
+  }, [shownSource, topic]);
+
   if (!loaded) {
     return (
       <main style={{ minHeight: "100dvh", background: "var(--cream)" }}>
         <div style={{ width: "100%", maxWidth: 480, margin: "0 auto", padding: "16px" }}>
-          <button onClick={() => router.push("/topics")} className="icon-btn" aria-label="Back">
-            ←
-          </button>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <button onClick={() => router.push("/topics")} className="icon-btn" aria-label="Back">
+              ←
+            </button>
+            <HelpPill />
+          </div>
           <h1 style={{ fontSize: 28, lineHeight: 1.15, margin: "18px 0 0", textWrap: "balance" }}>“{base.teenQuestion}”</h1>
           <section className="first-line" aria-live="polite">
             <div className="card-label">Your first line</div>
@@ -118,6 +129,7 @@ export default function TalkCardView({ topic }: { topic: TopicId }) {
 
   function notNow() {
     addOpenTopic(topic);
+    track("topic_not_now", { topic });
     router.push("/home");
   }
 

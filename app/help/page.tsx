@@ -1,4 +1,5 @@
-import Link from "next/link";
+import BackButton from "@/components/BackButton";
+import TrackOnView from "@/components/TrackOnView";
 import { HELP_LINES } from "@/lib/safety";
 import { CRISIS_TOPICS, type CrisisId } from "@/lib/topics";
 
@@ -68,9 +69,9 @@ export default async function Help({ searchParams }: { searchParams: Promise<{ a
   return (
     <main style={{ minHeight: "100dvh", background: "var(--cream)" }}>
       <div style={{ width: "100%", maxWidth: 480, margin: "0 auto", padding: "16px 16px 32px" }}>
-        <Link href="/topics" className="icon-btn" aria-label="Back" style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", textDecoration: "none" }}>
-          ←
-        </Link>
+        <BackButton />
+        {/* Counts only that Help was opened, never which situation. */}
+        <TrackOnView event="help_shown" fields={{ from: "help_page" }} />
 
         <h1 style={{ fontSize: 30, lineHeight: 1.15, margin: "16px 0 6px" }}>
           {guide ? "You don't have to handle this alone" : "Get help"}
@@ -137,6 +138,32 @@ export default async function Help({ searchParams }: { searchParams: Promise<{ a
                   </a>
                 </li>
               ))}
+            </ul>
+          </>
+        )}
+
+        {!guide && (
+          <>
+            <h2 className="section-title">Also useful</h2>
+            <ul style={{ margin: 0, paddingLeft: 22, display: "grid", gap: 8, lineHeight: 1.45 }}>
+              <li>
+                <a href="https://cybercrime.gov.in" target="_blank" rel="noreferrer" style={{ color: "var(--teal)", fontWeight: 600 }}>
+                  cybercrime.gov.in
+                </a>{" "}
+                to report online harm
+              </li>
+              <li>
+                <a href="https://takeitdown.ncmec.org" target="_blank" rel="noreferrer" style={{ color: "var(--teal)", fontWeight: 600 }}>
+                  Take It Down
+                </a>{" "}
+                to help remove a private image of someone under 18
+              </li>
+              <li>
+                <a href="https://nimhans.ac.in" target="_blank" rel="noreferrer" style={{ color: "var(--teal)", fontWeight: 600 }}>
+                  NIMHANS
+                </a>{" "}
+                (SHUT clinic, Bengaluru) for help with heavy phone, gaming or internet use
+              </li>
             </ul>
           </>
         )}

@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import HelpPill from "@/components/HelpPill";
+import { track } from "@/lib/events";
 import type { Language } from "@/lib/cards";
 import { NEXT_LINE, NEXT_TIP, SAID_MORE, topicChoices, type SaidMore } from "@/lib/followUp";
 import { loadProfile } from "@/lib/profile";
@@ -47,6 +49,12 @@ export default function FollowUpView({ planId }: { planId: string }) {
       followUpMatched: picked === reflection!.topic,
       followUpAnswer: saidMore,
     });
+    track("follow_up_answered", {
+      topic: reflection!.topic,
+      plan_id: planId,
+      matched: picked === reflection!.topic,
+      said_more: saidMore,
+    });
     setAnswered(true);
     window.scrollTo(0, 0);
   }
@@ -55,7 +63,10 @@ export default function FollowUpView({ planId }: { planId: string }) {
   if ((answered || reflection.followUpAt) && finalAnswer) {
     return (
       <main style={{ minHeight: "100dvh", background: "var(--cream)" }}>
-        <div style={{ width: "100%", maxWidth: 480, margin: "0 auto", padding: "40px 16px 32px" }}>
+        <div style={{ width: "100%", maxWidth: 480, margin: "0 auto", padding: "16px 16px 32px" }}>
+          <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 12 }}>
+            <HelpPill />
+          </div>
           <h1 style={{ fontSize: 30, lineHeight: 1.15 }}>Thank you.</h1>
           <p className="notice" style={{ marginTop: 14 }}>
             💡 {NEXT_TIP[finalAnswer]}

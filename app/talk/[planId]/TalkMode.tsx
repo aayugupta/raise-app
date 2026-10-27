@@ -5,7 +5,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { currentFirstLine, SAFETY_PROMISE } from "@/lib/cards";
 import { loadProfile } from "@/lib/profile";
-import { loadPlan, momentOf, updatePlan, type Plan } from "@/lib/talks";
+import { track } from "@/lib/events";
+import { loadPlan, momentOf, startedOnTime, updatePlan, type Plan } from "@/lib/talks";
 
 // One screen: the first line at a glance, Start, phone away, Done.
 // If the phone locks or the page closes, the talk carries on: Start is saved on the phone.
@@ -51,6 +52,7 @@ export default function TalkMode({ planId }: { planId: string }) {
   function start() {
     setNow(Date.now());
     setPlan(updatePlan(planId, { startedAt: new Date().toISOString() }) ?? null);
+    track("talk_started", { topic: plan!.topic, plan_id: planId });
   }
 
   function done(force = false) {
@@ -59,7 +61,9 @@ export default function TalkMode({ planId }: { planId: string }) {
       setConfirmEarly(true);
       return;
     }
-    updatePlan(planId, { doneAt: new Date().toISOString() });
+    const finished = updatePlan(planId, { doneAt: new Date().toISOString() });
+    // on_time = Start in the planned window and 5+ minutes long (metric step 2).
+    if (finished) track("talk_done", { topic: finished.topic, plan_id: planId, on_time: startedOnTime(finished) });
     router.push(`/reflect/${planId}`);
   }
 

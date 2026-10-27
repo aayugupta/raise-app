@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import HelpPill from "@/components/HelpPill";
+import { track } from "@/lib/events";
 import { saveReflection, type Feeling, type Happened, type Reflection, type WhoTalked } from "@/lib/reflections";
 import { hasDangerSign } from "@/lib/safety";
 import { loadPlan, loadPlans, momentOf, updatePlan, type Plan } from "@/lib/talks";
@@ -66,6 +68,7 @@ export default function ReflectView({ planId }: { planId: string }) {
   function notYet() {
     updatePlan(planId, { closedAt: new Date().toISOString() });
     saveReflection({ planId, topic: plan!.topic, happened: "not-yet", discussed: "", learned: "", helpOffered: false });
+    track("reflection_saved", { topic: plan!.topic, plan_id: planId, happened: "not-yet", help_offered: false });
     router.push(`/recover/${planId}?why=not-yet`);
   }
 
@@ -74,6 +77,7 @@ export default function ReflectView({ planId }: { planId: string }) {
     if (happened === "not-yet") return notYet();
     // A danger sign: offer help first. The parent decides (FR12).
     if (hasDangerSign(`${discussed} ${learned}`)) {
+      track("help_shown", { from: "reflection" });
       setHelpOffer(true);
       return;
     }
@@ -93,6 +97,15 @@ export default function ReflectView({ planId }: { planId: string }) {
       helpOffered,
     });
     updatePlan(planId, { reflectedAt: r.createdAt });
+    // The fixed-choice answers only. The written notes never leave the phone.
+    track("reflection_saved", {
+      topic: plan!.topic,
+      plan_id: planId,
+      happened: happened!,
+      ...(whoTalked ? { who_talked: whoTalked } : {}),
+      ...(feeling ? { feeling } : {}),
+      help_offered: helpOffered,
+    });
     setHelpOffer(false);
     // A hard or partial talk goes to repair, never to a "failed" label (FR10).
     if (!helpOffered && (happened === "partly" || feeling === "hard")) {
@@ -270,7 +283,10 @@ function Saved({ reflection }: { reflection: Reflection }) {
 
   return (
     <main style={{ minHeight: "100dvh", background: "var(--cream)" }}>
-      <div style={{ width: "100%", maxWidth: 480, margin: "0 auto", padding: "40px 16px 32px" }}>
+      <div style={{ width: "100%", maxWidth: 480, margin: "0 auto", padding: "16px 16px 32px" }}>
+        <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 12 }}>
+          <HelpPill />
+        </div>
         <h1 style={{ fontSize: 30, lineHeight: 1.15 }}>You did it. Thank you for trying.</h1>
         <p style={{ fontSize: 17, lineHeight: 1.5 }}>Every talk, even a short one, tells your teen the door is open.</p>
 

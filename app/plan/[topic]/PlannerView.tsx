@@ -4,9 +4,11 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import FamilySofa from "@/components/FamilySofa";
+import HelpPill from "@/components/HelpPill";
 import WalkTogether from "@/components/WalkTogether";
 import { googleCalendarUrl, icsFile } from "@/lib/calendar";
 import { currentFirstLine } from "@/lib/cards";
+import { track } from "@/lib/events";
 import { loadProfile } from "@/lib/profile";
 import { MOMENTS, savePlan, type MomentId, type Plan } from "@/lib/talks";
 import type { TopicId } from "@/lib/topics";
@@ -75,7 +77,9 @@ export default function PlannerView({ topic, suggestedMoment }: { topic: TopicId
 
   function save() {
     if (!moment || !valid) return;
-    setSaved(savePlan({ topic, moment, when: when.toISOString() }));
+    const plan = savePlan({ topic, moment, when: when.toISOString() });
+    track("plan_set", { topic, plan_id: plan.id, moment });
+    setSaved(plan);
     window.scrollTo(0, 0);
   }
 
@@ -87,6 +91,9 @@ export default function PlannerView({ topic, suggestedMoment }: { topic: TopicId
     return (
       <main style={{ minHeight: "100dvh", background: "var(--cream)" }}>
         <div style={{ width: "100%", maxWidth: 480, margin: "0 auto", padding: "16px 16px 32px" }}>
+          <div style={{ display: "flex", justifyContent: "flex-end" }}>
+            <HelpPill />
+          </div>
           <div className="illustration-panel">{moment === "walk" || moment === "car" ? <WalkTogether /> : <FamilySofa />}</div>
 
           <h1 style={{ fontSize: 30, lineHeight: 1.15 }}>Your plan is set</h1>

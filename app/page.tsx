@@ -1,3 +1,4 @@
+import HelpPill from "@/components/HelpPill";
 import StartButton from "@/components/StartButton";
 import WalkTogether from "@/components/WalkTogether";
 
@@ -16,7 +17,10 @@ export default function Welcome() {
         overflow: "hidden",
       }}
     >
-      <div style={{ padding: "clamp(32px, 7vh, 56px) 24px 0", maxWidth: 440 }}>
+      <div style={{ width: "100%", maxWidth: 480, display: "flex", justifyContent: "flex-end", padding: "12px 16px 0" }}>
+        <HelpPill style={{ background: "rgba(255,255,255,0.6)" }} />
+      </div>
+      <div style={{ padding: "clamp(8px, 3vh, 32px) 24px 0", maxWidth: 440 }}>
         <h1 style={{ fontSize: "clamp(36px, 12vw, 46px)", lineHeight: 1.05, textWrap: "balance" }}>Every hard talk starts with one line</h1>
         <p style={{ fontSize: 17, lineHeight: 1.45, margin: "16px 0 24px", color: "var(--text)" }}>
           Raise gives you the first line, a good moment, and calm words for whatever comes next.
