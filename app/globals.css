@@ -600,6 +600,70 @@ h3 {
   background: var(--teal);
 }
 
+.journey-day {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--teal-dark);
+  background: #e6f2f0;
+  border-radius: 999px;
+  padding: 2px 9px;
+  white-space: nowrap;
+}
+
+/* Home topic carousel: cards slide sideways and snap; only this row scrolls, never the page. */
+.topic-carousel {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  margin: 0 -16px;
+  padding: 2px 16px 10px;
+  scrollbar-width: none;
+}
+
+.topic-carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel-card {
+  flex: 0 0 78%;
+  max-width: 280px;
+  scroll-snap-align: start;
+  scroll-margin-left: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border: 2px solid #eadfcd;
+  border-radius: 20px;
+  padding: 16px;
+  text-decoration: none;
+  color: var(--ink);
+}
+
+.carousel-icon {
+  font-size: 30px;
+}
+
+.carousel-name {
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 21px;
+  line-height: 1.15;
+}
+
+.carousel-question {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.4;
+  flex: 1;
+}
+
+.carousel-open {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--teal);
+  margin-top: 4px;
+}
+
 .journey-empty {
   display: flex;
   align-items: center;

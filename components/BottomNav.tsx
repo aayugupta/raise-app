@@ -3,27 +3,22 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-// The bottom tab bar from Aayushi's brainstorm: Home · Topics · AI Coach · Progress · Profile.
-// Shown only on these 5 main screens, never in the middle of preparing, talking or reflecting.
+// The bottom tab bar from Aayushi's simplified flow (28 Oct 2026):
+// Topics · AI Coach · Journey · Help · Profile. "Topics" opens Home (topic carousel + library link).
+// "Journey" opens Progress until the Journey screen is built. Shown only on these main screens,
+// never in the middle of preparing, talking or reflecting.
 
 const TABS = [
-  { href: "/home", label: "Home", icon: "home" },
-  { href: "/topics", label: "Topics", icon: "topics" },
-  { href: "/coach", label: "AI Coach", icon: "coach" },
-  { href: "/progress", label: "Progress", icon: "progress" },
-  { href: "/profile", label: "Profile", icon: "profile" },
+  { href: "/home", label: "Topics", icon: "topics", also: ["/topics"] },
+  { href: "/coach", label: "AI Coach", icon: "coach", also: [] },
+  { href: "/progress", label: "Journey", icon: "journey", also: ["/journey"] },
+  { href: "/help", label: "Help", icon: "help", also: [] },
+  { href: "/profile", label: "Profile", icon: "profile", also: [] },
 ] as const;
 
 function Icon({ name }: { name: (typeof TABS)[number]["icon"] }) {
   const common = { width: 24, height: 24, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: 2, strokeLinecap: "round" as const, strokeLinejoin: "round" as const, "aria-hidden": true };
   switch (name) {
-    case "home":
-      return (
-        <svg {...common}>
-          <path d="M3 10.5 12 3l9 7.5" />
-          <path d="M5 9.5V21h5v-6h4v6h5V9.5" />
-        </svg>
-      );
     case "topics":
       return (
         <svg {...common}>
@@ -38,10 +33,19 @@ function Icon({ name }: { name: (typeof TABS)[number]["icon"] }) {
           <path d="M9 10h.01M12 10h.01M15 10h.01" />
         </svg>
       );
-    case "progress":
+    case "journey":
       return (
         <svg {...common}>
-          <path d="M4 20V10M10 20V4M16 20v-7M22 20H2" />
+          <circle cx="5" cy="18" r="2" />
+          <circle cx="19" cy="6" r="2" />
+          <path d="M7 18h7a3 3 0 0 0 0-6h-4a3 3 0 0 1 0-6h7" />
+        </svg>
+      );
+    case "help":
+      return (
+        <svg {...common}>
+          <path d="M12 21s-7.5-4.6-9.2-9.4C1.6 8.2 3.7 4.5 7.3 4.5c2 0 3.6 1.1 4.7 2.7 1.1-1.6 2.7-2.7 4.7-2.7 3.6 0 5.7 3.7 4.5 7.1C19.5 16.4 12 21 12 21Z" />
+          <path d="M12 9v5M9.5 11.5h5" />
         </svg>
       );
     case "profile":
@@ -59,12 +63,12 @@ export default function BottomNav() {
   return (
     <nav className="bottom-nav" aria-label="Main">
       {TABS.map((t) => {
-        const active = pathname === t.href;
+        const active = pathname === t.href || (t.also as readonly string[]).includes(pathname);
         return (
           <Link
             key={t.href}
             href={t.href}
-            aria-label={t.label}
+            aria-label={t.label === "Help" ? "Emergency help" : t.label}
             className={`bottom-nav-tab${active ? " active" : ""}`}
             aria-current={active ? "page" : undefined}
           >

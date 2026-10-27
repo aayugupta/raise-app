@@ -5,23 +5,15 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import BottomNav from "@/components/BottomNav";
 import FamilySofa from "@/components/FamilySofa";
-import HelpPill from "@/components/HelpPill";
 import { currentFirstLine } from "@/lib/cards";
-import { isFollowUpDue } from "@/lib/followUp";
 import { activeJourneys, type Journey } from "@/lib/journey";
 import { greetName, loadProfile, type Profile } from "@/lib/profile";
-import { loadReflections, type Reflection } from "@/lib/reflections";
-import { loadOpenTopics, loadPlans, momentOf, planStage, type Plan } from "@/lib/talks";
+import { JOURNEY_DAYS, loadOpenTopics, loadPlans, loadTopicStarts, momentOf, planStage, type Plan } from "@/lib/talks";
 import { TOPICS, type TopicId } from "@/lib/topics";
 
-// Screen 7: Home (brainstorm screen 3). The reason to come back: the in-app reminder,
-// "Continue your journey", and a grid to start a new conversation. No streaks, no scores.
-
-function greeting(hour: number) {
-  if (hour < 12) return "Good morning";
-  if (hour < 17) return "Good afternoon";
-  return "Good evening";
-}
+// Screen 5: Home (Aayushi's simplified flow, 28 Oct 2026), opened by the "Topics" tab.
+// "Hello Mumma/Papa", the in-app reminder, the active 14-day journeys, a topic carousel,
+// and "Choose topic from library". No streaks, no scores: just "Day 5 of 14".
 
 function whenText(iso: string) {
   const d = new Date(iso);
@@ -44,7 +36,7 @@ export default function Home() {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [plans, setPlans] = useState<Plan[]>([]);
   const [openTopics, setOpenTopics] = useState<TopicId[]>([]);
-  const [reflections, setReflections] = useState<Reflection[]>([]);
+  const [starts, setStarts] = useState<Partial<Record<TopicId, string>>>({});
   const [now, setNow] = useState(() => Date.now());
   const [ready, setReady] = useState(false);
 
@@ -57,7 +49,7 @@ export default function Home() {
     setProfile(p);
     setPlans(loadPlans());
     setOpenTopics(loadOpenTopics());
-    setReflections(loadReflections());
+    setStarts(loadTopicStarts());
     setReady(true);
     // Re-check every minute, so "It's time" appears without reloading.
     const timer = setInterval(() => setNow(Date.now()), 60_000);
@@ -67,24 +59,18 @@ export default function Home() {
   if (!ready || !profile) return <main style={{ minHeight: "100dvh", background: "var(--cream)" }} />;
 
   const nowPlans = [...plans].sort((a, b) => a.when.localeCompare(b.when)).filter((p) => planStage(p, now) === "now");
-  const followUps = reflections.filter((r) => isFollowUpDue(r, now));
   // The "It's time" banner already covers plans happening now, so they're not repeated below.
-  const journeys = activeJourneys(plans, openTopics, now).filter((j) => !nowPlans.some((p) => p.id === j.planId));
-  const name = greetName(profile);
+  const journeys = activeJourneys(plans, openTopics, now, starts).filter((j) => !nowPlans.some((p) => p.id === j.planId));
+  const activeTopics = new Set(journeys.map((j) => j.topic));
+  // Carousel: topics not already in a journey first, so there's always something new to start.
+  const carousel = [...TOPICS].sort((a, b) => Number(activeTopics.has(a.id)) - Number(activeTopics.has(b.id)));
 
   return (
     <main className="has-bottom-nav" style={{ minHeight: "100dvh", background: "var(--cream)" }}>
-      <div style={{ width: "100%", maxWidth: 480, margin: "0 auto", padding: "16px 16px 24px" }}>
+      <div style={{ width: "100%", maxWidth: 480, margin: "0 auto", padding: "20px 16px 24px" }}>
         {/* Greeting */}
-        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-          <div style={{ flex: 1 }}>
-            <h1 style={{ fontSize: 26, lineHeight: 1.15 }}>
-              {greeting(new Date(now).getHours())}, {name}
-            </h1>
-            <div style={{ fontSize: 15, color: "var(--muted)", marginTop: 2 }}>Small steps. Big conversations.</div>
-          </div>
-          <HelpPill />
-        </div>
+        <h1 style={{ fontSize: 30, lineHeight: 1.15 }}>Hello {greetName(profile)}</h1>
+        <div style={{ fontSize: 15, color: "var(--muted)", marginTop: 4 }}>One small conversation at a time.</div>
 
         {/* In-app reminder: inside the planned window */}
         {nowPlans.map((p) => (
@@ -100,21 +86,23 @@ export default function Home() {
           </section>
         ))}
 
-        {/* 3-day follow-up, built from the parent's own reflection (FR8) */}
-        {followUps.map((r) => (
-          <section key={r.planId} className="notice" style={{ marginTop: 16, borderLeft: "5px solid var(--mustard)" }}>
-            <div style={{ fontWeight: 700, color: "var(--ink)", fontSize: 17 }}>💬 A quick question</div>
-            <p style={{ margin: "4px 0 12px", fontSize: 15, color: "var(--muted)" }}>
-              About your talk on {new Date(r.createdAt).toLocaleDateString("en-IN", { weekday: "long" })}. Two taps, and we'll suggest a next line.
-            </p>
-            <Link href={`/follow-up/${r.planId}`} className="btn-secondary btn-block" style={{ textAlign: "center", textDecoration: "none" }}>
-              Answer
+        {/* Topic carousel: swipe sideways */}
+        <h2 className="section-title">Start a conversation</h2>
+        <div className="topic-carousel" role="list" aria-label="Topics">
+          {carousel.map((t) => (
+            <Link key={t.id} href={`/card/${t.id}`} className="carousel-card" role="listitem" style={{ background: `${t.color}1f`, borderColor: `${t.color}55` }}>
+              <span className="carousel-icon" aria-hidden="true">
+                {t.icon}
+              </span>
+              <span className="carousel-name">{t.name}</span>
+              <span className="carousel-question">Teens wonder: “{t.teenQuestion}”</span>
+              <span className="carousel-open">{activeTopics.has(t.id) ? "Continue →" : "Open flashcards →"}</span>
             </Link>
-          </section>
-        ))}
+          ))}
+        </div>
 
-        {/* Continue your journey (brainstorm screen 3) */}
-        <h2 className="section-title">Continue your journey</h2>
+        {/* Active 14-day journeys */}
+        <h2 className="section-title">Your {JOURNEY_DAYS}-day journey</h2>
         {journeys.length > 0 ? (
           <div style={{ display: "grid", gap: 10 }}>
             {journeys.map((j) => (
@@ -128,27 +116,13 @@ export default function Home() {
             </div>
             <div>
               <div style={{ fontWeight: 700, color: "var(--ink)" }}>Ready when you are</div>
-              <div style={{ fontSize: 15, color: "var(--muted)", marginTop: 2 }}>Pick a topic below and we'll give you the first line.</div>
+              <div style={{ fontSize: 15, color: "var(--muted)", marginTop: 2 }}>Pick a topic and you'll have {JOURNEY_DAYS} days to prepare, talk and reflect.</div>
             </div>
           </section>
         )}
 
-        {/* Start a new conversation: all 8 topics */}
-        <h2 className="section-title">Start a new conversation</h2>
-        <div className="topic-grid">
-          {TOPICS.map((t) => (
-            <Link key={t.id} href={`/card/${t.id}`} className="topic-tile" aria-label={t.name}>
-              <span className="topic-tile-icon" style={{ background: `${t.color}26` }} aria-hidden="true">
-                {t.icon}
-              </span>
-              <span>{t.short}</span>
-            </Link>
-          ))}
-        </div>
-
-        {/* For talks that happened without a plan in Raise. */}
-        <Link href="/log" className="btn-secondary btn-block" style={{ marginTop: 18, textAlign: "center", textDecoration: "none" }}>
-          💬 I had a talk
+        <Link href="/topics" className="btn-secondary btn-block" style={{ marginTop: 18, textAlign: "center", textDecoration: "none" }}>
+          📚 Choose topic from library
         </Link>
       </div>
       <BottomNav />
@@ -156,7 +130,7 @@ export default function Home() {
   );
 }
 
-// One active topic: its step (Prepare → Talk → Reflect), a 3-part progress bar, and the next action.
+// One active topic: "Day 5 of 14", its step (Prepare → Talk → Reflect), and the next action.
 function JourneyCard({ journey, whenLabel }: { journey: Journey; whenLabel?: string }) {
   const t = topicMeta(journey.topic);
   return (
@@ -165,7 +139,14 @@ function JourneyCard({ journey, whenLabel }: { journey: Journey; whenLabel?: str
         {t.icon}
       </span>
       <span style={{ flex: 1, minWidth: 0 }}>
-        <span style={{ display: "block", fontWeight: 700, color: "var(--ink)" }}>{t.short}</span>
+        <span style={{ display: "flex", justifyContent: "space-between", gap: 8, alignItems: "baseline" }}>
+          <span style={{ fontWeight: 700, color: "var(--ink)" }}>{t.short}</span>
+          {journey.day && (
+            <span className="journey-day">
+              Day {journey.day} of {JOURNEY_DAYS}
+            </span>
+          )}
+        </span>
         <span style={{ display: "block", fontSize: 14, color: "var(--muted)", marginTop: 2 }}>
           Step {journey.step} of 3 · {journey.stepName}
           {whenLabel ? ` · ${whenLabel}` : ""}

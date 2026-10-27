@@ -3,7 +3,7 @@
 //   2 Talk:    a talk is planned
 //   3 Reflect: the talk is done, or its time has passed, and the parent hasn't said how it went
 // ".ts" ending so the tests (plain Node) can load this file too.
-import { planStage, type Plan } from "./talks.ts";
+import { journeyDay, planStage, type Plan } from "./talks.ts";
 import type { TopicId } from "./topics";
 
 export type Journey = {
@@ -14,9 +14,15 @@ export type Journey = {
   href: string;
   planId?: string;
   when?: string;
+  day?: number; // "Day 5 of 14", when the start date is known
 };
 
-export function activeJourneys(plans: Plan[], openTopics: TopicId[], now = Date.now()): Journey[] {
+export function activeJourneys(
+  plans: Plan[],
+  openTopics: TopicId[],
+  now = Date.now(),
+  starts: Partial<Record<TopicId, string>> = {}
+): Journey[] {
   const journeys: Journey[] = [];
   const byTime = [...plans].sort((a, b) => a.when.localeCompare(b.when));
 
@@ -36,6 +42,11 @@ export function activeJourneys(plans: Plan[], openTopics: TopicId[], now = Date.
     if (!journeys.some((j) => j.topic === topic)) {
       journeys.push({ topic, step: 1, stepName: "Prepare", action: "Plan this talk", href: `/card/${topic}` });
     }
+  }
+
+  for (const j of journeys) {
+    const start = starts[j.topic] ?? plans.find((p) => p.id === j.planId)?.createdAt;
+    if (start) j.day = journeyDay(start, now);
   }
 
   // Most urgent first: reflect, then talk, then prepare.

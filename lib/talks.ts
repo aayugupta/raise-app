@@ -13,7 +13,48 @@ export function loadOpenTopics(): TopicId[] {
   }
 }
 
+// ---------- 14-day journey (28 Oct 2026): when each topic was started ----------
+// A topic starts the first time its card is opened (or it is picked in setup). Day 1 is that day.
+// The metric counts a topic as completed if a reflection is saved within 14 days of this.
+
+const STARTS_KEY = "raise.topicStarts";
+export const JOURNEY_DAYS = 14;
+
+export function loadTopicStarts(): Partial<Record<TopicId, string>> {
+  try {
+    return JSON.parse(localStorage.getItem(STARTS_KEY) ?? "{}");
+  } catch {
+    return {};
+  }
+}
+
+export function markTopicStarted(id: TopicId): void {
+  try {
+    const starts = loadTopicStarts();
+    if (!starts[id]) localStorage.setItem(STARTS_KEY, JSON.stringify({ ...starts, [id]: new Date().toISOString() }));
+  } catch {}
+}
+
+// After a reflection the journey is finished; opening the topic again starts a new one.
+export function clearTopicStart(id: TopicId): void {
+  try {
+    const { [id]: _, ...rest } = loadTopicStarts();
+    localStorage.setItem(STARTS_KEY, JSON.stringify(rest));
+  } catch {}
+}
+
+// "Day 5 of 14". Day 1 is the start day; after day 14 it stays at 14 (never "failed" or "overdue").
+export function journeyDay(startedAt: string, now = Date.now()): number {
+  const start = new Date(startedAt);
+  start.setHours(0, 0, 0, 0);
+  const today = new Date(now);
+  today.setHours(0, 0, 0, 0);
+  const day = Math.round((today.getTime() - start.getTime()) / 86_400_000) + 1;
+  return Math.min(Math.max(day, 1), JOURNEY_DAYS);
+}
+
 export function addOpenTopic(id: TopicId): void {
+  markTopicStarted(id);
   try {
     const topics = loadOpenTopics();
     if (!topics.includes(id)) localStorage.setItem(OPEN_KEY, JSON.stringify([...topics, id]));
@@ -128,6 +169,7 @@ export function loadPlans(): Plan[] {
 export function savePlan(plan: Omit<Plan, "id" | "createdAt">): Plan {
   const id = typeof crypto.randomUUID === "function" ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
   const full: Plan = { ...plan, id, createdAt: new Date().toISOString() };
+  markTopicStarted(plan.topic);
   try {
     localStorage.setItem(PLANS_KEY, JSON.stringify([...loadPlans(), full]));
     removeOpenTopic(plan.topic);

@@ -1,4 +1,5 @@
 import BackButton from "@/components/BackButton";
+import BottomNav from "@/components/BottomNav";
 import TrackOnView from "@/components/TrackOnView";
 import { HELP_LINES } from "@/lib/safety";
 import { CRISIS_TOPICS, type CrisisId } from "@/lib/topics";
@@ -67,7 +68,7 @@ export default async function Help({ searchParams }: { searchParams: Promise<{ a
   const otherLines = guide ? HELP_LINES.filter((h) => !guide.lines.includes(h.number)) : [];
 
   return (
-    <main style={{ minHeight: "100dvh", background: "var(--cream)" }}>
+    <main className="has-bottom-nav" style={{ minHeight: "100dvh", background: "var(--cream)" }}>
       <div style={{ width: "100%", maxWidth: 480, margin: "0 auto", padding: "16px 16px 32px" }}>
         <BackButton />
         {/* Counts only that Help was opened, never which situation. */}
@@ -172,6 +173,7 @@ export default async function Help({ searchParams }: { searchParams: Promise<{ a
           Raise guides you to experts. It doesn't counsel or diagnose. Nothing you open here is saved.
         </p>
       </div>
+      <BottomNav />
     </main>
   );
 }

@@ -80,7 +80,8 @@ Aayushi's simplified wireframe (10 screens + Emergency help) replaces the 14-scr
 
 | Question | Decision |
 | --- | --- |
-| Navigation | **Bottom tab bar: Topics · AI Coach · Journey · Emergency help · Profile** |
+| Navigation | **Bottom tab bar: Topics · AI Coach · Journey · Help · Profile.** The Topics tab opens Home (carousel + "Choose topic from library"); the Help tab is labelled "Help" (read aloud as "Emergency help"). Journey opens Progress until the Journey screen is built |
+| Home extras | **"I had a talk" and the 3-day follow-up are removed from Home** (Aayushi, 28 Oct 2026). The in-app "It's time" reminder stays |
 | Age bands | **12–14 / 15–16 / 17–19** |
 | Topics | **Back to the docs' 6** (relationships, stress, friends, online safety, consent, body). Study & future and Screen time come out |
 | Reminders | **In-app only.** No push notifications, no "Add to calendar" |

@@ -9,7 +9,7 @@ import { CONFIDENCE_AFTER_QUESTION, recordConfidence } from "@/lib/confidence";
 import { track } from "@/lib/events";
 import { saveReflection, type Feeling, type Happened, type Reflection, type WhoTalked } from "@/lib/reflections";
 import { hasDangerSign } from "@/lib/safety";
-import { loadPlan, loadPlans, momentOf, updatePlan, type Plan } from "@/lib/talks";
+import { clearTopicStart, loadPlan, loadPlans, momentOf, updatePlan, type Plan } from "@/lib/talks";
 import { TOPICS, type TopicId } from "@/lib/topics";
 
 // 30 seconds: did it happen, what we discussed, who talked more, one thing learned, how it felt.
@@ -100,6 +100,7 @@ export default function ReflectView({ planId }: { planId: string }) {
       helpOffered,
     });
     updatePlan(planId, { reflectedAt: r.createdAt });
+    clearTopicStart(plan!.topic);
     if (afterConfidence) recordConfidence(afterConfidence, "after_talk");
     // The fixed-choice answers only. The written notes never leave the phone.
     track("reflection_saved", {
