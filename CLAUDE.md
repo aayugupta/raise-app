@@ -45,6 +45,21 @@ The research and decisions live in `docs/` (Steps 1–4; also bundled in `docs/r
 | Accounts | GitHub exists. Vercel, Supabase and a Gemini API key still need creating; walk her through each when needed |
 | Designs | **Wait for her design before building each screen** (Figma, screenshot or sketch). Behind-the-scenes work (Gemini, Supabase, safety checks) can go ahead meanwhile |
 
+## Brainstorm flow decisions (27 Oct 2026, these WIN over the docs)
+
+Aayushi's brainstorm of the app flow is in `docs/brainstorm-app-flow.webp` (14 screens). Use it as the reference for **flow and screens**; the look stays as in Visual design below.
+
+| Question | Decision |
+| --- | --- |
+| Topics | **8 topics**: the docs' 6 (relationships, stress, friends, online safety, consent, body) **+ Study & future + Screen time**. Claude drafts the 2 new base cards; Aayushi edits |
+| Age bands | **10–13 / 14–16 / 17–19** (replaces 13–15 / 16–18) |
+| Navigation | **Bottom tab bar**: Home · Topics · AI Coach · Progress · Profile |
+| Home | Brainstorm screen 3: greeting, "Continue your journey" with progress, a grid to start a new conversation |
+| Progress | Brainstorm screen 13: talks completed / in progress, and **confidence before → after** (1–5, asked at setup and after talks; the Step 6 metric) |
+| Profile | Brainstorm screen 14, adapted: no accounts, so no log in / log out; no "saved topics" (no save button) |
+| AI Coach | **Build the open chat** (brainstorm screen 9; was v2 in the docs). Every message in and out goes through the safety checks; the 30-message test is extended to it |
+| Kept from earlier decisions | No push notifications (calendar + in-app reminders). Help shows public helplines only: the counsellor/doctor network stays cut (Step 3) |
+
 ## Visual design
 
 Aayushi's reference design (25 Oct 2026) is a warm, illustrated parenting app: a peach welcome screen with a big serif headline, a teal button and a flat illustration filling the bottom; a cream home screen with a greeting, rounded illustrated cards and serif section titles.

@@ -26,7 +26,7 @@ const PROMISES: { title: string; detail: string }[] = [
   {
     title: "The AI only sees your taps",
     detail:
-      "To write your Talk Card, we send your tapped answers (like “father, 16–18, Hinglish”) to Google's Gemini AI. Never your nickname or anything you type.",
+      "To write your Talk Card, we send your tapped answers (like “father, 14–16, Hinglish”) to Google's Gemini AI. Never your nickname or anything you type.",
   },
   {
     title: "We count taps, not people",

@@ -1,5 +1,5 @@
 // The 6 v1 topics. Full card content lives in content/base-talk-cards.md.
-export type TopicId = "relationships" | "stress" | "friends" | "online-safety" | "consent" | "body";
+export type TopicId = "relationships" | "stress" | "friends" | "online-safety" | "consent" | "body" | "study" | "screen-time";
 
 // Order matters: the first three are what teens most want to talk about
 // (relationships 10 of 12, feelings and friends 7 of 12 each), so they are suggested first.
@@ -10,6 +10,9 @@ export const TOPICS: { id: TopicId; name: string; teenQuestion: string; color: s
   { id: "online-safety", name: "Online safety", teenQuestion: "What would you do if someone online asked for a photo?", color: "#0e716d" },
   { id: "consent", name: "Consent and personal safety", teenQuestion: "Is it okay to say no, even to someone you know?", color: "#4e8a5e" },
   { id: "body", name: "Body and growing up", teenQuestion: "Is what's happening to my body normal?", color: "#f08f74" },
+  // Added 27 Oct 2026 from Aayushi's brainstorm.
+  { id: "study", name: "Study and future", teenQuestion: "What would you choose if no one else's opinion mattered?", color: "#7b8cc4" },
+  { id: "screen-time", name: "Screen time", teenQuestion: "What's a fair phone rule for everyone at home, parents too?", color: "#5aa9c9" },
 ];
 
 export function isTopicId(value: string): value is TopicId {

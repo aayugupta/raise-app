@@ -108,9 +108,11 @@ const TOPIC_WORDS: { id: TopicId; pattern: RegExp }[] = [
   { id: "relationships", pattern: /crush|dating|\bdate\b|boyfriend|girlfriend|\bbf\b|\bgf\b|relationship|\blove\b|pyaar|porn|adult content|\bsex/g },
   { id: "friends", pattern: /friend|peer|dost|\bgroup\b|bully/g },
   { id: "stress", pattern: /stress|exam|anxi|\bsad\b|feeling|mood|udaas|tension|marks|result|cry/g },
-  { id: "online-safety", pattern: /online|instagram|\binsta\b|social media|internet|\bphone\b|scam|cyber|gaming|\bgames?\b|reels?/g },
+  { id: "online-safety", pattern: /online|instagram|\binsta\b|social media|internet|scam|cyber/g },
   { id: "consent", pattern: /consent|\btouch|personal safety|say no|stranger|\bsafe/g },
   { id: "body", pattern: /period|puberty|\bbody\b|growing up|pimple|height|weight|shave/g },
+  { id: "study", pattern: /study|studies|career|college|tuition|\bboards?\b|future|padhai|coaching/g },
+  { id: "screen-time", pattern: /\bphone\b|mobile|screen|gaming|\bgames?\b|reels?|youtube|addict/g },
 ];
 
 export function checkSetupText(text: string): TextCheck {

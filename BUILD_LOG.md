@@ -4,6 +4,37 @@ What we built, what broke, and how we fixed it. Newest entries at the top.
 
 ---
 
+## 2026-10-27 — Brainstorm flow: decisions, new age bands, 2 new topics
+
+**Decided (Aayushi, from her brainstorm `docs/brainstorm-app-flow.webp`; recorded in CLAUDE.md)**
+- Build: **bottom tab bar + new Home**, **Progress with confidence before → after**, **Profile / Settings**, and the **AI Coach chat** (was v2 in the docs).
+- Topics: **8**, the docs' 6 + **Study and future** + **Screen time**.
+- Age bands: **10–13 / 14–16 / 17–19** (was 13–15 / 16–18).
+- Kept: no push notifications; Help shows public helplines only (the counsellor/doctor network stays cut); no log in / log out, no save button.
+
+**Built in this step**
+- **Age bands** switched everywhere: Setup ("How old is your child?", 3 choices), the AI instructions (10–13: friends and school only, never the child's own romantic life; 14–16: friends first; 17–19: their own life and choices, respecting independence), the server's allowed values, events, and the Privacy example. Old saved answers move to the nearest new band (13–15 → 14–16, 16–18 → 17–19).
+- **Two new base cards** drafted in `content/base-talk-cards.md` (for Aayushi to edit), using only facts from the research:
+  - **Study and future**: "What would you choose if no one else's opinion mattered?" (NCERT 2022: 81% say exams cause anxiety).
+  - **Screen time**: "What's a fair phone rule for everyone at home, parents too?" (IAP 2022: no fixed limit; protect sleep, screens off an hour before bed, rules made together). The "Avoid" list warns against phone threats and checking secretly.
+- Both topics added everywhere: topic list (8), events, card converter (expects 8), and Setup text matching ("career / college / tuition" → Study; "phone / gaming / reels" → Screen time).
+
+**Broke**
+- Nothing broke. Moving "phone / gaming / reels" from Online safety to Screen time could have changed an existing Setup suggestion ("instagram and reels"); the test confirmed it still points to Online safety.
+
+**Checked**
+- Live AI cards: Study (mother, 10–13, Hinglish), Screen time (father, 17–19, Hindi) and Relationships (10–13, English, kept to friends' crushes). All personalised, about 2 s each.
+- Topics screen shows 8; Setup shows 3 age bands.
+- `npm test` 8/8 files (card safety now checks all 8 base cards; setup test has the 2 new topics). Build passes.
+
+**Next (in order)**
+1. Bottom tab bar + new Home
+2. Progress + confidence before → after
+3. Profile / Settings
+4. AI Coach chat (with safety checks on every message, and the 30-message test extended to it)
+
+---
+
 ## 2026-10-27 — "I had a talk" (logging unplanned talks)
 
 **Why**

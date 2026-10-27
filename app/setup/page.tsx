@@ -40,11 +40,12 @@ const STEPS: Step[] = [
   {
     kind: "choice",
     key: "ageBand",
-    question: "How old is your teen?",
-    why: "Younger teens get gentler openers that start with their friends.",
+    question: "How old is your child?",
+    why: "Openers are matched to their age. Younger children get gentler ones that start with their friends.",
     options: [
-      { value: "13-15", label: "13 to 15" },
-      { value: "16-18", label: "16 to 18" },
+      { value: "10-13", label: "10 to 13" },
+      { value: "14-16", label: "14 to 16" },
+      { value: "17-19", label: "17 to 19" },
     ],
   },
   {
@@ -111,7 +112,7 @@ export default function Setup() {
     saveProfile({
       nickname: nickname.trim(),
       role: answers.role ?? "guardian",
-      ageBand: answers.ageBand ?? "16-18",
+      ageBand: answers.ageBand ?? "14-16",
       teenGender: answers.teenGender ?? "unsaid",
       language: answers.language ?? "hinglish",
       comfort: answers.comfort ?? "gentle",
@@ -122,7 +123,7 @@ export default function Setup() {
     // Tapped answers only: never the nickname or what the parent typed.
     track("setup_completed", {
       role: answers.role ?? "guardian",
-      age_band: answers.ageBand ?? "16-18",
+      age_band: answers.ageBand ?? "14-16",
       language: answers.language ?? "hinglish",
       comfort: answers.comfort ?? "gentle",
     });

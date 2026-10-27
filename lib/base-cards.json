@@ -210,6 +210,76 @@
       "getHelp": "for any medical worry (pain, very irregular periods, anything that doesn't seem right) → a doctor. If your teen seems very unhappy with their body or stops eating properly → Tele-MANAS 14416.",
       "sources": "Rashmi et al., parent-adolescent communication on SRH, Bengaluru, IJCMPH 2026 · Likith, factors influencing parent-adolescent SRH communication, 2024",
       "checkedOn": "25 Oct 2026"
+    },
+    {
+      "id": "study",
+      "name": "Study and future",
+      "teenQuestion": "What would you choose if no one else's opinion mattered?",
+      "whyNow": "81% of Indian school students say exams and results cause them anxiety. Teens in our survey said they want to be heard before they're given advice.",
+      "whySource": "NCERT mental health survey, 2022 · Raise teen survey, Oct 2026",
+      "firstLine": {
+        "hinglish": "Agar marks aur logon ki baatein na hoti, toh tumhe kya karna achha lagta? Bas jaanna hai, koi pressure nahi.",
+        "hindi": "अगर नंबर और लोगों की बातें न होतीं, तो तुम्हें क्या करना अच्छा लगता? बस जानना है, कोई दबाव नहीं।",
+        "english": "If marks and what people say didn't matter, what would you love to do? I just want to know, no pressure."
+      },
+      "followUps": [
+        "What part of your studies feels heaviest right now?",
+        "How can I help without adding more pressure?"
+      ],
+      "say": [
+        "You won't be in trouble for telling me, even about marks.",
+        "Your marks don't change how much I love you.",
+        "There's more than one good path. We'll figure it out together."
+      ],
+      "avoid": [
+        "Comparing them with siblings, cousins or toppers.",
+        "Do you know how much we spend on your tuition?",
+        "Deciding their subjects or career for them."
+      ],
+      "react": {
+        "quiet": "No rush. We can talk whenever you're ready.",
+        "upset": "I'm not here to lecture. I'm on your side.",
+        "disagree": "Okay, tell me your plan. I'd really like to understand it.",
+        "noTalk": "Okay. Just know you can talk to me about school any time, even about bad marks."
+      },
+      "getHelp": "if exam stress means your teen can't sleep or eat for weeks, talks about giving up, or says life feels pointless → Tele-MANAS 14416 (free, 24×7). If they talk about hurting themselves → 112 now, and stay with them.",
+      "sources": "NCERT student mental health survey, 2022 · Raise teen survey, 12 teens, Oct 2026",
+      "checkedOn": "27 Oct 2026"
+    },
+    {
+      "id": "screen-time",
+      "name": "Screen time",
+      "teenQuestion": "What's a fair phone rule for everyone at home, parents too?",
+      "whyNow": "The Indian Academy of Pediatrics sets no fixed screen limit for teens. It advises protecting 8 to 9 hours of sleep, screens off an hour before bed, and family rules made together.",
+      "whySource": "Indian Academy of Pediatrics, 2022",
+      "firstLine": {
+        "hinglish": "Ghar mein phone ka ek aisa rule banayein jo sab pe lage, mujh pe bhi? Tumhe kya fair lagega?",
+        "hindi": "घर में फ़ोन का एक ऐसा नियम बनाएँ जो सब पर लागू हो, मुझ पर भी? तुम्हें क्या सही लगेगा?",
+        "english": "Shall we make a phone rule for the whole family, me included? What would feel fair to you?"
+      },
+      "followUps": [
+        "When does your phone help you, and when does it get in the way?",
+        "What time should phones go off at night, for all of us?"
+      ],
+      "say": [
+        "You won't be in trouble for telling me about anything you see online.",
+        "These rules are for all of us, me included.",
+        "Sleep matters more than screen hours. Let's protect that together."
+      ],
+      "avoid": [
+        "Threatening to take the phone away.",
+        "Checking their phone secretly.",
+        "Calling them \"addicted\" or \"always on the phone\"."
+      ],
+      "react": {
+        "quiet": "No rush. Think about it, and tell me what you'd suggest.",
+        "upset": "I'm not trying to control you. I want rules we both think are fair.",
+        "disagree": "Okay, what would you change? Let's find something that works for both of us.",
+        "noTalk": "Okay. Let's pick a time this week to agree on it together."
+      },
+      "getHelp": "if phone or gaming use has pushed out sleep, school and friends for weeks, or your teen seems very distressed without it → the NIMHANS SHUT clinic (Bengaluru) or Tele-MANAS 14416 for advice.",
+      "sources": "Indian Academy of Pediatrics, screen time guidelines, 2022 · NIMHANS SHUT clinic",
+      "checkedOn": "27 Oct 2026"
     }
   ]
 }

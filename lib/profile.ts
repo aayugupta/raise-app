@@ -4,7 +4,7 @@ import type { TopicId } from "./topics";
 export type Profile = {
   nickname: string;
   role: "mother" | "father" | "guardian";
-  ageBand: "13-15" | "16-18";
+  ageBand: "10-13" | "14-16" | "17-19";
   teenGender: "girl" | "boy" | "unsaid";
   language: "hinglish" | "hindi" | "english";
   comfort: "gentle" | "open";
@@ -25,10 +25,16 @@ export function saveProfile(profile: Profile): void {
   }
 }
 
+// Age bands changed on 27 Oct 2026 (13–15 / 16–18 → 10–13 / 14–16 / 17–19).
+const OLD_AGE_BANDS: Record<string, Profile["ageBand"]> = { "13-15": "14-16", "16-18": "17-19" };
+
 export function loadProfile(): Profile | null {
   try {
     const raw = localStorage.getItem(KEY);
-    return raw ? (JSON.parse(raw) as Profile) : null;
+    if (!raw) return null;
+    const profile = JSON.parse(raw) as Profile;
+    const moved = OLD_AGE_BANDS[profile.ageBand as string];
+    return moved ? { ...profile, ageBand: moved } : profile;
   } catch {
     return null;
   }
