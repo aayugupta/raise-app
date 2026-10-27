@@ -1176,3 +1176,94 @@ h3 {
   border-radius: var(--radius);
   padding: 14px;
 }
+
+/* AI Coach */
+.coach-privacy {
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--ink);
+  background: #fff6e6;
+  border: 1px solid #f1dcb2;
+  border-radius: 12px;
+  padding: 8px 10px;
+  margin: 0;
+}
+
+.coach-chat {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 16px 0 8px;
+}
+
+.bubble {
+  max-width: 88%;
+  padding: 10px 14px;
+  border-radius: 18px;
+  font-size: 16px;
+  line-height: 1.45;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.bubble.parent {
+  align-self: flex-end;
+  background: var(--teal);
+  color: #fff;
+  border-bottom-right-radius: 6px;
+}
+
+.bubble.parent.hidden-note {
+  background: #eadfcd;
+  color: var(--muted);
+  font-style: italic;
+  font-size: 14px;
+}
+
+.bubble.coach {
+  align-self: flex-start;
+  background: var(--card);
+  border: 2px solid #eadfcd;
+  color: var(--ink);
+  border-bottom-left-radius: 6px;
+}
+
+.bubble.coach.fallback {
+  color: var(--muted);
+}
+
+.bubble.coach a {
+  color: var(--teal);
+  font-weight: 700;
+}
+
+.coach-help {
+  border: 2px solid #f3c7bc;
+}
+
+/* The message box stays above the tab bar while the chat scrolls. */
+.coach-composer {
+  position: sticky;
+  bottom: calc(76px + env(safe-area-inset-bottom));
+  display: flex;
+  gap: 8px;
+  align-items: flex-end;
+  background: var(--cream);
+  padding: 8px 0 4px;
+}
+
+.coach-composer .text-input {
+  flex: 1;
+  margin: 0;
+  resize: none;
+  min-height: 52px;
+}
+
+.coach-composer .btn-primary {
+  width: 52px;
+  height: 52px;
+  padding: 0;
+  flex-shrink: 0;
+  border-radius: 50%;
+  font-size: 20px;
+}

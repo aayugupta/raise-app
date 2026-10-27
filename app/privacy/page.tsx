@@ -25,9 +25,9 @@ const PROMISES: { title: string; detail: string }[] = [
     detail: "Raise never listens or records. You put the phone away and talk.",
   },
   {
-    title: "The AI only sees your taps",
+    title: "The AI sees only what it needs",
     detail:
-      "To write your Talk Card, we send your tapped answers (like “father, 15–16, Hinglish”) to Google's Gemini AI. Never your nickname or anything you type.",
+      "Talk Cards use only your taps (like “father, 15–16, Hinglish”). In AI Coach, what you type goes to Google's Gemini AI to write a reply, so please don't use names. Your reflections are never sent.",
   },
   {
     title: "We count taps, not people",

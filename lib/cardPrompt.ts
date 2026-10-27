@@ -38,6 +38,14 @@ const COMFORT_RULES: Record<Family["comfort"], string> = {
   open: "The family talks quite openly: the wording can be a little more direct.",
 };
 
+// The family's tapped answers as instructions, shared with the AI Coach (lib/coachPrompt.ts).
+export function familyRules(family: Family): { language: string; lines: string[] } {
+  return {
+    language: LANGUAGE_RULES[family.language],
+    lines: [ROLE_RULES[family.role], TEEN_RULES[family.teenGender], AGE_RULES[family.ageBand], COMFORT_RULES[family.comfort]],
+  };
+}
+
 export function buildPrompt(base: BaseCard, family: Family): string {
   const baseCard = {
     whyNow: base.whyNow,

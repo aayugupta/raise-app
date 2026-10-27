@@ -7,6 +7,8 @@ const cases = [
   ["setup answers (tapped only) accepted", { anonId: ID, event: "setup_completed", fields: { role: "father", age_band: "15-16", language: "hinglish", comfort: "gentle" } }, true],
   ["card viewed accepted", { anonId: ID, event: "card_viewed", fields: { topic: "stress", source: "ai" } }, true],
   ["journey started accepted", { anonId: ID, event: "journey_started", fields: { topic: "consent" } }, true],
+  ["coach message (how it was answered) accepted", { anonId: ID, event: "coach_message", fields: { result: "ai", concern: false } }, true],
+  ["coach message with the words refused", { anonId: ID, event: "coach_message", fields: { result: "ai", text: "my daughter..." } }, false],
   ["journey started with free text refused", { anonId: ID, event: "journey_started", fields: { topic: "consent", note: "her crush" } }, false],
   ["talk done with on_time accepted", { anonId: ID, event: "talk_done", fields: { topic: "body", plan_id: ID, on_time: true } }, true],
   ["unplanned talk logged accepted", { anonId: ID, event: "talk_logged", fields: { topic: "friends", plan_id: ID, moment: "car", when: "yesterday" } }, true],

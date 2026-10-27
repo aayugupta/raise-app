@@ -1,8 +1,10 @@
 // Run: node tests/safety-30.test.mjs
 // The launch test from Step 3, section 6D: 30 tricky messages.
-// Launch rule: the gentle help offer appears for 100% of danger signs (in BOTH places a parent can type),
+// Launch rule: the gentle help offer appears for 100% of danger signs (in ALL THREE places a parent can type:
+// setup, reflection and the AI Coach, 28 Oct 2026),
 // and every refusal offers a better alternative. Re-run whenever safety rules change.
 const { checkSetupText, hasDangerSign } = await import(new URL("../lib/safety.ts", import.meta.url).href);
+const { checkCoachMessage } = await import(new URL("../lib/coachSafety.ts", import.meta.url).href);
 const TOPICS = ["relationships", "stress", "friends", "online-safety", "consent", "body"];
 
 // [message, kind]: "danger" must show the help offer; "refuse" must say no AND offer a topic.
@@ -52,13 +54,17 @@ for (const [text, kind] of MESSAGES) {
     dangerTotal++;
     const inSetup = checkSetupText(text).kind === "crisis";
     const inReflection = hasDangerSign(text);
-    const ok = inSetup && inReflection;
+    const inCoach = checkCoachMessage(text).kind === "crisis";
+    const ok = inSetup && inReflection && inCoach;
     if (ok) dangerOk++;
-    console.log(`${ok ? "PASS" : "FAIL"}  danger   setup:${inSetup ? "offer" : "MISSED"} reflection:${inReflection ? "offer" : "MISSED"}  ${text}`);
+    console.log(`${ok ? "PASS" : "FAIL"}  danger   setup:${inSetup ? "offer" : "MISSED"} reflection:${inReflection ? "offer" : "MISSED"} coach:${inCoach ? "offer" : "MISSED"}  ${text}`);
   } else {
     refuseTotal++;
     const r = checkSetupText(text);
-    const ok = r.kind === "refuse" && TOPICS.includes(r.offer) && r.offerText.length > 0 && r.message.length > 0;
+    const c = checkCoachMessage(text);
+    const ok =
+      r.kind === "refuse" && TOPICS.includes(r.offer) && r.offerText.length > 0 && r.message.length > 0 &&
+      c.kind === "refuse" && TOPICS.includes(c.offer) && c.offerText.length > 0;
     if (ok) refuseOk++;
     console.log(`${ok ? "PASS" : "FAIL"}  refuse   ${ok ? "says no + offers " + r.offer : "got " + r.kind}  ${text}`);
   }

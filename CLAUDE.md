@@ -133,7 +133,7 @@ Aayushi's reference design (25 Oct 2026) is a warm, illustrated parenting app: a
 - Never store crisis details, only that help was shown.
 
 **The Talk Card**
-- AI fills a **fixed card** from a hand-written base card. No open chat in this MVP.
+- AI fills a **fixed card** from a hand-written base card. (Open questions go to the AI Coach, built 28 Oct 2026: `app/coach`, `app/api/coach`, safety in `lib/coachSafety.ts`, tested in `tests/coach.test.mjs` and the 30-message test.)
 - Parts: why now · first line · **10 gentle questions** (28 Oct 2026, was two) · 3 say / 3 avoid · "if they react" (quiet, upset, disagrees, doesn't want to talk). The "doesn't want to talk" line accepts the no without guilt, promises not to push, and leaves one easy door open (later, a walk, a text).
 - The **safety promise** ("You won't be in trouble for telling me") and the escalation signs appear on every card, whatever the AI writes.
 - Ends with **"Plan this talk"** or **"Not now"**. There is **no save button**.
