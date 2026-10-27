@@ -9,6 +9,7 @@ import { track } from "@/lib/events";
 import { loadProfile } from "@/lib/profile";
 import { BLOCKERS, REPAIR_LINE, SOFTER_RESTART, type BlockerId } from "@/lib/recovery";
 import { updateReflection } from "@/lib/reflections";
+import { finishJourney } from "@/lib/journeyLog";
 import { addOpenTopic, loadPlan, type Plan } from "@/lib/talks";
 import { TOPICS } from "@/lib/topics";
 
@@ -51,8 +52,15 @@ export default function RecoverView({ planId, why, picked }: { planId: string; w
     track("recovery_chosen", { topic: plan!.topic, plan_id: planId, reason: id });
   }
 
-  function notNow() {
+  // Keep it open: the topic stays in the 14-day journey (back to step 1, Prepare).
+  function keepOpen() {
     addOpenTopic(plan!.topic);
+    router.push("/home");
+  }
+
+  // Not now: set the topic aside. Its journey ends (not completed); it can be started fresh any time.
+  function notNow() {
+    finishJourney(plan!.topic, false, false);
     router.push("/home");
   }
 
@@ -124,8 +132,11 @@ export default function RecoverView({ planId, why, picked }: { planId: string; w
             <Link href={planAgainHref} className="btn-primary btn-block">
               Plan again
             </Link>
+            <button className="btn-secondary btn-block" onClick={keepOpen} style={{ marginTop: 10 }}>
+              Keep it open
+            </button>
             <button className="btn-link" onClick={notNow}>
-              Not now, keep it open
+              Not now
             </button>
           </div>
         )}
