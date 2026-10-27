@@ -60,6 +60,34 @@ Aayushi's brainstorm of the app flow is in `docs/brainstorm-app-flow.webp` (14 s
 | AI Coach | **Build the open chat** (brainstorm screen 9; was v2 in the docs). Every message in and out goes through the safety checks; the 30-message test is extended to it |
 | Kept from earlier decisions | No push notifications (calendar + in-app reminders). Help shows public helplines only: the counsellor/doctor network stays cut (Step 3) |
 
+## Simplified flow decisions (28 Oct 2026, these WIN over everything above)
+
+Aayushi's simplified wireframe (10 screens + Emergency help) replaces the 14-screen brainstorm as the reference for **flow and screens**. The look stays as in Visual design.
+
+| # | Screen | Decision |
+| --- | --- | --- |
+| 1 | Welcome | Logo, tagline **"Better conversations. Brighter tomorrows."**, line "Guiding parents to build stronger bonds, one conversation at a time", parent-and-teen illustration (mother/father with daughter/son) |
+| 2 | About you | "Hey there! You're not just a username, we want to get to know you!" · Mother / Father / Guardian. **No nickname step**: Home greets "Hello Mumma" / "Hello Papa" from the role |
+| 3 | About your teen | Age band + gender (Girl / Boy / Prefer not to say) on **one screen** |
+| 4 | Confidence + topic | Confidence 1–5, then pick a topic or "Skip, I'll choose later". **The free-text "what do you want to talk about" box is removed** |
+| 5 | Home | "Hello Mumma/Papa", topic carousel, active 14-day journey card, "Choose topic from library" |
+| 6 | Topic flashcards | The Talk Card split into **swipeable flashcards**: how to begin (first line) → common teen questions → say / don't say → how your child may react. Safety promise on every card |
+| 7 | AI Coach | Parent describes a problem, gets calm guidance; risk leads to Emergency help. Real Gemini, safety checks on every message |
+| 8 | Plan the talk | When, time, setting, reminder, app's suggested best time |
+| 9 | Reflection | What did you say · what did your child say · who spoke more · if it didn't go well, what got in the way → Save. Stays on the phone |
+| 10 | Progress | Topics started vs completed, 14-day journey, confidence over time. Lives under the Journey tab |
+| + | Emergency help | Its own tab. Public helplines + when to talk to a professional (no counsellor network) |
+
+| Question | Decision |
+| --- | --- |
+| Navigation | **Bottom tab bar: Topics · AI Coach · Journey · Emergency help · Profile** |
+| Age bands | **12–14 / 15–16 / 17–19** |
+| Topics | **Back to the docs' 6** (relationships, stress, friends, online safety, consent, body). Study & future and Screen time come out |
+| Reminders | **In-app only.** No push notifications, no "Add to calendar" |
+| Language / comfort | Not asked in setup. Hinglish by default; both changeable in Profile |
+| Streak | Shown as **"Day 5 of 14"**, never a streak counter (no-streaks rule stands) |
+| Metric | **Completed Conversation Rate = topics with a reflection saved within 14 days ÷ topics started.** Replaces the Start/Done timing, 24-hour and 3-day follow-up rule in "The metric" below |
+
 ## Visual design
 
 Aayushi's reference design (25 Oct 2026) is a warm, illustrated parenting app: a peach welcome screen with a big serif headline, a teal button and a flat illustration filling the bottom; a cream home screen with a greeting, rounded illustrated cards and serif section titles.
