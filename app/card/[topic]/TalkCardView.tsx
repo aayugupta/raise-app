@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { baseTalkCard, getBaseCard, SAFETY_PROMISE, type Language, type TalkCard } from "@/lib/cards";
+import { baseTalkCard, cardCacheKey, getBaseCard, SAFETY_PROMISE, type Language, type TalkCard } from "@/lib/cards";
 import type { Family } from "@/lib/cardPrompt";
 import { loadProfile } from "@/lib/profile";
 import { addOpenTopic } from "@/lib/talks";
@@ -42,11 +42,6 @@ function requestCard(key: string, topic: TopicId, family: Family) {
   return request;
 }
 
-// Personalised cards are remembered on this phone, so reopening a card doesn't call the AI again.
-function cacheKey(topic: TopicId, f: Family, checkedOn: string) {
-  return `raise.card.${topic}.${f.role}.${f.ageBand}.${f.teenGender}.${f.language}.${f.comfort}.${checkedOn}`;
-}
-
 export default function TalkCardView({ topic }: { topic: TopicId }) {
   const router = useRouter();
   const base = getBaseCard(topic);
@@ -69,7 +64,7 @@ export default function TalkCardView({ topic }: { topic: TopicId }) {
     };
     const showBase = () => setLoaded({ source: "base", card: baseTalkCard(base, family.language), language: family.language });
 
-    const key = cacheKey(topic, family, base.checkedOn);
+    const key = cardCacheKey(topic, family, base.checkedOn);
     try {
       const cached = localStorage.getItem(key);
       if (cached) {

@@ -62,6 +62,12 @@ h3 {
   box-shadow: 0 2px 0 var(--teal-dark);
 }
 
+.btn-primary:disabled {
+  background: #9dbfbc;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
 .btn-primary:focus-visible {
   outline: 3px solid var(--ink);
   outline-offset: 3px;
@@ -159,6 +165,29 @@ h3 {
 
 .option.selected,
 .option:active {
+  border-color: var(--teal);
+  background: #e6f2f0;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  background: var(--card);
+  border: 2px solid #eadfcd;
+  border-radius: 20px;
+  padding: 8px 14px;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.chip.selected {
   border-color: var(--teal);
   background: #e6f2f0;
 }

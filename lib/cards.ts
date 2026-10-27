@@ -40,6 +40,26 @@ export function getBaseCard(id: TopicId): BaseCard {
   return card;
 }
 
+type CacheFamily = Pick<Profile, "role" | "ageBand" | "teenGender" | "language" | "comfort">;
+
+// Personalised cards are remembered on this phone, so reopening a card doesn't call the AI again.
+export function cardCacheKey(topic: TopicId, f: CacheFamily, checkedOn: string) {
+  return `raise.card.${topic}.${f.role}.${f.ageBand}.${f.teenGender}.${f.language}.${f.comfort}.${checkedOn}`;
+}
+
+// The first line the parent last saw for this topic: the personalised one if saved, else the base one.
+export function currentFirstLine(topic: TopicId, profile: Profile | null): string {
+  const base = getBaseCard(topic);
+  if (!profile) return base.firstLine.hinglish;
+  try {
+    const saved = localStorage.getItem(cardCacheKey(topic, profile, base.checkedOn));
+    if (saved) return (JSON.parse(saved) as TalkCard).firstLine;
+  } catch {
+    // Fall through to the base card.
+  }
+  return base.firstLine[profile.language] ?? base.firstLine.hinglish;
+}
+
 // The base card as written, in the parent's language for the first line.
 export function baseTalkCard(base: BaseCard, language: Language): TalkCard {
   return {

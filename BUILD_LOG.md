@@ -4,6 +4,35 @@ What we built, what broke, and how we fixed it. Newest entries at the top.
 
 ---
 
+## 2026-10-27 — Screen 6: Planner
+
+**Built**
+- Planner screen (`app/plan/[topic]`), covering D3 and FR4:
+  1. **Pick a moment:** walk, late evening, cooking or chores, meal, car. Walk and late evening come first and are tagged "Teens' pick".
+  2. **Which day:** today to 6 days ahead. A sensible time is filled in per moment (walk 6:30 pm, late evening 9:30 pm…) and can be changed. If today's time has already passed, it suggests tomorrow.
+  3. **The plan as a sentence:** "On our walk tomorrow at 6:30 pm, I'll start with: '…'", using the same first line the parent just read (the personalised one if there is one).
+  4. **Save my plan:** two taps are enough (moment → save).
+- A plan must be at least 15 minutes away; otherwise the screen says so and Save stays off.
+- Plans are saved on the phone with a timestamp (`lib/talks.ts`), for the metric's "Planned" step. The topic leaves "open topics".
+- **"Your plan is set"** screen, with **Add to Google Calendar** (opens the Calendar app on most Android phones) and **Other calendar app** (a calendar file with a reminder 15 minutes before).
+- **Calendar events never name the topic.** The title is just the moment ("Your walk", "Quiet evening") and the link goes to Raise's Home, not the topic. This replaces the docs' push notification (decision: calendar + in-app).
+
+**Broke**
+- Nothing broke in testing.
+
+**Checked**
+- Mother, Hinglish: card → Plan this talk → walk → tomorrow → plan sentence with the personalised first line → saved. Stored as 6:30 pm India time.
+- Google Calendar link and calendar file: title "Your walk", reminder 15 min before, no mention of the topic (checked automatically).
+- A time 5 minutes from now → "too soon" message, Save off.
+- 375 × 812 and 320 × 640, no sideways scrolling. Build and both safety tests pass.
+
+**Still to do**
+- The in-app reminder belongs on Home (next screen): "Your walk is coming up" plus the way into Talk mode.
+- The calendar link points to `localhost` until the app is deployed; after deployment it will point to the public link.
+- On a real Android phone: check that "Add to Google Calendar" opens the Calendar app.
+
+---
+
 ## 2026-10-27 — AI-personalised Talk Card (Gemini)
 
 **Built**
