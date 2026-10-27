@@ -18,7 +18,15 @@ export type Reflection = {
   createdAt: string;
   followUpDue?: string; // 3 days later (FR8)
   followUpAnswer?: string;
+  gotInTheWay?: string; // "Not yet": what the parent said got in the way (a fixed choice, no free text)
 };
+
+export function updateReflection(planId: string, change: Partial<Reflection>): void {
+  try {
+    const all = loadReflections().map((r) => (r.planId === planId ? { ...r, ...change } : r));
+    localStorage.setItem(KEY, JSON.stringify(all));
+  } catch {}
+}
 
 const KEY = "raise.reflections";
 const FOLLOW_UP_DAYS = 3;

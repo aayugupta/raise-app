@@ -46,18 +46,13 @@ function isSoonEnough(date: Date): boolean {
   return date.getTime() - Date.now() >= MIN_LEAD_MIN * 60_000;
 }
 
-export default function PlannerView({ topic }: { topic: TopicId }) {
+export default function PlannerView({ topic, suggestedMoment }: { topic: TopicId; suggestedMoment?: MomentId }) {
   const router = useRouter();
   const [firstLine, setFirstLine] = useState("");
   const [moment, setMoment] = useState<MomentId | null>(null);
   const [day, setDay] = useState(0);
   const [time, setTime] = useState("18:30");
   const [saved, setSaved] = useState<Plan | null>(null);
-
-  // The first line the parent just read on the card (personalised if it was).
-  useEffect(() => {
-    setFirstLine(currentFirstLine(topic, loadProfile()));
-  }, [topic]);
 
   function chooseMoment(id: MomentId) {
     const m = MOMENTS.find((x) => x.id === id)!;
@@ -66,6 +61,13 @@ export default function PlannerView({ topic }: { topic: TopicId }) {
     // If that time has already gone today, suggest tomorrow.
     if (day === 0 && !isSoonEnough(dateFor(0, m.defaultTime))) setDay(1);
   }
+
+  // The first line the parent just read on the card (personalised if it was),
+  // and the moment Recovery suggested, if any.
+  useEffect(() => {
+    setFirstLine(currentFirstLine(topic, loadProfile()));
+    if (suggestedMoment) chooseMoment(suggestedMoment);
+  }, [topic, suggestedMoment]);
 
   const when = useMemo(() => dateFor(day, time), [day, time]);
   const momentInfo = MOMENTS.find((m) => m.id === moment);

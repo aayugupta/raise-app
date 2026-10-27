@@ -4,6 +4,36 @@ What we built, what broke, and how we fixed it. Newest entries at the top.
 
 ---
 
+## 2026-10-27 — Screen 10: Recovery
+
+**Built**
+- `components/HandOnShoulder.tsx`: a parent's arm around the teen's shoulder, both smiling, from Aayushi's mood pictures.
+- Recovery (`app/recover/[planId]`), covering D5, FR9 and FR10. No "failed" label anywhere.
+  - **After "Not yet":** "That's okay. Let's find an easier way in. Most talks take more than one try. What got in the way?" There are 5 choices, each with its own tip:
+    - The right moment didn't come → try a walk (Plan again opens the Planner with **walk already picked**)
+    - It felt awkward → a lighter way in (start with something easy; a good chat counts too)
+    - My teen wasn't in the mood → a calmer time (late evening already picked)
+    - I didn't feel ready → say the first line out loud once beforehand
+    - Something else → the topic will wait
+  - **After 😣 or "Partly":** "Hard talks happen. It doesn't mean it went wrong. It means you started, and your teen saw you try." It shows **"Your repair line"** in the parent's language ("Us din ki baat ke liye sorry. Kya hum phir se baat kar sakte hain? Is baar pehle tumhari baat sunenge."), worded so it fits mothers, fathers and guardians, plus "A softer restart" (4 short steps).
+  - Both end with **Plan again** or **Not now, keep it open** (back to Home's open topics).
+- `lib/recovery.ts`: the reasons, tips and repair lines. Templates only, no AI.
+- The "what got in the way" choice is saved on the phone with the reflection (a fixed choice, no free text).
+- The Planner can now open with a suggested moment already picked.
+
+**Broke**
+- Nothing broke in testing.
+
+**Checked**
+- Not yet → "The right moment didn't come" → tip → Plan again → Planner with walk picked; reason saved.
+- Repair path in Hinglish → Not now, keep it open → Home shows it under Open topics.
+- 375 × 812 and 320 × 640. Build and all 4 test sets pass.
+
+**For the metric**
+- A replanned talk is a new plan for the same topic. Whether it lands within 14 days of first choosing the topic is worked out when we build the metric counting.
+
+---
+
 ## 2026-10-27 — Screen 9: Reflection
 
 **Built**

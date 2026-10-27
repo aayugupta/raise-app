@@ -1,14 +1,14 @@
-import Link from "next/link";
+import RecoverView from "./RecoverView";
 
-// Placeholder until the Recovery screen is built.
-export default function Recover() {
-  return (
-    <main style={{ padding: "56px 24px", maxWidth: 440, margin: "0 auto", textAlign: "center" }}>
-      <h1 style={{ fontSize: 30 }}>Let's try again</h1>
-      <p style={{ fontSize: 17, lineHeight: 1.45 }}>The recovery path is coming next.</p>
-      <Link href="/home" style={{ color: "var(--teal)", fontWeight: 600 }}>
-        Back to Home
-      </Link>
-    </main>
-  );
+// Screen 10: Recovery (D5, FR9, FR10). ?why=not-yet or ?why=repair
+export default async function Recover({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ planId: string }>;
+  searchParams: Promise<{ why?: string }>;
+}) {
+  const { planId } = await params;
+  const { why } = await searchParams;
+  return <RecoverView planId={planId} why={why === "repair" ? "repair" : "not-yet"} />;
 }
