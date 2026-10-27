@@ -9,6 +9,8 @@ const cases = [
   ["talk done with on_time accepted", { anonId: ID, event: "talk_done", fields: { topic: "body", plan_id: ID, on_time: true } }, true],
   ["unplanned talk logged accepted", { anonId: ID, event: "talk_logged", fields: { topic: "friends", plan_id: ID, moment: "car", when: "yesterday" } }, true],
   ["unplanned talk with a free-text place refused", { anonId: ID, event: "talk_logged", fields: { topic: "friends", plan_id: ID, moment: "at grandma's house", when: "today" } }, false],
+  ["confidence 4 after a talk accepted", { anonId: ID, event: "confidence_rated", fields: { value: "4", when: "after_talk" } }, true],
+  ["confidence out of range refused", { anonId: ID, event: "confidence_rated", fields: { value: "9", when: "setup" } }, false],
   ["help shown (no detail) accepted", { anonId: ID, event: "help_shown", fields: { from: "reflection" } }, true],
   ["nickname refused", { anonId: ID, event: "setup_completed", fields: { role: "mother", nickname: "Meera" } }, false],
   ["reflection notes refused", { anonId: ID, event: "reflection_saved", fields: { topic: "stress", plan_id: ID, happened: "yes", learned: "She worries about maths" } }, false],

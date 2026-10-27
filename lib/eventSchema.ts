@@ -31,6 +31,8 @@ export const EVENTS: Record<string, Record<string, FieldRule>> = {
   },
   follow_up_answered: { topic: TOPIC, plan_id: PLAN_ID, matched: BOOL, said_more: ["yes", "little", "not-yet"] },
   recovery_chosen: { topic: TOPIC, plan_id: PLAN_ID, reason: ["moment", "awkward", "mood", "ready", "other", "repair"] },
+  // Parent confidence 1–5 (survey Q14): at setup, and after talks. Step 6 leading indicator.
+  confidence_rated: { value: ["1", "2", "3", "4", "5"], when: ["setup", "after_talk"] },
   // Only THAT help was shown, and where. Never what the crisis was.
   help_shown: { from: ["setup", "reflection", "help_page"] },
 };

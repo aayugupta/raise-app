@@ -4,6 +4,35 @@ What we built, what broke, and how we fixed it. Newest entries at the top.
 
 ---
 
+## 2026-10-27 — Progress + confidence before → after (brainstorm screen 13)
+
+**Built**
+- **Confidence**, using the parent survey's exact question (Q14), so it compares with the survey baseline (2.8 / 5 for parents putting a talk off):
+  - **Before:** a new Setup question (now 8): "How confident do you feel about starting a hard talk with your child?" 1 Not at all … 5 Very.
+  - **After:** an optional question at the end of each reflection: "How confident do you feel about your next talk?"
+  - Parents who did setup before this change get a one-tap prompt on Progress.
+  - `lib/confidence.ts` saves ratings on the phone; only the number goes out (new event `confidence_rated`: value 1–5, setup or after_talk).
+  - `components/ConfidenceScale.tsx`: the 1–5 buttons, shared by Setup, Reflection and Progress.
+- **Progress screen** ("Your journey"):
+  - A ring with **talks done / total** (done = reflected and happened; total adds in-progress journeys), plus a legend.
+  - **Your confidence: Before x/5 → Now y/5**. Rising: "Up 2 since you started. Every talk makes the next one easier." Same or lower: "Confidence goes up and down. Every talk still counts." (never a judgement).
+  - **Your talks:** newest first, with topic, date, how the teen responded (emoji), "Your teen talked more 💛", and what you learned.
+  - "Only you can see this. It stays on your phone." No streaks, no scores.
+- `supabase/schema.sql`: new view **confidence_change**: average before, average after, average change, parents more confident. That's the Step 6 number.
+
+**Broke**
+- With no talks yet, the progress ring showed a stray teal dot (the rounded end of a zero-length bar).
+
+**Fix**
+- The ring draws nothing when no talks are done.
+
+**Checked**
+- Empty Progress → tapped "2" → Before 2/5, Now "–".
+- Reflected on a talk with "4" → Progress: 1/2 talks, **2/5 → 4/5 "Up 2"**, the talk listed with 😊 and the note. Stored on the phone: setup 2, after_talk 4.
+- Setup shows the question as 7 of 8. 320 px fits. `npm test` 9/9 (events test now covers confidence, refusing 9). Build passes.
+
+---
+
 ## 2026-10-27 — Bottom tab bar + new Home (brainstorm screen 3)
 
 **Built**

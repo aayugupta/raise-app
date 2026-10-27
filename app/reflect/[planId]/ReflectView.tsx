@@ -3,7 +3,9 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import ConfidenceScale from "@/components/ConfidenceScale";
 import HelpPill from "@/components/HelpPill";
+import { CONFIDENCE_AFTER_QUESTION, recordConfidence } from "@/lib/confidence";
 import { track } from "@/lib/events";
 import { saveReflection, type Feeling, type Happened, type Reflection, type WhoTalked } from "@/lib/reflections";
 import { hasDangerSign } from "@/lib/safety";
@@ -41,6 +43,7 @@ export default function ReflectView({ planId }: { planId: string }) {
   const [whoTalked, setWhoTalked] = useState<WhoTalked | null>(null);
   const [learned, setLearned] = useState("");
   const [feeling, setFeeling] = useState<Feeling | null>(null);
+  const [afterConfidence, setAfterConfidence] = useState<number | null>(null);
   const [helpOffer, setHelpOffer] = useState(false);
   const [saved, setSaved] = useState<Reflection | null>(null);
 
@@ -97,6 +100,7 @@ export default function ReflectView({ planId }: { planId: string }) {
       helpOffered,
     });
     updatePlan(planId, { reflectedAt: r.createdAt });
+    if (afterConfidence) recordConfidence(afterConfidence, "after_talk");
     // The fixed-choice answers only. The written notes never leave the phone.
     track("reflection_saved", {
       topic: plan!.topic,
@@ -235,6 +239,12 @@ export default function ReflectView({ planId }: { planId: string }) {
                 </button>
               ))}
             </div>
+
+            {/* Optional: confidence after the talk (survey Q14), for Progress and the Step 6 metric. */}
+            <h2 className="section-title">
+              {CONFIDENCE_AFTER_QUESTION} <span style={{ fontFamily: "var(--font-body)", fontSize: 14, color: "var(--muted)" }}>(optional)</span>
+            </h2>
+            <ConfidenceScale value={afterConfidence} onChoose={setAfterConfidence} />
           </>
         )}
 

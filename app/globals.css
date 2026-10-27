@@ -169,6 +169,125 @@ h3 {
   background: #e6f2f0;
 }
 
+/* Confidence 1–5 */
+.confidence-scale {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+}
+
+.confidence-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  background: var(--card);
+  border: 2px solid #eadfcd;
+  border-radius: 14px;
+  padding: 10px 2px;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.confidence-step.selected {
+  border-color: var(--teal);
+  background: #e6f2f0;
+}
+
+.confidence-number {
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 24px;
+  color: var(--ink);
+}
+
+.confidence-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+  line-height: 1.2;
+  text-align: center;
+}
+
+/* Progress */
+.progress-summary {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  font-size: 16px;
+  color: var(--ink);
+}
+
+.progress-ring {
+  position: relative;
+  width: 88px;
+  height: 88px;
+  flex-shrink: 0;
+}
+
+.progress-ring-label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.1;
+}
+
+.progress-ring-label strong {
+  font-family: var(--font-serif), Georgia, serif;
+  font-weight: 400;
+  font-size: 24px;
+  color: var(--ink);
+}
+
+.progress-ring-label span {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.legend-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 6px;
+}
+
+.confidence-compare {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.confidence-box {
+  flex: 1;
+  background: var(--cream);
+  border-radius: 14px;
+  padding: 12px;
+  text-align: center;
+}
+
+.confidence-box.now {
+  background: #e6f2f0;
+}
+
+.confidence-value {
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 32px;
+  color: var(--ink);
+}
+
+.talk-entry {
+  display: flex;
+  gap: 12px;
+  background: var(--card);
+  border: 2px solid #eadfcd;
+  border-radius: var(--radius);
+  padding: 12px;
+}
+
 /* Bottom tab bar (on the 5 main screens) */
 .bottom-nav {
   position: fixed;

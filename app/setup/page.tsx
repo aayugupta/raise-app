@@ -4,6 +4,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import FamilySofa from "@/components/FamilySofa";
 import HelpPill from "@/components/HelpPill";
+import ConfidenceScale from "@/components/ConfidenceScale";
+import { CONFIDENCE_QUESTION, recordConfidence } from "@/lib/confidence";
 import { track } from "@/lib/events";
 import { saveProfile, type Profile } from "@/lib/profile";
 import { checkSetupText, HELP_LINES, type TextCheck } from "@/lib/safety";
@@ -18,6 +20,7 @@ type Answers = Partial<Pick<Profile, ChoiceKey>>;
 type Step =
   | { kind: "nickname"; question: string; why: string }
   | { kind: "choice"; key: ChoiceKey; question: string; why: string; options: { value: string; label: string }[] }
+  | { kind: "confidence"; question: string; why: string }
   | { kind: "wish"; question: string; why: string };
 
 const STEPS: Step[] = [
@@ -81,6 +84,11 @@ const STEPS: Step[] = [
     ],
   },
   {
+    kind: "confidence",
+    question: CONFIDENCE_QUESTION,
+    why: "There's no right answer. We'll ask again after your talks, so you can see how it changes.",
+  },
+  {
     kind: "wish",
     question: "Is there something you'd like to talk about with your teen?",
     why: "It helps us suggest where to start. It stays on your phone.",
@@ -93,6 +101,7 @@ export default function Setup() {
   const [nickname, setNickname] = useState("");
   const [answers, setAnswers] = useState<Answers>({});
   const [wish, setWish] = useState("");
+  const [confidence, setConfidence] = useState<number | null>(null);
   const [check, setCheck] = useState<Exclude<TextCheck, { kind: "ok" }> | null>(null);
 
   const step = STEPS[stepIndex];
@@ -120,6 +129,7 @@ export default function Setup() {
       suggestedTopic,
       createdAt: new Date().toISOString(),
     });
+    if (confidence) recordConfidence(confidence, "setup");
     // Tapped answers only: never the nickname or what the parent typed.
     track("setup_completed", {
       role: answers.role ?? "guardian",
@@ -198,6 +208,16 @@ export default function Setup() {
                   </button>
                 ))}
               </div>
+            )}
+
+            {step.kind === "confidence" && (
+              <ConfidenceScale
+                value={confidence}
+                onChoose={(v) => {
+                  setConfidence(v);
+                  setStepIndex(stepIndex + 1);
+                }}
+              />
             )}
 
             {step.kind === "wish" && (

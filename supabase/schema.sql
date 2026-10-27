@@ -117,5 +117,29 @@ select count(*)                                       as topics_started,
        count(*) filter (where completed_unplanned and not completed_planned) as completed_unplanned_only
 from public.topic_outcomes;
 
+-- ---------------------------------------------------------------------------
+-- View 4: confidence before → after (Step 6 leading indicator; parent survey Q14, 1–5).
+-- Before = each parent's first rating at setup. After = their latest rating after a talk.
+-- Compare with the survey baseline: 2.8 / 5 for parents who were putting a talk off.
+-- ---------------------------------------------------------------------------
+create or replace view public.confidence_change with (security_invoker = true) as
+with ratings as (
+  select anon_id, created_at, props->>'when' as rated_when, (props->>'value')::int as value
+  from public.events where event = 'confidence_rated'
+),
+before as (
+  select distinct on (anon_id) anon_id, value from ratings where rated_when = 'setup' order by anon_id, created_at
+),
+after as (
+  select distinct on (anon_id) anon_id, value from ratings where rated_when = 'after_talk' order by anon_id, created_at desc
+)
+select count(*)                                   as parents_with_before_and_after,
+       round(avg(b.value), 2)                     as average_before,
+       round(avg(a.value), 2)                     as average_after,
+       round(avg(a.value - b.value), 2)           as average_change,
+       count(*) filter (where a.value > b.value)  as parents_more_confident
+from before b
+join after a on a.anon_id = b.anon_id;
+
 -- Views are for the Supabase dashboard only, never the browser.
-revoke all on public.funnel, public.topic_outcomes, public.completion_rate from anon, authenticated;
+revoke all on public.funnel, public.topic_outcomes, public.completion_rate, public.confidence_change from anon, authenticated;
