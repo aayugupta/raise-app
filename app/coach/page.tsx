@@ -4,17 +4,21 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import BottomNav from "@/components/BottomNav";
-import { checkCoachMessage, COACH_FALLBACK, COACH_MAX_CHARS } from "@/lib/coachSafety";
+import { currentFirstLine } from "@/lib/cards";
+import { checkCoachMessage, COACH_BUSY, COACH_MAX_CHARS } from "@/lib/coachSafety";
 import { clearCoachChat, loadCoachChat, saveCoachChat, turnsForAi, type CoachEntry } from "@/lib/coachChat";
 import { track } from "@/lib/events";
+import { markPractised, startJourney } from "@/lib/journeyLog";
 import { loadProfile, type Profile } from "@/lib/profile";
 import { HELP_LINES } from "@/lib/safety";
-import { TOPICS } from "@/lib/topics";
+import { TOPICS, type TopicId } from "@/lib/topics";
 
 // Screen 7: AI Coach (Aayushi's simplified flow, 28 Oct 2026). Parents share how a talk went,
 // ask doubts, or bring any topic the flashcards don't cover. Every message is checked before it
 // goes to the AI and every reply is checked before it's shown. Serious concerns get a dismissible
 // help offer; the parent decides. The chat stays on this phone.
+// Opened with ?topic=… it is step 2 of that topic's journey (Practise): ask doubts about the topic,
+// or role-play, where the AI plays the child so the parent can try their first line.
 
 const STARTERS = [
   "My talk didn't go well. What can I say now?",
@@ -22,6 +26,8 @@ const STARTERS = [
   "How do I bring up something that isn't in the topics?",
   "How do I start talking more with my child?",
 ];
+
+const TOPIC_STARTERS = ["How do I start this topic?", "What if my child gets upset?", "What if my child doesn't want to talk?"];
 
 const now = () => new Date().toISOString();
 
@@ -32,6 +38,9 @@ export default function Coach() {
   const [draft, setDraft] = useState("");
   const [waiting, setWaiting] = useState(false);
   const [confirmClear, setConfirmClear] = useState(false);
+  const [topic, setTopic] = useState<TopicId | null>(null);
+  const [roleplay, setRoleplay] = useState(false);
+  const [practised, setPractised] = useState(false);
   const endRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -42,7 +51,15 @@ export default function Coach() {
     }
     setProfile(p);
     setChat(loadCoachChat());
+    const t = TOPICS.find((x) => x.id === new URLSearchParams(window.location.search).get("topic"))?.id ?? null;
+    setTopic(t);
+    if (t) startJourney(t); // no-op if this topic's journey is already running
   }, [router]);
+
+  const topicMeta = topic ? TOPICS.find((t) => t.id === topic)! : null;
+  // In a role-play only that topic's role-play messages show; otherwise the normal chat.
+  // Help offers and refusals always show, whichever mode they came from.
+  const visible = chat.filter((e) => !("text" in e) || (roleplay ? e.roleplay && e.topic === topic : !e.roleplay));
 
   useEffect(() => {
     endRef.current?.scrollIntoView({ block: "end" });
@@ -57,6 +74,8 @@ export default function Coach() {
     const message = text.trim();
     if (!message || waiting || !profile) return;
     setDraft("");
+    // Role-play turns are kept apart, so the normal chat never mixes with the practice.
+    const tag = roleplay && topic ? { roleplay: true, topic } : {};
 
     // Checked on the phone first: a danger sign or a refused request never leaves the phone.
     const check = checkCoachMessage(message);
@@ -69,21 +88,25 @@ export default function Coach() {
       track("coach_message", { result: "refused", concern: false });
       return update([
         ...chat,
-        { role: "parent", text: message, at: now() },
+        { role: "parent", text: message, at: now(), ...tag },
         { role: "coach", refusal: check.message, offer: check.offer, offerText: check.offerText, at: now() },
       ]);
     }
 
-    const withMessage: CoachEntry[] = [...chat, { role: "parent", text: message, at: now() }];
+    const withMessage: CoachEntry[] = [...chat, { role: "parent", text: message, at: now(), ...tag }];
     update(withMessage);
     setWaiting(true);
     const family = { role: profile.role, ageBand: profile.ageBand, teenGender: profile.teenGender, language: profile.language, comfort: profile.comfort };
-    let data: { kind?: string; reply?: string; concern?: string; message?: string; offer?: string; offerText?: string } | null = null;
+    let data: { kind?: string; reply?: string; tip?: string; concern?: string; message?: string; offer?: string; offerText?: string } | null = null;
     try {
       const res = await fetch("/api/coach", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ family, messages: turnsForAi(withMessage) }),
+        body: JSON.stringify({
+          family,
+          messages: turnsForAi(withMessage, roleplay && topic ? topic : undefined),
+          ...(topic ? { topic, mode: roleplay ? "roleplay" : "coach" } : {}),
+        }),
         signal: AbortSignal.timeout(15000),
       });
       data = res.ok ? await res.json() : null;
@@ -106,17 +129,22 @@ export default function Coach() {
     if (data?.kind === "ai" && data.reply) {
       const serious = data.concern === "serious";
       track("coach_message", { result: "ai", concern: serious });
-      const reply: CoachEntry = { role: "coach", text: data.reply, at: now() };
+      // Step 2 of the topic's journey is done once the parent has practised with the coach.
+      if (topic) {
+        markPractised(topic, false);
+        setPractised(true);
+      }
+      const reply: CoachEntry = { role: "coach", text: data.reply, at: now(), ...tag, ...(data.tip ? { tip: data.tip } : {}) };
       if (!serious) return update([...withMessage, reply]);
       track("help_shown", { from: "coach" });
       return update([...withMessage, reply, { role: "coach", help: true, at: now() }]);
     }
     track("coach_message", { result: "fallback", concern: false });
-    update([...withMessage, { role: "coach", text: data?.reply || COACH_FALLBACK, fallback: true, at: now() }]);
+    update([...withMessage, { role: "coach", text: data?.reply || COACH_BUSY, fallback: true, at: now() }]);
   }
 
-  function dismissHelp(index: number) {
-    update(chat.map((e, i) => (i === index && "help" in e ? { ...e, dismissed: true } : e)));
+  function dismissHelp(entry: CoachEntry) {
+    update(chat.map((e) => (e === entry && "help" in e ? { ...e, dismissed: true } : e)));
   }
 
   function clearChat() {
@@ -138,7 +166,53 @@ export default function Coach() {
           🔒 What you type here goes to Google's Gemini AI to write a reply. Please don't use names. Your chat stays on this phone.
         </p>
 
-        {chat.length === 0 && (
+        {/* Step 2 of a topic's journey: practise it */}
+        {topicMeta && (
+          <section className="practice-card">
+            <div className="card-label">Step 2 of 4 · Practise</div>
+            <div style={{ fontWeight: 700, color: "var(--ink)", fontSize: 17, margin: "2px 0 10px" }}>
+              {topicMeta.icon} {topicMeta.name}
+            </div>
+            <div className="practice-modes" role="tablist" aria-label="How to practise">
+              <button role="tab" aria-selected={!roleplay} className={!roleplay ? "on" : ""} onClick={() => setRoleplay(false)}>
+                Ask a doubt
+              </button>
+              <button role="tab" aria-selected={roleplay} className={roleplay ? "on" : ""} onClick={() => setRoleplay(true)}>
+                Role-play
+              </button>
+            </div>
+            <p style={{ fontSize: 14, color: "var(--muted)", margin: "8px 0 0" }}>
+              {roleplay
+                ? "The AI plays your child. Say your first line and see how it goes. You'll get a short tip after each reply."
+                : "Ask anything about this talk: how to start, what to say, what if it goes wrong."}
+            </p>
+            <Link href={`/plan/${topicMeta.id}`} className={`btn-block ${practised ? "btn-primary" : "btn-secondary"}`} style={{ marginTop: 12, textAlign: "center", textDecoration: "none" }}>
+              {practised ? "Next: plan a moment →" : "Skip, plan a moment"}
+            </Link>
+          </section>
+        )}
+
+        {topicMeta && roleplay && visible.length === 0 && (
+          <div style={{ display: "grid", gap: 8, marginTop: 16 }}>
+            <div className="card-label">Start the role-play</div>
+            <button className="option" style={{ fontSize: 16, padding: "12px 14px" }} onClick={() => setDraft(currentFirstLine(topicMeta.id, profile))}>
+              Try your first line
+            </button>
+          </div>
+        )}
+
+        {topicMeta && !roleplay && visible.length === 0 && (
+          <div style={{ display: "grid", gap: 8, marginTop: 16 }}>
+            <div className="card-label">Try asking</div>
+            {TOPIC_STARTERS.map((s) => (
+              <button key={s} className="option" style={{ fontSize: 16, padding: "12px 14px" }} onClick={() => send(s)}>
+                {s}
+              </button>
+            ))}
+          </div>
+        )}
+
+        {!topicMeta && visible.length === 0 && (
           <div style={{ display: "grid", gap: 8, marginTop: 16 }}>
             <div className="card-label">Try asking</div>
             {STARTERS.map((s) => (
@@ -150,8 +224,8 @@ export default function Coach() {
         )}
 
         <div className="coach-chat" aria-live="polite">
-          {chat.map((e, i) => (
-            <Entry key={i} entry={e} onDismiss={() => dismissHelp(i)} />
+          {visible.map((e, i) => (
+            <Entry key={i} entry={e} onDismiss={() => dismissHelp(e)} />
           ))}
           {waiting && (
             <div className="bubble coach" aria-label="The coach is writing">
@@ -273,6 +347,19 @@ function Entry({ entry, onDismiss }: { entry: CoachEntry; onDismiss: () => void 
           {topic.icon} Open {topic.short} flashcards
         </Link>
       </div>
+    );
+  }
+  if (entry.roleplay) {
+    return (
+      <>
+        <div className="bubble coach child">
+          <span className="card-label" style={{ display: "block", marginBottom: 2 }}>
+            Your child (practice)
+          </span>
+          {entry.text}
+        </div>
+        {entry.tip && <div className="bubble coach tip">💡 {entry.tip}</div>}
+      </>
     );
   }
   return <div className={`bubble coach${entry.fallback ? " fallback" : ""}`}>{entry.text}</div>;

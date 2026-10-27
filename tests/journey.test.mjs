@@ -15,22 +15,29 @@ const check = (name, ok) => {
   console.log(`${ok ? "PASS" : "FAIL"}  ${name}`);
 };
 
+// Aayushi's 4 steps (28 Oct 2026): 1 Learn → 2 Practise → 3 Plan → 4 Reflect.
 const j = activeJourneys(
   [plan("a", "stress", -20), plan("b", "online-safety", 26), plan("c", "friends", 0.3), plan("d", "body", -50, { reflectedAt: iso(now - 40 * H) })],
   ["consent", "online-safety"],
-  now
+  now,
+  { relationships: iso(now - 24 * H) },
+  { consent: { learned: true, practised: false }, relationships: { learned: false, practised: false } }
 );
 const byTopic = Object.fromEntries(j.map((x) => [x.topic, x]));
 
-check("past, not reflected → step 3 Reflect", byTopic.stress?.step === 3 && byTopic.stress.href === "/reflect/a");
-check("planned for tomorrow → step 2 Talk", byTopic["online-safety"]?.step === 2);
-check("happening now → step 2 with Talk mode", byTopic.friends?.step === 2 && byTopic.friends.href === "/talk/c");
+check("planned, time passed → step 4 Reflect", byTopic.stress?.step === 4 && byTopic.stress.href === "/reflect/a");
+check("planned for tomorrow → step 4, see your first line", byTopic["online-safety"]?.step === 4 && byTopic["online-safety"].href === "/card/online-safety");
+check("happening now → step 4 with Talk mode", byTopic.friends?.step === 4 && byTopic.friends.href === "/talk/c");
+check("started from setup, flashcards not opened → step 1 Learn", byTopic.relationships?.step === 1 && byTopic.relationships.href === "/card/relationships");
+check("flashcards read, not practised → step 2 Practise with the coach", byTopic.consent?.step === 2 && byTopic.consent.href === "/coach?topic=consent");
+check("step 2 can be skipped straight to planning", byTopic.consent?.skipHref === "/plan/consent?skipPractice=1");
+const practised = activeJourneys([], ["consent"], now, {}, { consent: { learned: true, practised: true } });
+check("practised (or skipped) → step 3 Plan", practised[0]?.step === 3 && practised[0].href === "/plan/consent");
 check("planned talks can be reflected on any time", byTopic["online-safety"]?.reflectHref === "/reflect/b" && byTopic.friends?.reflectHref === "/reflect/c");
-check("not-yet-planned topics have no reflect link", !byTopic.consent?.reflectHref);
-check("opened, not planned → step 1 Prepare", byTopic.consent?.step === 1 && byTopic.consent.href === "/card/consent");
-check("an open topic that's already planned isn't shown twice", j.filter((x) => x.topic === "online-safety").length === 1);
+check("unplanned steps can log a talk that already happened", byTopic.consent?.reflectHref === "/log?topic=consent");
+check("a planned topic isn't shown twice", j.filter((x) => x.topic === "online-safety").length === 1);
 check("reflected talks are finished and not shown", !byTopic.body);
-check("most urgent first (Reflect before Talk before Prepare)", j[0].step === 3 && j[j.length - 1].step === 1);
+check("furthest along first (Reflect … Learn)", j[0].step === 4 && j[j.length - 1].step === 1);
 check("nothing active → empty", activeJourneys([], [], now).length === 0);
 
 // 14-day journey: "Day X of 14", counted from when the topic started. Never past 14 ("no shame").

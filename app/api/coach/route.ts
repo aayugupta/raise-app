@@ -2,8 +2,9 @@
 // writes is logged or stored here. The phone already checked the message; the server checks again,
 // so a crisis or a refused request never reaches the AI, and every AI reply is checked before it's sent back.
 import type { Family } from "@/lib/cardPrompt";
-import { coachInstructions } from "@/lib/coachPrompt";
-import { checkCoachMessage, COACH_FALLBACK, COACH_MAX_CHARS, coachReplyProblems } from "@/lib/coachSafety";
+import { coachInstructions, type Practice } from "@/lib/coachPrompt";
+import { isTopicId } from "@/lib/topics";
+import { checkCoachMessage, COACH_BUSY, COACH_FALLBACK, COACH_MAX_CHARS, coachReplyProblems } from "@/lib/coachSafety";
 
 const MODEL = process.env.GEMINI_MODEL || "gemini-3.5-flash-lite";
 const TIMEOUT_MS = 12000;
@@ -21,7 +22,8 @@ const ALLOWED = {
 type Turn = { role: "parent" | "coach"; text: string };
 
 function fallback(reason: string) {
-  return Response.json({ kind: "fallback", reply: COACH_FALLBACK, reason });
+  // A broken rule gets the "tell me more" reply; a busy or unreachable AI gets "please send again".
+  return Response.json({ kind: "fallback", reply: reason === "broke a rule" || reason === "not json" ? COACH_FALLBACK : COACH_BUSY, reason });
 }
 
 export async function POST(request: Request) {
@@ -45,6 +47,10 @@ export async function POST(request: Request) {
   const check = checkCoachMessage(latest.text);
   if (check.kind !== "ok") return Response.json(check);
 
+  // Step 2 of a topic's journey: practising that topic (questions, or the AI playing the child).
+  const practice: Practice | undefined =
+    typeof body?.topic === "string" && isTopicId(body.topic) ? { topic: body.topic, roleplay: body?.mode === "roleplay" } : undefined;
+
   const key = process.env.GEMINI_API_KEY;
   if (!key) return fallback("no key");
 
@@ -59,7 +65,7 @@ export async function POST(request: Request) {
         headers: { "Content-Type": "application/json", "x-goog-api-key": key },
         signal: AbortSignal.timeout(TIMEOUT_MS - (Date.now() - started)),
         body: JSON.stringify({
-          systemInstruction: { parts: [{ text: coachInstructions(family) }] },
+          systemInstruction: { parts: [{ text: coachInstructions(family, practice) }] },
           contents: turns.map((t) => ({ role: t.role === "parent" ? "user" : "model", parts: [{ text: t.text }] })),
           generationConfig: {
             responseMimeType: "application/json",
@@ -68,14 +74,22 @@ export async function POST(request: Request) {
           },
         }),
       });
-      if (!res.ok) return fallback(`gemini ${res.status}`);
+      if (!res.ok) {
+        // Busy (429 = free-plan speed limit) or a passing server error: wait a moment and try once more.
+        if (attempt === 1 && [429, 500, 503].includes(res.status) && Date.now() - started < RETRY_IF_UNDER_MS) {
+          await new Promise((r) => setTimeout(r, 1200));
+          reason = `gemini ${res.status}`;
+          continue;
+        }
+        return fallback(`gemini ${res.status}`);
+      }
       const data = await res.json();
       text = data?.candidates?.[0]?.content?.parts?.map((p: { text?: string }) => p.text ?? "").join("") ?? "";
     } catch (err) {
       return fallback(err instanceof Error && err.name === "TimeoutError" ? "timeout" : "network");
     }
 
-    let parsed: { reply?: unknown; concern?: unknown };
+    let parsed: { reply?: unknown; tip?: unknown; concern?: unknown };
     try {
       parsed = JSON.parse(text);
     } catch {
@@ -83,9 +97,11 @@ export async function POST(request: Request) {
       continue;
     }
     const reply = typeof parsed.reply === "string" ? parsed.reply.trim() : "";
-    const problems = coachReplyProblems(reply);
+    // In a role-play the coach's tip is checked by the same rules as the child's line.
+    const tip = practice?.roleplay && typeof parsed.tip === "string" ? parsed.tip.trim() : "";
+    const problems = [...coachReplyProblems(reply), ...(tip ? coachReplyProblems(tip).map((p) => `tip: ${p}`) : [])];
     if (problems.length === 0) {
-      return Response.json({ kind: "ai", reply, concern: parsed.concern === "serious" ? "serious" : "none", ms: Date.now() - started });
+      return Response.json({ kind: "ai", reply, ...(tip ? { tip } : {}), concern: parsed.concern === "serious" ? "serious" : "none", ms: Date.now() - started });
     }
     // Only the rule names are logged, never the parent's words or the reply.
     console.warn(`[coach] reply rejected on attempt ${attempt} (${problems.join("; ")})`);

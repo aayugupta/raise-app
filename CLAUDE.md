@@ -89,6 +89,7 @@ Aayushi's simplified wireframe (10 screens + Emergency help) replaces the 14-scr
 | Streak | Shown as **"Day 5 of 14"**, never a streak counter (no-streaks rule stands) |
 | AI Coach privacy | What the parent types in AI Coach **is sent to Google's Gemini** to write a reply. Coach and the Privacy screen say so plainly: "What you type here goes to Google's Gemini AI to write a reply. Don't use names." Reflections still never leave the phone. Coach messages are never sent to Supabase |
 | AI Coach history | **Kept on this phone only**; "Clear my data" deletes it. If a message shows a crisis, the chat keeps only that help was shown, not the details |
+| Topic journey | **4 steps** (Aayushi, 28 Oct 2026): **1 Learn** (open the flashcards) → **2 Practise** with the AI Coach (ask doubts, or role-play where the AI plays the child; encouraged, can be skipped) → **3 Plan** a moment → **4 Reflect** (two taps). A talk that happened completes the topic and fills the Super Parent bar; "Not yet" is logged and the topic goes back to Plan. "Already talked? Tell us how it went" works from any step. Logic in `lib/journey.ts`, step records in `lib/journeyLog.ts` |
 | Metric | **Completed Conversation Rate = topics with a reflection saved within 14 days ÷ topics started.** Replaces the Start/Done timing, 24-hour and 3-day follow-up rule in "The metric" below |
 
 ## Visual design
@@ -136,7 +137,7 @@ Aayushi's reference design (25 Oct 2026) is a warm, illustrated parenting app: a
 - AI fills a **fixed card** from a hand-written base card. (Open questions go to the AI Coach, built 28 Oct 2026: `app/coach`, `app/api/coach`, safety in `lib/coachSafety.ts`, tested in `tests/coach.test.mjs` and the 30-message test.)
 - Parts: why now · first line · **10 gentle questions** (28 Oct 2026, was two) · 3 say / 3 avoid · "if they react" (quiet, upset, disagrees, doesn't want to talk). The "doesn't want to talk" line accepts the no without guilt, promises not to push, and leaves one easy door open (later, a walk, a text).
 - The **safety promise** ("You won't be in trouble for telling me") and the escalation signs appear on every card, whatever the AI writes.
-- Ends with **"Plan this talk"** or **"Not now"**. There is **no save button**.
+- Ends with **"Next: practise with AI Coach"**, "Skip, plan a moment" or **"Not now"** (28 Oct 2026; was "Plan this talk"). There is **no save button**.
 - If the AI fails, is slow, or its output breaks a rule, show the hand-written base card instead.
 
 **What Raise never says** (check every AI output against this)

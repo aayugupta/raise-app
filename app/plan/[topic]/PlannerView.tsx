@@ -8,7 +8,7 @@ import HelpPill from "@/components/HelpPill";
 import WalkTogether from "@/components/WalkTogether";
 import { currentFirstLine } from "@/lib/cards";
 import { track } from "@/lib/events";
-import { startJourney } from "@/lib/journeyLog";
+import { markPractised, startJourney } from "@/lib/journeyLog";
 import { loadProfile } from "@/lib/profile";
 import { MOMENTS, savePlan, type MomentId, type Plan } from "@/lib/talks";
 import type { TopicId } from "@/lib/topics";
@@ -59,7 +59,15 @@ function suggestion(): { moment: MomentId; day: number; time: string } {
   return { moment: "walk", day: 1, time: "18:30" };
 }
 
-export default function PlannerView({ topic, suggestedMoment }: { topic: TopicId; suggestedMoment?: MomentId }) {
+export default function PlannerView({
+  topic,
+  suggestedMoment,
+  skippedPractice = false,
+}: {
+  topic: TopicId;
+  suggestedMoment?: MomentId;
+  skippedPractice?: boolean;
+}) {
   const router = useRouter();
   const [firstLine, setFirstLine] = useState("");
   const [moment, setMoment] = useState<MomentId | null>(null);
@@ -83,7 +91,9 @@ export default function PlannerView({ topic, suggestedMoment }: { topic: TopicId
     setFirstLine(currentFirstLine(topic, loadProfile()));
     setSuggested(suggestion());
     if (suggestedMoment) chooseMoment(suggestedMoment);
-  }, [topic, suggestedMoment]);
+    // "Skip, plan a moment": step 2 (practise) is passed over, never required.
+    if (skippedPractice) markPractised(topic, true);
+  }, [topic, suggestedMoment, skippedPractice]);
 
   const when = useMemo(() => dateFor(day, time), [day, time]);
   const momentInfo = MOMENTS.find((m) => m.id === moment);
@@ -130,7 +140,7 @@ export default function PlannerView({ topic, suggestedMoment }: { topic: TopicId
     <main style={{ minHeight: "100dvh", background: "var(--cream)" }}>
       <div style={{ width: "100%", maxWidth: 480, margin: "0 auto", padding: "16px 16px 0" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <button onClick={() => router.push(`/card/${topic}`)} className="icon-btn" aria-label="Back">
+          <button onClick={() => router.back()} className="icon-btn" aria-label="Back">
             ←
           </button>
           <Link href="/help" className="help-pill">

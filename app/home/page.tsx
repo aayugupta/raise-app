@@ -9,7 +9,7 @@ import { currentFirstLine } from "@/lib/cards";
 import JourneyCard, { whenText } from "@/components/JourneyCard";
 import { activeJourneys } from "@/lib/journey";
 import { greetName, loadProfile, type Profile } from "@/lib/profile";
-import { loadJourneyRecords, openJourneyStarts } from "@/lib/journeyLog";
+import { loadJourneyRecords, openJourneyStarts, openJourneySteps } from "@/lib/journeyLog";
 import { topicsTalkedAbout } from "@/lib/metric";
 import { JOURNEY_DAYS, loadOpenTopics, loadPlans, momentOf, planStage, type Plan } from "@/lib/talks";
 import { TOPICS, type TopicId } from "@/lib/topics";
@@ -49,7 +49,7 @@ export default function Home() {
 
   const nowPlans = [...plans].sort((a, b) => a.when.localeCompare(b.when)).filter((p) => planStage(p, now) === "now" && p.reminder !== false);
   // The "It's time" banner already covers plans happening now, so they're not repeated below.
-  const journeys = activeJourneys(plans, openTopics, now, starts).filter((j) => !nowPlans.some((p) => p.id === j.planId));
+  const journeys = activeJourneys(plans, openTopics, now, starts, openJourneySteps()).filter((j) => !nowPlans.some((p) => p.id === j.planId));
   const activeTopics = new Set(journeys.map((j) => j.topic));
   // Carousel: topics not already in a journey first, so there's always something new to start.
   const carousel = [...TOPICS].sort((a, b) => Number(activeTopics.has(a.id)) - Number(activeTopics.has(b.id)));

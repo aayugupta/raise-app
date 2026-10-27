@@ -59,5 +59,17 @@ const turns = turnsForAi(chat);
 check("the AI sees only real messages and replies", JSON.stringify(turns.map((t) => t.text)) === JSON.stringify(["How do I start?", "Try a walk.", "She went quiet after dinner."]));
 check("a refused request is never sent to the AI", !turns.some((t) => t.text.includes("WhatsApp")));
 
+// Role-play (step 2, Practise): its turns stay apart from the normal chat, per topic.
+const mixed = [
+  ...chat,
+  { role: "parent", text: "Tumhare friends mein kisi ko koi pasand hai?", at, roleplay: true, topic: "relationships" },
+  { role: "coach", text: "Pata nahi... shayad.", tip: "Good, gentle start.", at, roleplay: true, topic: "relationships" },
+  { role: "parent", text: "Stress role-play line", at, roleplay: true, topic: "stress" },
+];
+const rp = turnsForAi(mixed, "relationships");
+check("a role-play sends only its own topic's turns", rp.length === 2 && rp[1].text === "Pata nahi... shayad.");
+check("the coach's tip is never sent back to the AI", !rp.some((t) => t.text.includes("gentle start")));
+check("the normal chat never includes role-play turns", !turnsForAi(mixed).some((t) => t.text.includes("pasand")));
+
 console.log(`\n${pass} of ${total} passed`);
 process.exit(pass === total ? 0 : 1);

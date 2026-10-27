@@ -8,7 +8,7 @@ import HelpPill from "@/components/HelpPill";
 import type { Family } from "@/lib/cardPrompt";
 import { track } from "@/lib/events";
 import { loadProfile } from "@/lib/profile";
-import { startJourney } from "@/lib/journeyLog";
+import { markLearned, startJourney } from "@/lib/journeyLog";
 import { addOpenTopic } from "@/lib/talks";
 import { TOPICS, type TopicId } from "@/lib/topics";
 
@@ -111,6 +111,7 @@ export default function TalkCardView({ topic }: { topic: TopicId }) {
     if (!shownSource) return;
     track("card_viewed", { topic, source: shownSource });
     startJourney(topic);
+    markLearned(topic); // step 1 Learn done
     addOpenTopic(topic);
   }, [shownSource, topic]);
 
@@ -319,14 +320,17 @@ export default function TalkCardView({ topic }: { topic: TopicId }) {
           <p>{base.sources}</p>
         </details>
 
-        {/* The card ends with a plan, never a save button (FR3) */}
+        {/* Step 1 done: next is practising with the AI Coach (step 2), or skip to planning. Never a save button. */}
         <div className="sticky-action">
-          <Link href={`/plan/${topic}`} className="btn-primary btn-block">
-            Plan this talk
+          <Link href={`/coach?topic=${topic}`} className="btn-primary btn-block">
+            Next: practise with AI Coach
           </Link>
-          <button className="btn-link" onClick={notNow} style={{ marginTop: 10 }}>
-            Not now
-          </button>
+          <div className="card-next-links">
+            <Link href={`/plan/${topic}?skipPractice=1`}>Skip, plan a moment</Link>
+            <button className="btn-link" onClick={notNow}>
+              Not now
+            </button>
+          </div>
         </div>
       </div>
     </main>

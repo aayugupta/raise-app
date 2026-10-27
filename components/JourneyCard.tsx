@@ -1,10 +1,10 @@
 import Link from "next/link";
-import type { Journey } from "@/lib/journey";
+import { STEP_NAMES, type Journey } from "@/lib/journey";
 import { JOURNEY_DAYS } from "@/lib/metric";
 import { TOPICS } from "@/lib/topics";
 
 // One active 14-day journey (Home and the Journey tab): "Day 5 of 14", its step
-// (Prepare → Talk → Reflect), and the next action. No streaks, never "overdue".
+// (Learn → Practise → Plan → Reflect), and the next action. No streaks, never "overdue".
 
 export function whenText(iso: string) {
   const d = new Date(iso);
@@ -38,11 +38,11 @@ export default function JourneyCard({ journey, whenLabel }: { journey: Journey; 
             )}
           </span>
           <span style={{ display: "block", fontSize: 14, color: "var(--muted)", marginTop: 2 }}>
-            Step {journey.step} of 3 · {journey.stepName}
+            Step {journey.step} of {STEP_NAMES.length} · {journey.stepName}
             {whenLabel ? ` · ${whenLabel}` : ""}
           </span>
           <span className="journey-steps" aria-hidden="true">
-            {[1, 2, 3].map((s) => (
+            {STEP_NAMES.map((_, i) => i + 1).map((s) => (
               <span key={s} className={s <= journey.step ? "done" : ""} />
             ))}
           </span>
@@ -50,11 +50,14 @@ export default function JourneyCard({ journey, whenLabel }: { journey: Journey; 
         </span>
       </Link>
       {/* Talks don't always happen at the planned time: reflect whenever it did. */}
-      {journey.reflectHref && (
-        <Link href={journey.reflectHref} className="journey-reflect">
-          Already talked? Tell us how it went
+      {journey.skipHref && (
+        <Link href={journey.skipHref} className="journey-reflect" style={{ borderTop: "none", paddingTop: 0, marginTop: 8 }}>
+          Skip practice, plan a moment
         </Link>
       )}
+      <Link href={journey.reflectHref} className="journey-reflect">
+        Already talked? Tell us how it went
+      </Link>
     </div>
   );
 }

@@ -1,6 +1,7 @@
 // The 14-day journeys, kept on this phone (raise.journeys). One record per journey, never deleted,
 // so Progress and the metric can look back. The metric itself is in lib/metric.ts.
 import { track } from "./events";
+import type { StepsDone } from "./journey";
 import { JOURNEY_DAYS, isOpen, withinWindow, type JourneyRecord } from "./metric";
 import type { TopicId } from "./topics";
 
@@ -55,6 +56,34 @@ export function finishJourney(topic: TopicId, happened: boolean, helpOffered: bo
   if (helpOffered) open.helpOffered = true;
   else if (happened && withinWindow(open.startedAt, at)) open.completedAt = at;
   save(records);
+}
+
+// Step 1 Learn: the topic's flashcards were opened.
+export function markLearned(topic: TopicId, now = Date.now()): void {
+  const records = loadJourneyRecords();
+  const open = records.find((r) => r.topic === topic && isOpen(r));
+  if (!open || open.learnedAt) return;
+  open.learnedAt = new Date(now).toISOString();
+  save(records);
+}
+
+// Step 2 Practise: a message to the AI Coach about this topic, or "Skip, plan a moment".
+export function markPractised(topic: TopicId, skipped: boolean, now = Date.now()): void {
+  const records = loadJourneyRecords();
+  const open = records.find((r) => r.topic === topic && isOpen(r));
+  if (!open || open.practisedAt) return;
+  open.practisedAt = new Date(now).toISOString();
+  if (skipped) open.practiceSkipped = true;
+  save(records);
+}
+
+// Which of steps 1–2 each running journey has done, for the journey cards.
+export function openJourneySteps(): StepsDone {
+  return Object.fromEntries(
+    loadJourneyRecords()
+      .filter(isOpen)
+      .map((r) => [r.topic, { learned: Boolean(r.learnedAt), practised: Boolean(r.practisedAt) }])
+  );
 }
 
 // Start dates of the journeys still running, for "Day 5 of 14" on Home.

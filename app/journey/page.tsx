@@ -8,7 +8,7 @@ import HelpPill from "@/components/HelpPill";
 import { CONFIDENCE_QUESTION, confidenceChange, loadConfidence, recordConfidence, type ConfidenceEntry } from "@/lib/confidence";
 import JourneyCard, { whenText } from "@/components/JourneyCard";
 import { activeJourneys, type Journey } from "@/lib/journey";
-import { loadJourneyRecords, openJourneyStarts } from "@/lib/journeyLog";
+import { loadJourneyRecords, openJourneyStarts, openJourneySteps } from "@/lib/journeyLog";
 import { journeyStats, type JourneyStats } from "@/lib/metric";
 import { loadReflections, type Reflection } from "@/lib/reflections";
 import { loadOpenTopics, loadPlans } from "@/lib/talks";
@@ -35,7 +35,7 @@ export default function JourneyScreen() {
         .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
     );
     setStats(journeyStats(loadJourneyRecords()));
-    setActive(activeJourneys(loadPlans(), loadOpenTopics(), Date.now(), openJourneyStarts()));
+    setActive(activeJourneys(loadPlans(), loadOpenTopics(), Date.now(), openJourneyStarts(), openJourneySteps()));
     setConfidence(loadConfidence());
     setReady(true);
   }, []);

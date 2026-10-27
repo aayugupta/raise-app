@@ -3,9 +3,9 @@
 import type { TopicId } from "./topics";
 
 export type CoachEntry =
-  | { role: "parent"; text: string; at: string }
+  | { role: "parent"; text: string; at: string; roleplay?: boolean; topic?: TopicId }
   | { role: "parent"; hidden: true; at: string } // a danger sign: the words are not kept
-  | { role: "coach"; text: string; at: string; fallback?: boolean }
+  | { role: "coach"; text: string; at: string; fallback?: boolean; roleplay?: boolean; topic?: TopicId; tip?: string } // in a role-play, text is the child's line
   | { role: "coach"; help: true; dismissed?: boolean; at: string }
   | { role: "coach"; refusal: string; offer: TopicId; offerText: string; at: string };
 
@@ -38,7 +38,11 @@ export function clearCoachChat(): void {
 // and neither is a parent message that was refused (the next entry isn't an AI reply).
 type Turn = { role: "parent" | "coach"; text: string };
 
-export function turnsForAi(entries: CoachEntry[]): Turn[] {
+// A role-play only sees its own turns for that topic; the normal chat never sees role-play turns.
+export function turnsForAi(all: CoachEntry[], roleplayTopic?: TopicId): Turn[] {
+  const entries = all.filter((e) =>
+    "text" in e ? (roleplayTopic ? e.roleplay && e.topic === roleplayTopic : !e.roleplay) : !roleplayTopic
+  );
   const isAiReply = (e?: CoachEntry) => !!e && e.role === "coach" && "text" in e && !e.fallback;
   return entries.flatMap((e, i): Turn[] => {
     if (!("text" in e)) return [];

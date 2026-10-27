@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import HelpPill from "@/components/HelpPill";
 import { track } from "@/lib/events";
@@ -19,6 +19,13 @@ const WHEN: { value: "today" | "yesterday" | "earlier"; label: string; daysAgo: 
 export default function LogTalk() {
   const router = useRouter();
   const [topic, setTopic] = useState<TopicId | null>(null);
+
+  // "Already talked?" from a journey card arrives with its topic chosen.
+  useEffect(() => {
+    const t = new URLSearchParams(window.location.search).get("topic");
+    const match = TOPICS.find((x) => x.id === t);
+    if (match) setTopic(match.id);
+  }, []);
   const [when, setWhen] = useState<(typeof WHEN)[number]["value"] | null>(null);
   const [moment, setMoment] = useState<MomentId | null>(null);
 

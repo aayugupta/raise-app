@@ -611,7 +611,7 @@ h3 {
 
 .journey-steps {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 4px;
   margin-top: 8px;
 }
@@ -1347,4 +1347,69 @@ h3 {
   font-size: 14px;
   line-height: 1.4;
   color: var(--ink);
+}
+
+/* Flashcards: under "Next: practise with AI Coach" */
+.card-next-links {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.card-next-links a,
+.card-next-links .btn-link {
+  width: auto;
+  margin: 0;
+  padding: 6px 2px;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--teal);
+}
+
+/* Coach: step 2 of a topic's journey (practise) */
+.practice-card {
+  margin-top: 14px;
+  padding: 14px;
+  border-radius: var(--radius);
+  background: var(--card);
+  border: 2px solid #b9dcd6;
+}
+
+.practice-modes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 12px;
+  background: #eef3f1;
+}
+
+.practice-modes button {
+  border: none;
+  border-radius: 9px;
+  padding: 9px 6px;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.practice-modes button.on {
+  background: var(--teal);
+  color: #fff;
+}
+
+.bubble.coach.child {
+  background: #fff6e6;
+  border-color: #f1dcb2;
+}
+
+.bubble.coach.tip {
+  background: #e6f2f0;
+  border-color: #b9dcd6;
+  font-size: 15px;
 }

@@ -37,6 +37,9 @@ export function coachReplyProblems(reply: string): string[] {
   return problems;
 }
 
-// Shown when the AI is slow, fails, or its reply breaks a rule.
+// Shown when the AI is busy, slow or unreachable (e.g. the free plan's speed limit).
+export const COACH_BUSY = "Sorry, I couldn't reply just now. Please send that again in a moment.";
+
+// Shown when the AI's reply broke one of Raise's rules.
 export const COACH_FALLBACK =
   "I couldn't answer that one well. Could you tell me a little more: what happened, and what would you like to say to your child? If something feels serious, the Help tab has people you can call.";

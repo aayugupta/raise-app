@@ -19,6 +19,10 @@ export type JourneyRecord = {
   endedAt?: string; // reflected on (or replaced by a new journey after day 14)
   completedAt?: string; // a reflection where the talk happened, within 14 days
   helpOffered?: boolean; // a danger sign was spotted: left out of the metric
+  // The 4 steps (28 Oct 2026): 1 Learn (flashcards) → 2 Practise (AI Coach) → 3 Plan → 4 Reflect.
+  learnedAt?: string; // flashcards opened
+  practisedAt?: string; // talked it through with the AI Coach, or chose to skip
+  practiceSkipped?: boolean;
 };
 
 export function withinWindow(startedAt: string, at: string): boolean {
