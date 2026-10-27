@@ -54,6 +54,8 @@ export function journeyDay(startedAt: string, now = Date.now()): number {
 }
 
 export function addOpenTopic(id: TopicId): void {
+  // Already planned and not yet reflected on: the plan is the journey, so it isn't "open" again.
+  if (loadPlans().some((p) => p.topic === id && !p.reflectedAt && !p.closedAt)) return;
   markTopicStarted(id);
   try {
     const topics = loadOpenTopics();

@@ -922,6 +922,130 @@ h3 {
   }
 }
 
+/* Topic flashcards: 4 cards that slide sideways and snap, one at a time. */
+.flash-deck {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  margin: 16px -16px 0;
+  padding: 4px 16px 8px;
+  scroll-padding: 0 16px;
+  scrollbar-width: none;
+}
+
+.flash-deck::-webkit-scrollbar {
+  display: none;
+}
+
+.flashcard {
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  display: flex;
+  flex-direction: column;
+  background: var(--card);
+  border: 2px solid #eadfcd;
+  border-top-width: 6px;
+  border-radius: 22px;
+  padding: 16px;
+  box-shadow: 0 6px 18px rgba(31, 35, 64, 0.06);
+}
+
+.flash-count {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.flash-title {
+  font-size: 23px;
+  line-height: 1.2;
+  margin: 2px 0 12px;
+}
+
+.flash-sub {
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 800;
+  margin: 4px 0 8px;
+}
+
+.flash-sub + .card-list {
+  margin-bottom: 14px;
+}
+
+.card-list.flash-questions {
+  padding-left: 0;
+}
+
+.flash-questions li {
+  background: var(--cream);
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--ink);
+  list-style-position: inside;
+}
+
+.flashcard .first-line {
+  margin-top: 14px;
+}
+
+.flashcard .react-row {
+  background: var(--cream);
+}
+
+.flash-promise {
+  display: grid;
+  gap: 2px;
+  margin-top: 16px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: var(--teal);
+  color: #fff;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 1.35;
+}
+
+.flash-promise .card-label {
+  color: #fff;
+  opacity: 0.85;
+  font-size: 11px;
+}
+
+.flash-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 6px;
+}
+
+.flash-nav .icon-btn:disabled {
+  opacity: 0.3;
+}
+
+.flash-dots {
+  display: flex;
+  gap: 8px;
+}
+
+.flash-dots span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #eadfcd;
+  transition: width 0.2s;
+}
+
+.flash-dots span.on {
+  width: 22px;
+  border-radius: 4px;
+  background: var(--teal);
+}
+
 .react-row {
   background: var(--card);
   border-radius: 12px;
