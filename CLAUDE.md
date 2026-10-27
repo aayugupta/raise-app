@@ -134,4 +134,6 @@ A **completed conversation** = a topic the parent planned, started in the planne
 - Before building a screen: restate what it does, which FR it covers, and ask anything unclear.
 - After building: test it on a phone-sized screen, then tell her exactly what to check on her own phone.
 - Keep secrets (Gemini key, Supabase keys) out of the code and out of GitHub; they go in Vercel's settings and a local `.env.local` that is never committed.
+- Run `npm test` after any change to rules, safety checks or the metric. It runs every `tests/*.test.mjs` file and fails on any failure or crash. Add a test for every new safety rule.
+- Base Talk Cards live in `content/base-talk-cards.md` (Aayushi edits this). `scripts/build-cards.mjs` turns it into `lib/base-cards.json` before every dev/build run, and refuses a card with missing parts.
 - Log every session in `BUILD_LOG.md`.

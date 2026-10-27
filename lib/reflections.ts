@@ -17,7 +17,9 @@ export type Reflection = {
   helpOffered: boolean; // a danger sign was spotted and help was offered (the text itself was dropped)
   createdAt: string;
   followUpDue?: string; // 3 days later (FR8)
-  followUpAnswer?: string;
+  followUpAt?: string; // when the follow-up was answered
+  followUpMatched?: boolean; // recall check: picked the topic they actually talked about (metric step 4)
+  followUpAnswer?: "yes" | "little" | "not-yet"; // has the teen said more since?
   gotInTheWay?: string; // "Not yet": what the parent said got in the way (a fixed choice, no free text)
 };
 

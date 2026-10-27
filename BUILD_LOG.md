@@ -4,6 +4,37 @@ What we built, what broke, and how we fixed it. Newest entries at the top.
 
 ---
 
+## 2026-10-27 — Screen 11: 3-day follow-up (+ `npm test`)
+
+**Built**
+- The 3-day follow-up (FR8, step 4 of the completed-conversation metric). Templates on the phone, no AI.
+  - **Home** shows "💬 A quick question: about your talk on Saturday. Two taps, and we'll suggest a next line" once 3 days have passed, and hides it once answered.
+  - **Follow-up screen** (`app/follow-up/[planId]`):
+    1. **"What did you two talk about on Saturday?"** Three topics, one of them real. This is the "answer must match" check from Step 2. **Recorded quietly, never shown as right or wrong.**
+    2. Then **"You noted: '…'. Has your teen said more about it since?"** Yes, they brought it up / A little / Not yet.
+  - **After:** a tip for that answer, **"A next line to try"** in the parent's language (builds on the last talk; no gendered verbs), and **Plan another talk**.
+  - Reopening an answered follow-up shows the result, not the questions.
+- `lib/followUp.ts`: when it's due, the three choices (real topic plus two others, in a fixed order per plan) and the templates.
+- **`npm test`** (`tests/run-all.mjs`): runs every test file and **fails loudly if any test fails or crashes**.
+- `tests/follow-up.test.mjs`: 6 checks, including 300 cases proving the choices always include the real topic, never repeat, and keep their order.
+
+**Broke**
+1. The "You noted" line showed before the first question, so a note like "…crushes…" **gave away the answer**.
+2. The new follow-up test crashed while loading, but my test commands hid error messages, so it **looked like it had printed nothing**, not like a crash.
+3. The first version of `npm test` couldn't find the test files: the spaces in the folder name ("Raise - Capstone Project") were garbled into `%20`.
+
+**Fix**
+1. The note and the second question appear only after the topic is picked.
+2. The follow-up logic now gets the topic list from the screen, so the test can load it. Added `npm test`, which reports crashes as failures. The setup safety test now also reports failure properly.
+3. Used Node's proper file-path conversion. `npm test`: 5 of 5 test files pass.
+
+**Checked**
+- Reflection 3 days old → Home shows the question; today's → not shown.
+- Picked the right topic + "A little" → matched recorded, tip and next line shown; Home's card gone; reopening shows "Thank you."
+- Build passes; `npm test` 5/5 files (88 checks).
+
+---
+
 ## 2026-10-27 — Screen 10: Recovery
 
 **Built**

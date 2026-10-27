@@ -38,3 +38,4 @@ for (const [text, kind, extra] of cases) {
   console.log(`${ok ? "PASS" : "FAIL"}  ${JSON.stringify(text)} -> ${r.kind}${got ? " / " + got : ""}`);
 }
 console.log(`\n${pass} of ${cases.length} passed`);
+process.exit(pass === cases.length ? 0 : 1);

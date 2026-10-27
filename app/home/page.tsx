@@ -5,7 +5,9 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import FamilySofa from "@/components/FamilySofa";
 import { currentFirstLine } from "@/lib/cards";
+import { isFollowUpDue } from "@/lib/followUp";
 import { loadProfile, type Profile } from "@/lib/profile";
+import { loadReflections, type Reflection } from "@/lib/reflections";
 import { loadOpenTopics, loadPlans, momentOf, planStage, type Plan } from "@/lib/talks";
 import { TOPICS, type TopicId } from "@/lib/topics";
 
@@ -36,6 +38,7 @@ export default function Home() {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [plans, setPlans] = useState<Plan[]>([]);
   const [openTopics, setOpenTopics] = useState<TopicId[]>([]);
+  const [reflections, setReflections] = useState<Reflection[]>([]);
   const [now, setNow] = useState(() => Date.now());
   const [ready, setReady] = useState(false);
 
@@ -48,6 +51,7 @@ export default function Home() {
     setProfile(p);
     setPlans(loadPlans());
     setOpenTopics(loadOpenTopics());
+    setReflections(loadReflections());
     setReady(true);
     // Re-check every minute, so "It's time" appears without reloading.
     const timer = setInterval(() => setNow(Date.now()), 60_000);
@@ -60,7 +64,8 @@ export default function Home() {
   const nowPlans = byTime.filter((p) => planStage(p, now) === "now");
   const upcoming = byTime.filter((p) => planStage(p, now) === "upcoming");
   const checkIns = byTime.filter((p) => planStage(p, now) === "check-in");
-  const nothingYet = !nowPlans.length && !upcoming.length && !checkIns.length && !openTopics.length;
+  const followUps = reflections.filter((r) => isFollowUpDue(r, now));
+  const nothingYet = !nowPlans.length && !upcoming.length && !checkIns.length && !openTopics.length && !followUps.length;
   const name = profile.nickname || "there";
 
   return (
@@ -90,6 +95,19 @@ export default function Home() {
             <p style={{ margin: "0 0 14px", fontSize: 17, lineHeight: 1.4 }}>“{currentFirstLine(p.topic, profile)}”</p>
             <Link href={`/talk/${p.id}`} className="btn-light btn-block">
               Open Talk mode
+            </Link>
+          </section>
+        ))}
+
+        {/* 3-day follow-up, built from the parent's own reflection (FR8) */}
+        {followUps.map((r) => (
+          <section key={r.planId} className="notice" style={{ marginTop: 16, borderLeft: "5px solid var(--mustard)" }}>
+            <div style={{ fontWeight: 700, color: "var(--ink)", fontSize: 17 }}>💬 A quick question</div>
+            <p style={{ margin: "4px 0 12px", fontSize: 15, color: "var(--muted)" }}>
+              About your talk on {new Date(r.createdAt).toLocaleDateString("en-IN", { weekday: "long" })}. Two taps, and we'll suggest a next line.
+            </p>
+            <Link href={`/follow-up/${r.planId}`} className="btn-secondary btn-block" style={{ textAlign: "center", textDecoration: "none" }}>
+              Answer
             </Link>
           </section>
         ))}
