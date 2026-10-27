@@ -13,11 +13,12 @@ import { addOpenTopic, loadPlan, type Plan } from "@/lib/talks";
 import { TOPICS } from "@/lib/topics";
 
 // Never a "failed" label. A missed talk gets an easier next step; a hard talk gets a repair line.
-export default function RecoverView({ planId, why }: { planId: string; why: "not-yet" | "repair" }) {
+export default function RecoverView({ planId, why, picked }: { planId: string; why: "not-yet" | "repair"; picked?: string }) {
   const router = useRouter();
   const [plan, setPlan] = useState<Plan | null | undefined>(undefined);
   const [language, setLanguage] = useState<Language>("hinglish");
-  const [blocker, setBlocker] = useState<BlockerId | null>(null);
+  // The reason may already have been picked on the Reflection screen.
+  const [blocker, setBlocker] = useState<BlockerId | null>(BLOCKERS.find((b) => b.id === picked)?.id ?? null);
 
   useEffect(() => {
     const p = loadPlan(planId) ?? null;
@@ -25,7 +26,9 @@ export default function RecoverView({ planId, why }: { planId: string; why: "not
     const saved = loadProfile()?.language;
     if (saved) setLanguage(saved);
     if (p && why === "repair") track("recovery_chosen", { topic: p.topic, plan_id: planId, reason: "repair" });
-  }, [planId, why]);
+    const pickedId = BLOCKERS.find((b) => b.id === picked)?.id;
+    if (p && why === "not-yet" && pickedId) track("recovery_chosen", { topic: p.topic, plan_id: planId, reason: pickedId });
+  }, [planId, why, picked]);
 
   if (plan === undefined) return <main style={{ minHeight: "100dvh", background: "var(--cream)" }} />;
   if (plan === null) {

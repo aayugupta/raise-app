@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import FamilySofa from "@/components/FamilySofa";
 import HelpPill from "@/components/HelpPill";
 import WalkTogether from "@/components/WalkTogether";
-import { googleCalendarUrl, icsFile } from "@/lib/calendar";
 import { currentFirstLine } from "@/lib/cards";
 import { track } from "@/lib/events";
 import { loadProfile } from "@/lib/profile";
@@ -48,13 +47,26 @@ function isSoonEnough(date: Date): boolean {
   return date.getTime() - Date.now() >= MIN_LEAD_MIN * 60_000;
 }
 
+// Raise's suggestion: the next walk or quiet late evening that's still ahead (teens' top two moments).
+function suggestion(): { moment: MomentId; day: number; time: string } {
+  for (const day of [0, 1]) {
+    for (const id of ["walk", "evening"] as const) {
+      const time = MOMENTS.find((m) => m.id === id)!.defaultTime;
+      if (isSoonEnough(dateFor(day, time))) return { moment: id, day, time };
+    }
+  }
+  return { moment: "walk", day: 1, time: "18:30" };
+}
+
 export default function PlannerView({ topic, suggestedMoment }: { topic: TopicId; suggestedMoment?: MomentId }) {
   const router = useRouter();
   const [firstLine, setFirstLine] = useState("");
   const [moment, setMoment] = useState<MomentId | null>(null);
   const [day, setDay] = useState(0);
   const [time, setTime] = useState("18:30");
+  const [reminder, setReminder] = useState(true);
   const [saved, setSaved] = useState<Plan | null>(null);
+  const [suggested, setSuggested] = useState<ReturnType<typeof suggestion> | null>(null);
 
   function chooseMoment(id: MomentId) {
     const m = MOMENTS.find((x) => x.id === id)!;
@@ -68,6 +80,7 @@ export default function PlannerView({ topic, suggestedMoment }: { topic: TopicId
   // and the moment Recovery suggested, if any.
   useEffect(() => {
     setFirstLine(currentFirstLine(topic, loadProfile()));
+    setSuggested(suggestion());
     if (suggestedMoment) chooseMoment(suggestedMoment);
   }, [topic, suggestedMoment]);
 
@@ -77,7 +90,7 @@ export default function PlannerView({ topic, suggestedMoment }: { topic: TopicId
 
   function save() {
     if (!moment || !valid) return;
-    const plan = savePlan({ topic, moment, when: when.toISOString() });
+    const plan = savePlan({ topic, moment, when: when.toISOString(), reminder });
     track("plan_set", { topic, plan_id: plan.id, moment });
     setSaved(plan);
     window.scrollTo(0, 0);
@@ -85,9 +98,6 @@ export default function PlannerView({ topic, suggestedMoment }: { topic: TopicId
 
   if (saved && momentInfo) {
     const start = new Date(saved.when);
-    const appUrl = `${window.location.origin}/home`;
-    const icsHref = `data:text/calendar;charset=utf-8,${encodeURIComponent(icsFile(momentInfo.calendarTitle, start, appUrl, saved.id))}`;
-
     return (
       <main style={{ minHeight: "100dvh", background: "var(--cream)" }}>
         <div style={{ width: "100%", maxWidth: 480, margin: "0 auto", padding: "16px 16px 32px" }}>
@@ -99,22 +109,15 @@ export default function PlannerView({ topic, suggestedMoment }: { topic: TopicId
           <h1 style={{ fontSize: 30, lineHeight: 1.15 }}>Your plan is set</h1>
           <PlanSentence phrase={momentInfo.phrase} day={dayPhrase(day)} time={timeText(start)} firstLine={firstLine} />
 
-          <h2 className="section-title">Add a reminder</h2>
-          <div style={{ display: "grid", gap: 10 }}>
-            <a className="btn-primary btn-block" href={googleCalendarUrl(momentInfo.calendarTitle, start, appUrl)} target="_blank" rel="noreferrer">
-              Add to Google Calendar
-            </a>
-            <a className="btn-secondary btn-block" href={icsHref} download="raise-plan.ics" style={{ textAlign: "center", textDecoration: "none" }}>
-              Other calendar app
-            </a>
-          </div>
-          <p className="why" style={{ marginTop: 12 }}>
-            🔒 The calendar will only say “{momentInfo.calendarTitle}”. It never names the topic.
+          <p className="notice" style={{ marginTop: 16 }}>
+            {saved.reminder === false
+              ? "No reminder. Your plan waits on Home under “Your 14-day journey”."
+              : `🔔 When it's time, Home will show “It's time for your ${momentInfo.calendarTitle.replace(/^Your /, "").toLowerCase()}” with your first line. Raise sends no notifications, so nothing pops up for your teen to see.`}
           </p>
 
-          <button className="btn-link" onClick={() => router.push("/home")}>
+          <Link href="/home" className="btn-primary btn-block" style={{ marginTop: 16 }}>
             Done, go to Home
-          </button>
+          </Link>
         </div>
       </main>
     );
@@ -132,12 +135,31 @@ export default function PlannerView({ topic, suggestedMoment }: { topic: TopicId
           </Link>
         </div>
 
-        <h1 style={{ fontSize: 28, lineHeight: 1.15, margin: "18px 0 0", textWrap: "balance" }}>When will you try it?</h1>
+        <h1 style={{ fontSize: 28, lineHeight: 1.15, margin: "18px 0 0", textWrap: "balance" }}>Plan your talk</h1>
         <p className="why">Teens open up most side by side: on walks and late in the evening.</p>
 
-        <h2 className="section-title" style={{ marginTop: 4 }}>
-          Pick a moment
-        </h2>
+        {/* Raise's suggested time to talk */}
+        {suggested && (
+          <section className="suggest-card">
+            <div className="card-label">⭐ Raise suggests</div>
+            <div style={{ fontSize: 17, fontWeight: 700, color: "var(--ink)", margin: "6px 0 10px" }}>
+              {MOMENTS.find((m) => m.id === suggested.moment)!.icon} {MOMENTS.find((m) => m.id === suggested.moment)!.label}, {dayPhrase(suggested.day)} at{" "}
+              {timeText(dateFor(suggested.day, suggested.time))}
+            </div>
+            <button
+              className="btn-secondary btn-block"
+              onClick={() => {
+                setMoment(suggested.moment);
+                setDay(suggested.day);
+                setTime(suggested.time);
+              }}
+            >
+              Use this time
+            </button>
+          </section>
+        )}
+
+        <h2 className="section-title">Where will you talk?</h2>
         <div style={{ display: "grid", gap: 8 }}>
           {MOMENTS.map((m) => (
             <button key={m.id} className={`option${moment === m.id ? " selected" : ""}`} onClick={() => chooseMoment(m.id)}>
@@ -170,6 +192,16 @@ export default function PlannerView({ topic, suggestedMoment }: { topic: TopicId
             {!isSoonEnough(when) && (
               <p style={{ color: "#b4472f", fontSize: 15, margin: "-8px 0 12px" }}>That time is too soon. Pick a time at least 15 minutes from now.</p>
             )}
+
+            <h2 className="section-title">Reminder</h2>
+            <button className={`option${reminder ? " selected" : ""}`} role="switch" aria-checked={reminder} onClick={() => setReminder(!reminder)}>
+              <span style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                <span aria-hidden="true">{reminder ? "🔔" : "🔕"}</span>
+                <span style={{ flex: 1 }}>Remind me on Home when it's time</span>
+                <span className="match-tag" style={{ marginTop: 0 }}>{reminder ? "On" : "Off"}</span>
+              </span>
+            </button>
+            <p style={{ fontSize: 14, color: "var(--muted)", margin: "8px 0 0" }}>In Raise only. No notifications, and it never names the topic.</p>
 
             <PlanSentence phrase={momentInfo.phrase} day={dayPhrase(day)} time={timeText(when)} firstLine={firstLine} />
           </>

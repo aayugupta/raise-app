@@ -7,13 +7,15 @@ import ConfidenceScale from "@/components/ConfidenceScale";
 import HelpPill from "@/components/HelpPill";
 import { CONFIDENCE_AFTER_QUESTION, recordConfidence } from "@/lib/confidence";
 import { track } from "@/lib/events";
+import { BLOCKERS, type BlockerId } from "@/lib/recovery";
 import { saveReflection, type Feeling, type Happened, type Reflection, type WhoTalked } from "@/lib/reflections";
 import { hasDangerSign } from "@/lib/safety";
 import { clearTopicStart, loadPlan, loadPlans, momentOf, updatePlan, type Plan } from "@/lib/talks";
 import { TOPICS, type TopicId } from "@/lib/topics";
 
-// 30 seconds: did it happen, what we discussed, who talked more, one thing learned, how it felt.
-// Everything stays on this phone. No names or private details.
+// Reflection (Aayushi's simplified flow, 28 Oct 2026): did it happen, what you said, what your child said,
+// who spoke more, how it went, and if it didn't go well, what got in the way.
+// Everything stays on this phone, never sent to the AI or anywhere else. No names or private details.
 
 const HAPPENED: { value: Happened; label: string }[] = [
   { value: "yes", label: "Yes" },
@@ -23,7 +25,7 @@ const HAPPENED: { value: Happened; label: string }[] = [
 
 const WHO: { value: WhoTalked; label: string }[] = [
   { value: "me", label: "Me" },
-  { value: "teen", label: "My teen" },
+  { value: "teen", label: "My child" },
   { value: "equal", label: "About equal" },
 ];
 
@@ -43,6 +45,7 @@ export default function ReflectView({ planId }: { planId: string }) {
   const [whoTalked, setWhoTalked] = useState<WhoTalked | null>(null);
   const [learned, setLearned] = useState("");
   const [feeling, setFeeling] = useState<Feeling | null>(null);
+  const [blocker, setBlocker] = useState<BlockerId | null>(null);
   const [afterConfidence, setAfterConfidence] = useState<number | null>(null);
   const [helpOffer, setHelpOffer] = useState(false);
   const [saved, setSaved] = useState<Reflection | null>(null);
@@ -64,15 +67,19 @@ export default function ReflectView({ planId }: { planId: string }) {
   }
 
   const topicName = TOPICS.find((t) => t.id === plan.topic)!.name;
+  // "If it didn't go well, what got in the way?": asked when it didn't happen, only partly happened, or felt hard.
+  const askBlocker = happened === "not-yet" || happened === "partly" || feeling === "hard";
   const complete =
     happened !== null &&
-    (happened === "not-yet" || (discussed.trim().length >= MIN_TEXT && learned.trim().length >= MIN_TEXT && whoTalked && feeling));
+    (happened === "not-yet"
+      ? blocker !== null
+      : discussed.trim().length >= MIN_TEXT && learned.trim().length >= MIN_TEXT && whoTalked && feeling);
 
   function notYet() {
     updatePlan(planId, { closedAt: new Date().toISOString() });
-    saveReflection({ planId, topic: plan!.topic, happened: "not-yet", discussed: "", learned: "", helpOffered: false });
+    saveReflection({ planId, topic: plan!.topic, happened: "not-yet", discussed: "", learned: "", helpOffered: false, gotInTheWay: blocker ?? undefined });
     track("reflection_saved", { topic: plan!.topic, plan_id: planId, happened: "not-yet", help_offered: false });
-    router.push(`/recover/${planId}?why=not-yet`);
+    router.push(`/recover/${planId}?why=not-yet${blocker ? `&blocker=${blocker}` : ""}`);
   }
 
   function submit() {
@@ -98,6 +105,7 @@ export default function ReflectView({ planId }: { planId: string }) {
       learned: helpOffered ? "" : learned.trim(),
       feeling: feeling ?? undefined,
       helpOffered,
+      gotInTheWay: askBlocker && blocker ? blocker : undefined,
     });
     updatePlan(planId, { reflectedAt: r.createdAt });
     clearTopicStart(plan!.topic);
@@ -161,7 +169,7 @@ export default function ReflectView({ planId }: { planId: string }) {
           {momentOf(plan).icon} {topicName}
         </div>
         <h1 style={{ fontSize: 28, lineHeight: 1.15, margin: "6px 0 0" }}>How did it go?</h1>
-        <p className="why">30 seconds. It stays on your phone. Please don't write names or private details.</p>
+        <p className="why">A minute. It stays on your phone and is never sent anywhere. Please don't write names or private details.</p>
 
         <h2 className="section-title" style={{ marginTop: 4 }}>
           {plan.unplanned ? "Did you get into the topic?" : "Did the talk happen?"}
@@ -176,15 +184,18 @@ export default function ReflectView({ planId }: { planId: string }) {
         </div>
 
         {happened === "not-yet" && (
-          <p className="notice" style={{ marginTop: 16 }}>
-            That's okay. Most talks take more than one try. Let's find an easier way in.
-          </p>
+          <>
+            <p className="notice" style={{ marginTop: 16 }}>
+              That's okay. Most talks take more than one try. Let's find an easier way in.
+            </p>
+            <BlockerChoice value={blocker} onChoose={setBlocker} />
+          </>
         )}
 
         {(happened === "yes" || happened === "partly") && (
           <>
             <label htmlFor="discussed" className="section-title" style={{ display: "block", fontFamily: "var(--font-serif), Georgia, serif", color: "var(--ink)" }}>
-              What did you talk about?
+              What did you say?
             </label>
             <textarea
               id="discussed"
@@ -193,11 +204,24 @@ export default function ReflectView({ planId }: { planId: string }) {
               maxLength={200}
               value={discussed}
               onChange={(e) => setDiscussed(e.target.value)}
-              placeholder="e.g. Her friend's crush, and what makes someone a good friend"
+              placeholder="e.g. I asked about her friends, and how people know they like someone"
+            />
+
+            <label htmlFor="learned" className="section-title" style={{ display: "block", fontFamily: "var(--font-serif), Georgia, serif", color: "var(--ink)" }}>
+              What did your child say?
+            </label>
+            <textarea
+              id="learned"
+              className="text-input"
+              rows={2}
+              maxLength={200}
+              value={learned}
+              onChange={(e) => setLearned(e.target.value)}
+              placeholder="e.g. She said most crushes in her class are just for fun"
             />
 
             <h2 className="section-title" style={{ marginTop: 0 }}>
-              Who talked more?
+              Who spoke more?
             </h2>
             <div className="chips">
               {WHO.map((w) => (
@@ -207,21 +231,8 @@ export default function ReflectView({ planId }: { planId: string }) {
               ))}
             </div>
 
-            <label htmlFor="learned" className="section-title" style={{ display: "block", fontFamily: "var(--font-serif), Georgia, serif", color: "var(--ink)" }}>
-              One thing you learned about your teen
-            </label>
-            <textarea
-              id="learned"
-              className="text-input"
-              rows={2}
-              maxLength={200}
-              value={learned}
-              onChange={(e) => setLearned(e.target.value)}
-              placeholder="e.g. She thinks most crushes at school are just for fun"
-            />
-
             <h2 className="section-title" style={{ marginTop: 0 }}>
-              How did your teen respond?
+              How did it go?
             </h2>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 8 }}>
               {FEELINGS.map((f) => (
@@ -240,6 +251,8 @@ export default function ReflectView({ planId }: { planId: string }) {
                 </button>
               ))}
             </div>
+
+            {askBlocker && <BlockerChoice value={blocker} onChoose={setBlocker} optional />}
 
             {/* Optional: confidence after the talk (survey Q14), for Progress and the Step 6 metric. */}
             <h2 className="section-title">
@@ -268,9 +281,6 @@ function Saved({ reflection }: { reflection: Reflection }) {
     setNext(TOPICS.find((t) => !used.has(t.id))?.id ?? null);
   }, []);
 
-  const followUp = reflection.followUpDue
-    ? new Date(reflection.followUpDue).toLocaleDateString("en-IN", { weekday: "long" })
-    : null;
   const nextTopic = TOPICS.find((t) => t.id === next);
 
   // After a danger sign: calm thanks and help, no "next topic" yet.
@@ -307,11 +317,6 @@ function Saved({ reflection }: { reflection: Reflection }) {
         )}
         {reflection.whoTalked === "teen" && <p className="notice">💛 Your teen did most of the talking. That's a great sign.</p>}
 
-        {followUp && (
-          <p className="notice" style={{ marginTop: 12 }}>
-            📅 We'll ask you one quick question on {followUp}, based on what you noted.
-          </p>
-        )}
 
         {nextTopic && (
           <>
@@ -336,5 +341,24 @@ function Saved({ reflection }: { reflection: Reflection }) {
         </Link>
       </div>
     </main>
+  );
+}
+
+// "What got in the way?" A fixed choice, never free text. Leads to an easier next step, never a "failed" label.
+function BlockerChoice({ value, onChoose, optional = false }: { value: BlockerId | null; onChoose: (id: BlockerId) => void; optional?: boolean }) {
+  return (
+    <>
+      <h2 className="section-title">
+        What got in the way?{" "}
+        {optional && <span style={{ fontFamily: "var(--font-body)", fontSize: 14, color: "var(--muted)" }}>(optional)</span>}
+      </h2>
+      <div style={{ display: "grid", gap: 8 }}>
+        {BLOCKERS.map((b) => (
+          <button key={b.id} className={`option${value === b.id ? " selected" : ""}`} aria-pressed={value === b.id} onClick={() => onChoose(b.id)} style={{ fontSize: 16, padding: "12px 14px" }}>
+            {b.label}
+          </button>
+        ))}
+      </div>
+    </>
   );
 }

@@ -19,7 +19,7 @@ export const BLOCKERS: { id: BlockerId; label: string; tip: string; suggestMomen
   },
   {
     id: "mood",
-    label: "My teen wasn't in the mood",
+    label: "My child wasn't in the mood",
     tip: "That's normal. Wait for a calmer time. Late evenings, when it's quiet, work for many teens.",
     suggestMoment: "evening",
   },

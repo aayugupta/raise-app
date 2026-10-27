@@ -58,7 +58,7 @@ export default function Home() {
 
   if (!ready || !profile) return <main style={{ minHeight: "100dvh", background: "var(--cream)" }} />;
 
-  const nowPlans = [...plans].sort((a, b) => a.when.localeCompare(b.when)).filter((p) => planStage(p, now) === "now");
+  const nowPlans = [...plans].sort((a, b) => a.when.localeCompare(b.when)).filter((p) => planStage(p, now) === "now" && p.reminder !== false);
   // The "It's time" banner already covers plans happening now, so they're not repeated below.
   const journeys = activeJourneys(plans, openTopics, now, starts).filter((j) => !nowPlans.some((p) => p.id === j.planId));
   const activeTopics = new Set(journeys.map((j) => j.topic));

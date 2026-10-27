@@ -103,6 +103,7 @@ export type Plan = {
   reflectedAt?: string; // set once the parent has said how it went
   closedAt?: string; // "Not yet": this moment is closed, the topic goes to recovery
   unplanned?: boolean; // logged afterwards with "I had a talk": it already happened
+  reminder?: boolean; // in-app "It's time" on Home (28 Oct 2026). Missing means on
 };
 
 // A talk that happened without a plan. Saved as already done, so it goes straight to reflection.

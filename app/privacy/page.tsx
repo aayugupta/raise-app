@@ -14,7 +14,7 @@ const PROMISES: { title: string; detail: string }[] = [
   },
   {
     title: "Your teen never sees Raise",
-    detail: "Reminders and calendar events never name the topic. They just say “Your walk” or “Your planned moment”.",
+    detail: "Raise sends no notifications. Reminders show only inside the app, and never name the topic, just “your walk”.",
   },
   {
     title: "A talk tool, never a spy tool",

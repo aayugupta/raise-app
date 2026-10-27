@@ -6,9 +6,9 @@ export default async function Recover({
   searchParams,
 }: {
   params: Promise<{ planId: string }>;
-  searchParams: Promise<{ why?: string }>;
+  searchParams: Promise<{ why?: string; blocker?: string }>;
 }) {
   const { planId } = await params;
-  const { why } = await searchParams;
-  return <RecoverView planId={planId} why={why === "repair" ? "repair" : "not-yet"} />;
+  const { why, blocker } = await searchParams;
+  return <RecoverView planId={planId} why={why === "repair" ? "repair" : "not-yet"} picked={blocker} />;
 }

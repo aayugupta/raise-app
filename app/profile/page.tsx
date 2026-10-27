@@ -137,8 +137,8 @@ export default function ProfileScreen() {
           </button>
           {reminders && (
             <p className="settings-note">
-              When you plan a talk, tap “Add to calendar”. Your calendar reminds you 15 minutes before, and the event only says
-              the moment (like “Your walk”), never the topic. Home also shows “It's time” when your moment comes.
+              When you plan a talk, keep “Remind me on Home” on. When your moment comes, Home shows “It's time” with your first
+              line. Raise sends no notifications, and the reminder only names the moment (like “your walk”), never the topic.
             </p>
           )}
 
