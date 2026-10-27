@@ -59,7 +59,14 @@ export type Plan = {
   doneAt?: string; // Talk mode "Done"
   reflectedAt?: string; // set once the parent has said how it went
   closedAt?: string; // "Not yet": this moment is closed, the topic goes to recovery
+  unplanned?: boolean; // logged afterwards with "I had a talk": it already happened
 };
+
+// A talk that happened without a plan. Saved as already done, so it goes straight to reflection.
+export function logUnplannedTalk(topic: TopicId, moment: MomentId, when: Date): Plan {
+  const plan = savePlan({ topic, moment, when: when.toISOString() });
+  return updatePlan(plan.id, { unplanned: true, doneAt: when.toISOString() }) ?? plan;
+}
 
 export function loadPlan(id: string): Plan | undefined {
   return loadPlans().find((p) => p.id === id);

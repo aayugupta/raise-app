@@ -19,6 +19,8 @@ export const EVENTS: Record<string, Record<string, FieldRule>> = {
   plan_set: { topic: TOPIC, plan_id: PLAN_ID, moment: ["walk", "evening", "chores", "meal", "car"] },
   talk_started: { topic: TOPIC, plan_id: PLAN_ID },
   talk_done: { topic: TOPIC, plan_id: PLAN_ID, on_time: BOOL },
+  // A talk that happened without a plan, logged afterwards ("I had a talk").
+  talk_logged: { topic: TOPIC, plan_id: PLAN_ID, moment: ["walk", "evening", "chores", "meal", "car"], when: ["today", "yesterday", "earlier"] },
   reflection_saved: {
     topic: TOPIC,
     plan_id: PLAN_ID,

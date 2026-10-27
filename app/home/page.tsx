@@ -181,6 +181,10 @@ export default function Home() {
         <Link href="/topics" className="btn-primary btn-block" style={{ marginTop: 24 }}>
           {nothingYet ? "Choose a topic" : "Start a new topic"}
         </Link>
+        {/* For talks that happened without a plan in Raise. */}
+        <Link href="/log" className="btn-secondary btn-block" style={{ marginTop: 10, textAlign: "center", textDecoration: "none" }}>
+          💬 I had a talk
+        </Link>
       </div>
     </main>
   );

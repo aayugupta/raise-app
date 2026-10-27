@@ -159,10 +159,11 @@ export default function ReflectView({ planId }: { planId: string }) {
         <p className="why">30 seconds. It stays on your phone. Please don't write names or private details.</p>
 
         <h2 className="section-title" style={{ marginTop: 4 }}>
-          Did the talk happen?
+          {plan.unplanned ? "Did you get into the topic?" : "Did the talk happen?"}
         </h2>
         <div className="chips">
-          {HAPPENED.map((h) => (
+          {/* A talk logged afterwards already happened, so "Not yet" isn't offered. */}
+          {HAPPENED.filter((h) => !plan.unplanned || h.value !== "not-yet").map((h) => (
             <button key={h.value} className={`chip${happened === h.value ? " selected" : ""}`} onClick={() => setHappened(h.value)}>
               {h.label}
             </button>

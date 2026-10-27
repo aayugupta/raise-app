@@ -128,6 +128,8 @@ Failures go on a watch list. Accepted claims still need human approval before re
 
 A **completed conversation** = a topic the parent planned, started in the planned window ("Start", then "Done" at least 5 minutes later), reflected on within 24 hours, and followed up at 3 days, all within 14 days of choosing it. Target: 40% of topics started. Crisis topics are left out.
 
+**Change (27 Oct 2026, Aayushi's decision): unplanned talks count too.** A parent can log a talk that happened without a plan ("I had a talk" on Home). It counts as completed when it's reflected on within 24 hours of logging (and it happened) and the 3-day follow-up matches, within 14 days. The "planned" and "started on time" steps don't apply to it. Report planned and unplanned completions separately, so Raise's effect stays visible.
+
 ## How to work
 
 - Plain explanations, one screen at a time, her design first.

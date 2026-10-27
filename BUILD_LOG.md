@@ -4,6 +4,35 @@ What we built, what broke, and how we fixed it. Newest entries at the top.
 
 ---
 
+## 2026-10-27 — "I had a talk" (logging unplanned talks)
+
+**Why**
+- Aayushi spotted that parents could only reflect on a talk they had **planned** in Raise. A talk that just happened (in the car, at dinner) had nowhere to go.
+
+**Decided (Aayushi)**
+- Add an "I had a talk" button.
+- **Unplanned talks count in the metric.** This changes Step 2: an unplanned talk is completed when it's reflected on within 24 hours of logging (and it happened) and the 3-day follow-up matches, within 14 days. Recorded in `CLAUDE.md`.
+- No "My talks" history for now.
+
+**Built**
+- **"💬 I had a talk"** on Home, under Start a new topic.
+- `app/log/page.tsx`: "Had a talk? Note it here. Talks that just happen count too." Three taps: **what** (6 topics), **when** (Today / Yesterday / Earlier this week), **where** (walk, evening, chores, meal, car). Then the same 30-second reflection, with the danger-sign check, repair path and 3-day follow-up.
+- The talk is saved on the phone as already done and marked unplanned. Reflection asks **"Did you get into the topic?"** with Yes / Partly only (no "Not yet", since it already happened).
+- New anonymous event `talk_logged` (topic, moment, when: fixed choices only).
+- `supabase/schema.sql`: logged talks start a topic, count toward completion, and **completion_rate now also shows `completed_after_a_plan` and `completed_unplanned_only` separately**, so Raise's own effect stays visible.
+
+**Broke**
+- The 6 topic buttons on the new screen had no names for screen readers.
+
+**Fix**
+- Added labels.
+
+**Checked**
+- Home → I had a talk → Friends, Yesterday, In the car → reflection shows Yes / Partly. Saved as unplanned, 1 day ago, done.
+- `npm test`: 8/8 files (events test now includes `talk_logged`, and refuses a free-text place). Build passes.
+
+---
+
 ## 2026-10-27 — Safety and polish pass
 
 **Built**
