@@ -1,7 +1,7 @@
 // The ONLY things Raise ever sends off the phone: fixed event names with fixed-choice fields.
 // No free text, no names, no nickname, no reflection notes. The server rejects anything not listed here.
 
-const TOPIC = ["relationships", "stress", "friends", "online-safety", "consent", "body", "study", "screen-time"];
+const TOPIC = ["relationships", "stress", "friends", "online-safety", "consent", "body"];
 const BOOL = [true, false];
 const PLAN_ID = /^[a-z0-9-]{6,64}$/i; // random id made on the phone
 
@@ -10,7 +10,7 @@ type FieldRule = readonly (string | boolean)[] | RegExp;
 export const EVENTS: Record<string, Record<string, FieldRule>> = {
   setup_completed: {
     role: ["mother", "father", "guardian"],
-    age_band: ["10-13", "14-16", "17-19"],
+    age_band: ["12-14", "15-16", "17-19"],
     language: ["hinglish", "hindi", "english"],
     comfort: ["gentle", "open"],
   },

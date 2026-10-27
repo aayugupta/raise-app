@@ -169,6 +169,45 @@ h3 {
   background: #e6f2f0;
 }
 
+/* Setup: a small question heading, and answers side by side (age, gender, topics). */
+.setup-question {
+  font-family: inherit;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 22px 0 10px;
+}
+
+.option-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.option-row .option {
+  text-align: center;
+  padding: 13px 4px;
+  font-size: 15px;
+  line-height: 1.2;
+}
+
+.topic-pick {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.topic-pick .option {
+  padding: 12px 10px;
+  font-size: 15px;
+  line-height: 1.25;
+}
+
+.btn-link:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
 /* Logo: sprout above the wordmark */
 .logo {
   display: inline-flex;
@@ -228,9 +267,9 @@ h3 {
   position: relative;
 }
 
-/* Hills shrink on short screens; they crop from the top, so only sky is lost. */
+/* The family and hills shrink on short screens; they crop from the top, so only sky is lost. */
 .welcome-bottom svg {
-  height: clamp(110px, 24vh, 220px);
+  height: clamp(150px, 30vh, 240px);
 }
 
 .welcome-action {

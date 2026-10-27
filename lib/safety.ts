@@ -111,8 +111,6 @@ const TOPIC_WORDS: { id: TopicId; pattern: RegExp }[] = [
   { id: "online-safety", pattern: /online|instagram|\binsta\b|social media|internet|scam|cyber/g },
   { id: "consent", pattern: /consent|\btouch|personal safety|say no|stranger|\bsafe/g },
   { id: "body", pattern: /period|puberty|\bbody\b|growing up|pimple|height|weight|shave/g },
-  { id: "study", pattern: /study|studies|career|college|tuition|\bboards?\b|future|padhai|coaching/g },
-  { id: "screen-time", pattern: /\bphone\b|mobile|screen|gaming|\bgames?\b|reels?|youtube|addict/g },
 ];
 
 export function checkSetupText(text: string): TextCheck {

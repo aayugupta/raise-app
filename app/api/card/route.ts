@@ -12,7 +12,7 @@ const RETRY_IF_UNDER_MS = 4000;
 
 const ALLOWED = {
   role: ["mother", "father", "guardian"],
-  ageBand: ["10-13", "14-16", "17-19"],
+  ageBand: ["12-14", "15-16", "17-19"],
   teenGender: ["girl", "boy", "unsaid"],
   language: ["hinglish", "hindi", "english"],
   comfort: ["gentle", "open"],

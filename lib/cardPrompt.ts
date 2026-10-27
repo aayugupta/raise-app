@@ -26,9 +26,9 @@ const TEEN_RULES: Record<Family["teenGender"], string> = {
 };
 
 const AGE_RULES: Record<Family["ageBand"], string> = {
-  "10-13":
-    "The child is 10 to 13: keep it simple, light and concrete. Talk about friends, school and 'kids your age', never the child's own romantic or sexual life.",
-  "14-16": "The teen is 14 to 16: start with friends and 'people your age'; only gently touch on the teen's own life.",
+  "12-14":
+    "The child is 12 to 14: keep it simple, light and concrete. Talk about friends, school and 'people your age', never the child's own romantic or sexual life.",
+  "15-16": "The teen is 15 or 16: start with friends and 'people your age'; only gently touch on the teen's own life.",
   "17-19":
     "The young person is 17 to 19: they are close to adulthood. You may ask about their own life and choices directly, and respect their independence.",
 };

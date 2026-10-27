@@ -9,7 +9,7 @@ import HelpPill from "@/components/HelpPill";
 import { currentFirstLine } from "@/lib/cards";
 import { isFollowUpDue } from "@/lib/followUp";
 import { activeJourneys, type Journey } from "@/lib/journey";
-import { loadProfile, type Profile } from "@/lib/profile";
+import { greetName, loadProfile, type Profile } from "@/lib/profile";
 import { loadReflections, type Reflection } from "@/lib/reflections";
 import { loadOpenTopics, loadPlans, momentOf, planStage, type Plan } from "@/lib/talks";
 import { TOPICS, type TopicId } from "@/lib/topics";
@@ -70,7 +70,7 @@ export default function Home() {
   const followUps = reflections.filter((r) => isFollowUpDue(r, now));
   // The "It's time" banner already covers plans happening now, so they're not repeated below.
   const journeys = activeJourneys(plans, openTopics, now).filter((j) => !nowPlans.some((p) => p.id === j.planId));
-  const name = profile.nickname || "there";
+  const name = greetName(profile);
 
   return (
     <main className="has-bottom-nav" style={{ minHeight: "100dvh", background: "var(--cream)" }}>

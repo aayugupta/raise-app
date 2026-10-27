@@ -7,7 +7,7 @@ const body = Nunito({ subsets: ["latin"], variable: "--font-body" });
 
 export const metadata: Metadata = {
   title: "Raise",
-  description: "Better conversations. A stronger tomorrow. Practical support for parents to have meaningful conversations with their teenagers.",
+  description: "Better conversations. Brighter tomorrows. Guiding parents to build stronger bonds, one conversation at a time.",
 };
 
 export const viewport: Viewport = {

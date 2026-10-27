@@ -25,8 +25,6 @@ const cases = [
   ["too much time on instagram and reels", "ok", "online-safety"],
   ["periods and puberty", "ok", "body"],
   ["saying no to people, personal safety", "ok", "consent"],
-  ["Worried about his career and college choice", "ok", "study"],
-  ["He is on his phone and gaming till 2 am", "ok", "screen-time"],
   ["", "ok", undefined],
   ["just want to be closer", "ok", undefined],
 ];

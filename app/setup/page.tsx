@@ -8,91 +8,52 @@ import ConfidenceScale from "@/components/ConfidenceScale";
 import { CONFIDENCE_QUESTION, recordConfidence } from "@/lib/confidence";
 import { track } from "@/lib/events";
 import { saveProfile, type Profile } from "@/lib/profile";
-import { PROFILE_CHOICES, type ChoiceKey } from "@/lib/profileOptions";
-import { checkSetupText, HELP_LINES, type TextCheck } from "@/lib/safety";
-import { topicName, type TopicId } from "@/lib/topics";
+import { PROFILE_CHOICES } from "@/lib/profileOptions";
+import { addOpenTopic } from "@/lib/talks";
+import { TOPICS, type TopicId } from "@/lib/topics";
 
-// Screen 2: Setup (D1, FR1). One question per screen, tap to answer, under a minute.
-// Every question says why it is asked. No phone number, email or password.
+// Screens 2–4 of Aayushi's simplified flow (28 Oct 2026, FR1): about you, about your teen,
+// confidence + first topic. All taps, no typing, no phone number, email or password.
+// Language and "how openly you talk" are no longer asked: Hinglish and gentle by default, changeable in Profile.
 
-type Answers = Partial<Pick<Profile, ChoiceKey>>;
-
-type Step =
-  | { kind: "nickname"; question: string; why: string }
-  | { kind: "choice"; key: ChoiceKey; question: string; why: string; options: { value: string; label: string }[] }
-  | { kind: "confidence"; question: string; why: string }
-  | { kind: "wish"; question: string; why: string };
-
-const STEPS: Step[] = [
-  {
-    kind: "nickname",
-    question: "What should we call you?",
-    why: "Only to greet you. No real name needed.",
-  },
-  // Role, age band, gender, language, comfort: shared with Profile (lib/profileOptions.ts).
-  ...PROFILE_CHOICES.map((c) => ({ kind: "choice" as const, key: c.key, question: c.question, why: c.why, options: c.options })),
-  {
-    kind: "confidence",
-    question: CONFIDENCE_QUESTION,
-    why: "There's no right answer. We'll ask again after your talks, so you can see how it changes.",
-  },
-  {
-    kind: "wish",
-    question: "Is there something you'd like to talk about with your teen?",
-    why: "It helps us suggest where to start. It stays on your phone.",
-  },
-];
+const ROLE = PROFILE_CHOICES.find((c) => c.key === "role")!;
+const AGE = PROFILE_CHOICES.find((c) => c.key === "ageBand")!;
+const GENDER = PROFILE_CHOICES.find((c) => c.key === "teenGender")!;
+const STEPS = 3;
 
 export default function Setup() {
   const router = useRouter();
-  const [stepIndex, setStepIndex] = useState(0);
-  const [nickname, setNickname] = useState("");
-  const [answers, setAnswers] = useState<Answers>({});
-  const [wish, setWish] = useState("");
+  const [step, setStep] = useState(0);
+  const [role, setRole] = useState<Profile["role"] | null>(null);
+  const [ageBand, setAgeBand] = useState<Profile["ageBand"] | null>(null);
+  const [teenGender, setTeenGender] = useState<Profile["teenGender"] | null>(null);
   const [confidence, setConfidence] = useState<number | null>(null);
-  const [check, setCheck] = useState<Exclude<TextCheck, { kind: "ok" }> | null>(null);
-
-  const step = STEPS[stepIndex];
+  const [topic, setTopic] = useState<TopicId | null>(null);
 
   function goBack() {
-    if (check) return setCheck(null);
-    if (stepIndex === 0) return router.push("/");
-    setStepIndex(stepIndex - 1);
+    if (step === 0) return router.push("/");
+    setStep(step - 1);
   }
 
-  function choose(key: ChoiceKey, value: string) {
-    setAnswers({ ...answers, [key]: value });
-    setStepIndex(stepIndex + 1);
-  }
-
-  function finish(keptWish: string, suggestedTopic?: TopicId) {
-    saveProfile({
-      nickname: nickname.trim(),
-      role: answers.role ?? "guardian",
-      ageBand: answers.ageBand ?? "14-16",
-      teenGender: answers.teenGender ?? "unsaid",
-      language: answers.language ?? "hinglish",
-      comfort: answers.comfort ?? "gentle",
-      wish: keptWish,
-      suggestedTopic,
+  function finish(firstTopic: TopicId | null) {
+    const profile: Profile = {
+      nickname: "",
+      role: role ?? "guardian",
+      ageBand: ageBand ?? "15-16",
+      teenGender: teenGender ?? "unsaid",
+      language: "hinglish",
+      comfort: "gentle",
+      wish: "",
+      suggestedTopic: firstTopic ?? undefined,
       createdAt: new Date().toISOString(),
-    });
+    };
+    saveProfile(profile);
     if (confidence) recordConfidence(confidence, "setup");
-    // Tapped answers only: never the nickname or what the parent typed.
-    track("setup_completed", {
-      role: answers.role ?? "guardian",
-      age_band: answers.ageBand ?? "14-16",
-      language: answers.language ?? "hinglish",
-      comfort: answers.comfort ?? "gentle",
-    });
-    router.push("/privacy");
-  }
-
-  function submitWish() {
-    const result = checkSetupText(wish);
-    if (result.kind === "ok") return finish(wish.trim(), result.suggestedTopic);
-    if (result.kind === "crisis") track("help_shown", { from: "setup" });
-    setCheck(result);
+    // The chosen topic shows on Home under "Continue your journey" (step 1, Prepare).
+    if (firstTopic) addOpenTopic(firstTopic);
+    // Tapped answers only.
+    track("setup_completed", { role: profile.role, age_band: profile.ageBand, language: profile.language, comfort: profile.comfort });
+    router.push("/home");
   }
 
   return (
@@ -103,144 +64,116 @@ export default function Setup() {
           <button onClick={goBack} className="icon-btn" aria-label="Back">
             ←
           </button>
-          <div className="progress" aria-label={`Question ${stepIndex + 1} of ${STEPS.length}`}>
-            <div style={{ width: `${((stepIndex + 1) / STEPS.length) * 100}%` }} />
+          <div className="progress" aria-label={`Step ${step + 1} of ${STEPS}`}>
+            <div style={{ width: `${((step + 1) / STEPS) * 100}%` }} />
           </div>
           <span style={{ fontSize: 14, color: "var(--muted)", minWidth: 32, textAlign: "right" }}>
-            {stepIndex + 1}/{STEPS.length}
+            {step + 1}/{STEPS}
           </span>
           <HelpPill />
         </div>
 
-        <div className="illustration-panel">
-          <FamilySofa />
-        </div>
-
-        {check ? (
-          <CheckResult
-            check={check}
-            onUseTopic={(topic) => finish("", topic)}
-            onContinue={() => finish("")}
-            onEdit={() => setCheck(null)}
-          />
-        ) : (
+        {/* Screen 2: About you */}
+        {step === 0 && (
           <>
-            <h1 style={{ fontSize: 28, lineHeight: 1.15, textWrap: "balance" }}>{step.question}</h1>
-            <p className="why">{step.why}</p>
-
-            {step.kind === "nickname" && (
-              <>
-                <input
-                  className="text-input"
-                  value={nickname}
-                  onChange={(e) => setNickname(e.target.value)}
-                  placeholder="e.g. Mumma, Papa, Meera"
-                  maxLength={20}
-                  autoComplete="off"
-                />
-                <button className="btn-primary btn-block" onClick={() => setStepIndex(1)}>
-                  {nickname.trim() ? "Continue" : "Skip"}
+            <div className="illustration-panel">
+              <FamilySofa />
+            </div>
+            <h1 style={{ fontSize: 30, lineHeight: 1.15 }}>Hey there!</h1>
+            <p className="why">You're not just a username. We want to get to know you!</p>
+            <h2 className="setup-question">You are your child's…</h2>
+            <div style={{ display: "grid", gap: 10 }}>
+              {ROLE.options.map((o) => (
+                <button
+                  key={o.value}
+                  className={`option${role === o.value ? " selected" : ""}`}
+                  onClick={() => {
+                    setRole(o.value as Profile["role"]);
+                    setStep(1);
+                  }}
+                >
+                  {o.value === "guardian" ? "Guardian" : o.label}
                 </button>
-              </>
-            )}
+              ))}
+            </div>
+          </>
+        )}
 
-            {step.kind === "choice" && (
-              <div style={{ display: "grid", gap: 10 }}>
-                {step.options.map((o) => (
-                  <button
-                    key={o.value}
-                    className={`option${answers[step.key] === o.value ? " selected" : ""}`}
-                    onClick={() => choose(step.key, o.value)}
-                  >
-                    {o.label}
-                  </button>
-                ))}
-              </div>
-            )}
+        {/* Screen 3: About your teen */}
+        {step === 1 && (
+          <>
+            <h1 style={{ fontSize: 28, lineHeight: 1.15, marginTop: 24 }}>About your child</h1>
+            <p className="why">So every first line fits your child's age. Your answers stay on this phone.</p>
 
-            {step.kind === "confidence" && (
-              <ConfidenceScale
-                value={confidence}
-                onChoose={(v) => {
-                  setConfidence(v);
-                  setStepIndex(stepIndex + 1);
-                }}
-              />
-            )}
-
-            {step.kind === "wish" && (
-              <>
-                <textarea
-                  className="text-input"
-                  value={wish}
-                  onChange={(e) => setWish(e.target.value)}
-                  placeholder="e.g. She has a crush and I don't know how to bring it up"
-                  maxLength={200}
-                  rows={3}
-                />
-                <p style={{ fontSize: 13, color: "var(--muted)", margin: "6px 0 16px" }}>
-                  Please don't write names or private details.
-                </p>
-                <button className="btn-primary btn-block" onClick={submitWish}>
-                  {wish.trim() ? "Continue" : "Skip, I'll pick a topic"}
+            <h2 className="setup-question">Child's age</h2>
+            <div className="option-row" role="radiogroup" aria-label="Child's age">
+              {AGE.options.map((o) => (
+                <button
+                  key={o.value}
+                  role="radio"
+                  aria-checked={ageBand === o.value}
+                  className={`option${ageBand === o.value ? " selected" : ""}`}
+                  onClick={() => setAgeBand(o.value as Profile["ageBand"])}
+                >
+                  {o.label.replace(" to ", "–")}
                 </button>
-              </>
+              ))}
+            </div>
+
+            <h2 className="setup-question">Your child is</h2>
+            <div className="option-row" role="radiogroup" aria-label="Your child is">
+              {GENDER.options.map((o) => (
+                <button
+                  key={o.value}
+                  role="radio"
+                  aria-checked={teenGender === o.value}
+                  className={`option${teenGender === o.value ? " selected" : ""}`}
+                  onClick={() => setTeenGender(o.value as Profile["teenGender"])}
+                >
+                  {{ girl: "Girl", boy: "Boy" }[o.value] ?? o.label}
+                </button>
+              ))}
+            </div>
+
+            <button className="btn-primary btn-block" style={{ marginTop: 24 }} disabled={!ageBand || !teenGender} onClick={() => setStep(2)}>
+              Next
+            </button>
+          </>
+        )}
+
+        {/* Screen 4: Confidence + first topic */}
+        {step === 2 && (
+          <>
+            <h1 style={{ fontSize: 26, lineHeight: 1.2, marginTop: 24, textWrap: "balance" }}>{CONFIDENCE_QUESTION}</h1>
+            <p className="why">There's no right answer. We'll ask again after your talks, so you can see how it changes.</p>
+            <ConfidenceScale value={confidence} onChoose={setConfidence} />
+
+            <h2 className="setup-question">Which topic would you like to talk about with your child?</h2>
+            <div className="topic-pick">
+              {TOPICS.map((t) => (
+                <button
+                  key={t.id}
+                  className={`option${topic === t.id ? " selected" : ""}`}
+                  aria-pressed={topic === t.id}
+                  onClick={() => setTopic(topic === t.id ? null : t.id)}
+                >
+                  <span aria-hidden="true">{t.icon}</span> {t.short}
+                </button>
+              ))}
+            </div>
+
+            <button className="btn-primary btn-block" style={{ marginTop: 20 }} disabled={!confidence || !topic} onClick={() => finish(topic)}>
+              Continue
+            </button>
+            <button className="btn-link" disabled={!confidence} onClick={() => finish(null)}>
+              Skip, I'll choose later
+            </button>
+            {!confidence && (
+              <p style={{ fontSize: 13, color: "var(--muted)", textAlign: "center", margin: "4px 0 0" }}>Pick a number from 1 to 5 first.</p>
             )}
           </>
         )}
       </div>
     </main>
-  );
-}
-
-function CheckResult({
-  check,
-  onUseTopic,
-  onContinue,
-  onEdit,
-}: {
-  check: Exclude<TextCheck, { kind: "ok" }>;
-  onUseTopic: (topic: TopicId) => void;
-  onContinue: () => void;
-  onEdit: () => void;
-}) {
-  if (check.kind === "crisis") {
-    return (
-      <div className="notice">
-        <h2 style={{ fontSize: 24 }}>This sounds serious.</h2>
-        <p>Would you like help from a professional? You don't have to handle this alone.</p>
-        <ul style={{ listStyle: "none", padding: 0, margin: "12px 0", display: "grid", gap: 8 }}>
-          {HELP_LINES.map((h) => (
-            <li key={h.number}>
-              <a href={`tel:${h.number}`} className="help-line">
-                <strong>
-                  {h.name} · {h.number}
-                </strong>
-                <span>{h.note}</span>
-              </a>
-            </li>
-          ))}
-        </ul>
-        <a href="/help" className="btn-primary btn-block" style={{ marginBottom: 10 }}>
-          See what to do now
-        </a>
-        <button className="btn-secondary btn-block" onClick={onContinue}>
-          Not now, continue setup
-        </button>
-      </div>
-    );
-  }
-
-  return (
-    <div className="notice">
-      <p style={{ fontWeight: 700, marginTop: 0 }}>{check.message}</p>
-      <p>{check.offerText}</p>
-      <button className="btn-primary btn-block" onClick={() => onUseTopic(check.offer)}>
-        Start with {topicName(check.offer)}
-      </button>
-      <button className="btn-link" onClick={onEdit}>
-        Change what I wrote
-      </button>
-    </div>
   );
 }

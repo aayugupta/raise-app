@@ -17,7 +17,7 @@ const check = (name, ok) => {
 
 const j = activeJourneys(
   [plan("a", "stress", -20), plan("b", "online-safety", 26), plan("c", "friends", 0.3), plan("d", "body", -50, { reflectedAt: iso(now - 40 * H) })],
-  ["study", "online-safety"],
+  ["consent", "online-safety"],
   now
 );
 const byTopic = Object.fromEntries(j.map((x) => [x.topic, x]));
@@ -25,7 +25,7 @@ const byTopic = Object.fromEntries(j.map((x) => [x.topic, x]));
 check("past, not reflected → step 3 Reflect", byTopic.stress?.step === 3 && byTopic.stress.href === "/reflect/a");
 check("planned for tomorrow → step 2 Talk", byTopic["online-safety"]?.step === 2);
 check("happening now → step 2 with Talk mode", byTopic.friends?.step === 2 && byTopic.friends.href === "/talk/c");
-check("opened, not planned → step 1 Prepare", byTopic.study?.step === 1 && byTopic.study.href === "/card/study");
+check("opened, not planned → step 1 Prepare", byTopic.consent?.step === 1 && byTopic.consent.href === "/card/consent");
 check("an open topic that's already planned isn't shown twice", j.filter((x) => x.topic === "online-safety").length === 1);
 check("reflected talks are finished and not shown", !byTopic.body);
 check("most urgent first (Reflect before Talk before Prepare)", j[0].step === 3 && j[j.length - 1].step === 1);

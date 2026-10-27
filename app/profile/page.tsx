@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import BottomNav from "@/components/BottomNav";
 import HelpPill from "@/components/HelpPill";
 import Logo from "@/components/Logo";
-import { clearMyData, loadProfile, updateProfile, type Profile } from "@/lib/profile";
+import { clearMyData, greetName, loadProfile, updateProfile, type Profile } from "@/lib/profile";
 import { choiceLabel, PROFILE_CHOICES, type ChoiceKey } from "@/lib/profileOptions";
 
 // Screen 15: Profile / Settings (brainstorm screen 14), adapted to Raise's rules:
@@ -53,7 +53,7 @@ export default function ProfileScreen() {
     router.replace("/");
   }
 
-  const name = profile.nickname || "there";
+  const name = greetName(profile);
 
   return (
     <main className="has-bottom-nav" style={{ minHeight: "100dvh", background: "var(--cream)" }}>
@@ -155,7 +155,7 @@ export default function ProfileScreen() {
           {about && (
             <div className="settings-note" style={{ textAlign: "center" }}>
               <Logo size={40} />
-              <p style={{ margin: "10px 0 6px", fontWeight: 700, color: "var(--ink)" }}>Better conversations. A stronger tomorrow.</p>
+              <p style={{ margin: "10px 0 6px", fontWeight: 700, color: "var(--ink)" }}>Better conversations. Brighter tomorrows.</p>
               <p style={{ margin: 0 }}>
                 Raise gives you a first line, a good moment and calm words for hard talks with your teen. It's built from a survey of
                 Indian parents and teens. Talk Cards are written with Google's Gemini AI and checked against safety rules. Raise

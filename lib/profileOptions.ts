@@ -27,8 +27,8 @@ export const PROFILE_CHOICES: {
     question: "How old is your child?",
     why: "Openers are matched to their age. Younger children get gentler ones that start with their friends.",
     options: [
-      { value: "10-13", label: "10 to 13" },
-      { value: "14-16", label: "14 to 16" },
+      { value: "12-14", label: "12 to 14" },
+      { value: "15-16", label: "15 to 16" },
       { value: "17-19", label: "17 to 19" },
     ],
   },

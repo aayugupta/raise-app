@@ -4,7 +4,7 @@ import type { TopicId } from "./topics";
 export type Profile = {
   nickname: string;
   role: "mother" | "father" | "guardian";
-  ageBand: "10-13" | "14-16" | "17-19";
+  ageBand: "12-14" | "15-16" | "17-19";
   teenGender: "girl" | "boy" | "unsaid";
   language: "hinglish" | "hindi" | "english";
   comfort: "gentle" | "open";
@@ -45,8 +45,16 @@ export function clearMyData(): void {
   } catch {}
 }
 
-// Age bands changed on 27 Oct 2026 (13–15 / 16–18 → 10–13 / 14–16 / 17–19).
-const OLD_AGE_BANDS: Record<string, Profile["ageBand"]> = { "13-15": "14-16", "16-18": "17-19" };
+// How Home and Profile greet the parent. Setup no longer asks for a nickname (28 Oct 2026),
+// so the greeting comes from the role; a nickname set earlier (or in Profile) still wins.
+export function greetName(profile: Profile): string {
+  if (profile.nickname) return profile.nickname;
+  return profile.role === "mother" ? "Mumma" : profile.role === "father" ? "Papa" : "there";
+}
+
+// Age bands changed on 27 Oct 2026 (13–15 / 16–18 → 10–13 / 14–16 / 17–19)
+// and again on 28 Oct 2026 (→ 12–14 / 15–16 / 17–19). Old answers move to the closest band.
+const OLD_AGE_BANDS: Record<string, Profile["ageBand"]> = { "13-15": "12-14", "16-18": "17-19", "10-13": "12-14", "14-16": "15-16" };
 
 export function loadProfile(): Profile | null {
   try {
