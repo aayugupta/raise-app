@@ -1,0 +1,215 @@
+{
+  "safetyPromise": "Whatever you tell me, you won't be in trouble for telling me. We'll figure it out together.",
+  "cards": [
+    {
+      "id": "relationships",
+      "name": "Relationships and crushes",
+      "teenQuestion": "How do you know if someone is good for you?",
+      "whyNow": "10 of 12 teens in our survey wish their parents talked about relationships more, but only 1 of 12 learns mainly from parents. Friends and Instagram fill the gap.",
+      "whySource": "Raise teen survey, Oct 2026",
+      "firstLine": {
+        "hinglish": "Tumhare friends mein aajkal kisi ko koi pasand hai? Log kaise pata karte hain?",
+        "hindi": "तुम्हारे दोस्तों में आजकल किसी को कोई पसंद है? लोग कैसे पता करते हैं?",
+        "english": "Do any of your friends like someone these days? How do people figure it out?"
+      },
+      "followUps": [
+        "What do you think makes someone good for you?",
+        "A lot of what we see in shows and online isn't how real relationships work. What feels fake to you?"
+      ],
+      "say": [
+        "You won't be in trouble for telling me.",
+        "It's normal to like someone. I liked people at your age too.",
+        "Real relationships aren't like what's shown in films or online. You can always ask me what's real."
+      ],
+      "avoid": [
+        "You're too young for this.",
+        "Who is it? Tell me their name.",
+        "Jokes or teasing about crushes, even kind ones."
+      ],
+      "react": {
+        "quiet": "No rush. We can talk another time. I'm here whenever.",
+        "upset": "I'm not checking up on you. I just want you to be able to come to me.",
+        "disagree": "That's fair. Tell me how it looks from your side.",
+        "noTalk": "Okay. Just know you can ask me anything, any time. No questions asked."
+      },
+      "getHelp": "if your teen mentions being pressured, threatened, hurt, or asked for photos → see the help screen (Childline 1098, Cybercrime 1930).",
+      "sources": "Raise teen survey, 12 teens, Oct 2026",
+      "checkedOn": "25 Oct 2026"
+    },
+    {
+      "id": "stress",
+      "name": "Stress and feelings",
+      "teenQuestion": "What do you do when everything feels like too much?",
+      "whyNow": "81% of Indian school students say exams and results cause them anxiety. Teens in our survey said they want to be heard, not given advice straight away.",
+      "whySource": "NCERT mental health survey, 2022 · Raise teen survey, Oct 2026",
+      "firstLine": {
+        "hinglish": "Aajkal tumhare mann mein sabse zyada kya chal raha hai? Bas sunne ka mann hai, kuch solve nahi karna.",
+        "hindi": "आजकल तुम्हारे मन में सबसे ज़्यादा क्या चल रहा है? बस सुनने का मन है, कुछ सुलझाना नहीं है।",
+        "english": "What's taking up most of your headspace these days? I just want to listen, not fix anything."
+      },
+      "followUps": [
+        "What helps you feel a bit better when it gets heavy?",
+        "Is there anything I do that makes it harder?"
+      ],
+      "say": [
+        "You won't be in trouble for telling me.",
+        "That sounds really hard. Thank you for telling me.",
+        "You don't have to handle this alone."
+      ],
+      "avoid": [
+        "Just don't think about it or \"cheer up\".",
+        "Comparing them with siblings, cousins or other kids.",
+        "Jumping straight to advice or solutions."
+      ],
+      "react": {
+        "quiet": "That's okay. We can just sit for a bit.",
+        "upset": "I'm sorry. I'm not trying to push. I'm on your side.",
+        "disagree": "You know your life better than I do. Help me understand.",
+        "noTalk": "Okay. If you ever want to talk, even at midnight, I'm here."
+      },
+      "getHelp": "if for weeks your teen isn't eating or sleeping properly, pulls away from everyone, or says life feels pointless → Tele-MANAS 14416 (free, 24×7). If they talk about hurting themselves → 112 now, and stay with them.",
+      "sources": "NCERT student mental health survey, 2022 · Raise teen survey, Oct 2026",
+      "checkedOn": "25 Oct 2026"
+    },
+    {
+      "id": "friends",
+      "name": "Friends and peer pressure",
+      "teenQuestion": "How do you say no to friends without losing them?",
+      "whyNow": "10 of 12 teens in our survey learn mainly from friends, and 7 of 12 want parents to talk more about friends. They want questions about their world, not rules.",
+      "whySource": "Raise teen survey, Oct 2026",
+      "firstLine": {
+        "hinglish": "Tumhare group mein aajkal sab kis cheez ke peeche pade hain? Kya trend chal raha hai?",
+        "hindi": "तुम्हारे ग्रुप में आजकल सब किस चीज़ के पीछे पड़े हैं? क्या ट्रेंड चल रहा है?",
+        "english": "What's everyone in your group into these days? What's the big thing right now?"
+      },
+      "followUps": [
+        "Has anyone in your group ever been pushed into something they didn't want to do?",
+        "What do you think makes someone a good friend?"
+      ],
+      "say": [
+        "You won't be in trouble for telling me.",
+        "Saying no to a friend is hard. Even adults find it hard.",
+        "If you ever need a way out, you can blame me. Say 'my parents won't allow it'."
+      ],
+      "avoid": [
+        "Those friends are a bad influence.",
+        "Questions that sound like an interrogation (who, where, how late).",
+        "When I was your age… lectures."
+      ],
+      "react": {
+        "quiet": "No pressure. I was just curious about your world.",
+        "upset": "I'm not judging your friends. I just want to know what your days are like.",
+        "disagree": "Fair enough. What am I missing?",
+        "noTalk": "Okay. My offer stands: you can always use me as your excuse."
+      },
+      "getHelp": "if your teen is being bullied, threatened, or pushed into alcohol, drugs or anything risky → see the help screen (Childline 1098; Cybercrime 1930 if it's online).",
+      "sources": "Raise teen survey, 12 teens, Oct 2026",
+      "checkedOn": "25 Oct 2026"
+    },
+    {
+      "id": "online-safety",
+      "name": "Online safety (photo blackmail, fake images, bullying)",
+      "teenQuestion": "What would you do if someone online asked for a photo?",
+      "whyNow": "45% of Indian children who faced cyberbullying hid it from their parents. AI apps can now turn any normal photo into a fake one, and there have been cases in Indian colleges (IIIT Raipur, 2025).",
+      "whySource": "McAfee, 2022 · OECD AI incident report, 2025",
+      "firstLine": {
+        "hinglish": "Tum log online sabse zyada kahan time spend karte ho? Mujhe bhi samjhao, main thoda peeche hoon.",
+        "hindi": "तुम लोग ऑनलाइन सबसे ज़्यादा कहाँ समय बिताते हो? मुझे भी समझाओ, मैं थोड़ा पीछे हूँ।",
+        "english": "Where do you and your friends spend most of your time online? Teach me, I'm a bit behind."
+      },
+      "followUps": [
+        "Have you heard of anyone getting a weird message or a photo threat? What did they do?",
+        "If something like that happened to a friend, what would you tell them?"
+      ],
+      "say": [
+        "If anyone ever threatens you with a photo, come straight to me. You won't be in trouble.",
+        "It's never the fault of the person being threatened.",
+        "Even a fake photo can be reported and taken down. There's help for this."
+      ],
+      "avoid": [
+        "Just don't post photos, then nothing will happen. (Fake images can be made from any normal photo.)",
+        "Threatening to take the phone away. Teens hide problems when they fear losing it.",
+        "Checking their phone secretly."
+      ],
+      "react": {
+        "quiet": "That's okay. I just want you to know the door's open.",
+        "upset": "I'm not accusing you of anything. I trust you. I just don't trust some people online.",
+        "disagree": "You probably know more about this than me. Tell me what I've got wrong.",
+        "noTalk": "Okay. Just remember: whatever happens online, you won't be in trouble for telling me."
+      },
+      "getHelp": "if your teen is being blackmailed or threatened, or a fake or private image is shared → Cybercrime 1930 or cybercrime.gov.in, and Take It Down to remove images. Don't pay, don't delete messages (they're evidence), don't contact the person yourself, and don't blame your teen.",
+      "sources": "McAfee, Cyberbullying in Plain Sight, India 2022 · OECD AI incident report (IIIT Raipur), 2025",
+      "checkedOn": "25 Oct 2026"
+    },
+    {
+      "id": "consent",
+      "name": "Consent and personal safety",
+      "teenQuestion": "Is it okay to say no, even to someone you know?",
+      "whyNow": "Most people who harm children are known to them: about 97% of offenders in India's POCSO cases knew the child. Only 6 of 18 parents in our survey have talked about consent.",
+      "whySource": "NCRB, 2024 · Raise parent survey, Oct 2026",
+      "firstLine": {
+        "hinglish": "Kabhi aisa hua hai ki kisi friend ko kuch karne ka mann nahi tha, par woh mana nahi kar paaya? Log aisa kyun karte hain?",
+        "hindi": "कभी ऐसा हुआ है कि किसी दोस्त का कुछ करने का मन नहीं था, पर वह मना नहीं कर पाया? लोग ऐसा क्यों करते हैं?",
+        "english": "Has a friend ever not wanted to do something but couldn't say no? Why do you think people go along with it?"
+      },
+      "followUps": [
+        "How can you tell when someone really means yes, and when they just feel they have to say it?",
+        "Who are the adults you'd feel okay going to if something felt wrong?"
+      ],
+      "say": [
+        "You won't be in trouble for telling me, whoever it's about.",
+        "You can say no to anyone, even family, teachers or friends, if something feels wrong.",
+        "Other people's no counts too. Asking first is always right."
+      ],
+      "avoid": [
+        "Strangers are the danger. (Most harm comes from people a child knows.)",
+        "Blaming questions like \"Why were you there?\" or \"What were you wearing?\"",
+        "Respect your elders, do what they say, without exceptions for safety."
+      ],
+      "react": {
+        "quiet": "That's okay. I just want you to know you can always say no, and always tell me.",
+        "upset": "I'm not worried about anything you did. I just want you to feel safe.",
+        "disagree": "Tell me more. How do people your age think about it?",
+        "noTalk": "Okay. Just remember: if anyone ever makes you uncomfortable, you can tell me, and you won't be in trouble."
+      },
+      "getHelp": "if your teen tells you someone touched them, hurt them or made them feel unsafe → stay calm, believe them, and call Childline 1098, or 112 if they're in danger now. Don't confront the person yourself.",
+      "sources": "NCRB Crime in India 2024, POCSO data · Raise parent survey, 18 parents, Oct 2026",
+      "checkedOn": "25 Oct 2026"
+    },
+    {
+      "id": "body",
+      "name": "Body and growing up",
+      "teenQuestion": "Is what's happening to my body normal?",
+      "whyNow": "Puberty questions are often left to school or friends. In a 2026 Bengaluru study, 52% of mothers had never talked about reproductive health with their daughters, and boys usually get even less guidance.",
+      "whySource": "Rashmi et al., Bengaluru, 2026 · Likith, Bengaluru, 2024",
+      "firstLine": {
+        "hinglish": "School mein body ke changes ke baare mein kuch padhaya hai? Kuch aisa hai jo unhone theek se nahi samjhaya?",
+        "hindi": "स्कूल में शरीर के बदलावों के बारे में कुछ पढ़ाया है? कुछ ऐसा है जो उन्होंने ठीक से नहीं समझाया?",
+        "english": "Has school taught anything about how bodies change? Anything they didn't explain properly?"
+      },
+      "followUps": [
+        "What do people your age wonder about but feel too awkward to ask?",
+        "Where do your friends usually look up stuff like this?"
+      ],
+      "say": [
+        "You won't be in trouble for asking me anything.",
+        "Everyone's body changes at a different pace. There's no 'right' time.",
+        "If I don't know the answer, we'll look it up together, or ask a doctor."
+      ],
+      "avoid": [
+        "Comments on their weight, skin or looks.",
+        "We don't talk about these things.",
+        "Giving medical advice yourself. For symptoms or worries, see a doctor."
+      ],
+      "react": {
+        "quiet": "It's a bit awkward for me too. We can keep it short.",
+        "upset": "I'm sorry. I didn't mean to embarrass you. I just want you to have real answers.",
+        "disagree": "Okay, tell me what you've heard. Let's figure out what's true.",
+        "noTalk": "Okay. You can always ask me later, or text me if that's easier."
+      },
+      "getHelp": "for any medical worry (pain, very irregular periods, anything that doesn't seem right) → a doctor. If your teen seems very unhappy with their body or stops eating properly → Tele-MANAS 14416.",
+      "sources": "Rashmi et al., parent-adolescent communication on SRH, Bengaluru, IJCMPH 2026 · Likith, factors influencing parent-adolescent SRH communication, 2024",
+      "checkedOn": "25 Oct 2026"
+    }
+  ]
+}

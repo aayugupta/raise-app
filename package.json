@@ -3,7 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "cards": "node scripts/build-cards.mjs",
+    "predev": "node scripts/build-cards.mjs",
     "dev": "next dev",
+    "prebuild": "node scripts/build-cards.mjs",
     "build": "next build",
     "start": "next start"
   },

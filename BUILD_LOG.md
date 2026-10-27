@@ -4,6 +4,38 @@ What we built, what broke, and how we fixed it. Newest entries at the top.
 
 ---
 
+## 2026-10-27 — Screen 5: Talk Card (base cards, before AI)
+
+**Built**
+- `scripts/build-cards.mjs`: reads `content/base-talk-cards.md` (still the only file Aayushi edits) and turns it into app data (`lib/base-cards.json`). It runs automatically before `npm run dev` and `npm run build`, or on its own with `npm run cards`. **If a card is missing a part** (e.g. only 2 "Say" lines, or no Hindi first line), it stops and lists exactly what's missing, so a broken card can't ship.
+- `lib/cards.ts`: the card shape. The AI version will fill the same shape later; the safety promise, help and sources always come from the base card.
+- Talk Card screen (`app/card/[topic]`), covering D2, FR2 (base version) and FR3, in the Step 3 order:
+  topic + teen's question → why now (with source) → **first line** in a big peach box, in the parent's language from setup, with "Try saying it out loud once" → 2 follow-ups → Say / Avoid → If they react (4 reactions) → **"Always say this"** safety promise (teal box) → When to get help + Open Help → "Checked on 25 Oct 2026 · Sources".
+- Only two actions, pinned to the bottom: **Plan this talk** and **Not now**. No save button.
+- "Not now" keeps the topic in "My open topics" on the phone (`lib/talks.ts`) and goes to Home.
+- Placeholders for the Planner and Home.
+
+**Broke**
+- An "Avoid" line written as `"quote" (note)` came out with a stray quote mark.
+- The Hinglish first line showed in the plain font instead of the serif, because I'd tagged it as Hindi.
+
+**Fix**
+- The converter now removes quote marks properly from `"quote" (note)` lines.
+- Only Hindi (Devanagari script) switches to the body font, since the serif font has no Devanagari letters. Hinglish uses the serif.
+
+**Checked**
+- Mother, 16–18, Hinglish → Relationships card in full. Switched to Hindi → Devanagari first line.
+- All 6 topic cards open; an unknown topic shows "not found".
+- "Not now" → Home, with the topic saved as open.
+- 375 × 812 and 320 × 640 with no sideways scrolling. Production build passes.
+
+**Still to do**
+- Base cards are still Claude's draft; Aayushi hasn't edited them yet.
+- In Hindi or English mode, only the first line changes language; the rest is English until the AI version translates it.
+- Next: Gemini key → AI-personalised card, with the base card as the backup.
+
+---
+
 ## 2026-10-25 — Screen 4: Pick a topic (+ basic Help screen)
 
 **Built**
