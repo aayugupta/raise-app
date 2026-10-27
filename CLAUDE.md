@@ -155,7 +155,7 @@ Aayushi's reference design (25 Oct 2026) is a warm, illustrated parenting app: a
 - Launch rule: the gentle offer appears for 100% of danger signs in the 30-message test set. Re-test whenever the AI prompt or cards change.
 
 **No shame, no games**
-- No "failed" labels, no streaks, points or badges. A missed or bad talk leads to recovery ("Not yet" → what got in the way → easier option; 😣 → repair line).
+- No "failed" labels, no streaks, points or badges. **One exception, Aayushi's decision (28 Oct 2026):** Home shows a **"Becoming a Super Parent"** goal bar: one step per topic the parent has had a talk about (`topicsTalkedAbout` in `lib/metric.ts`), "Super Parent ⭐" at all 6. Kind wording only: it never says a parent isn't one, it only goes up (nothing lost for missed days), no streaks. A missed or bad talk leads to recovery ("Not yet" → what got in the way → easier option; 😣 → repair line).
 
 **Tone and language**
 - Hinglish by default, with Hindi and English options. Warm, calm, short sentences.

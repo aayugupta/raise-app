@@ -1302,3 +1302,49 @@ h3 {
   background: var(--card);
   border: 2px dashed #eadfcd;
 }
+
+/* Home: "Becoming a Super Parent" goal */
+.goal-card {
+  margin-top: 16px;
+  padding: 14px 16px;
+  border-radius: var(--radius);
+  background: linear-gradient(135deg, #fde9bf, #f9d898);
+  border: 2px solid #f1cf86;
+}
+
+.goal-title {
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 18px;
+  color: var(--ink);
+}
+
+.goal-count {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--teal-dark);
+  white-space: nowrap;
+}
+
+.goal-bar {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 5px;
+  margin: 10px 0 8px;
+}
+
+.goal-bar span {
+  height: 10px;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.goal-bar span.done {
+  background: var(--teal);
+}
+
+.goal-message {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--ink);
+}

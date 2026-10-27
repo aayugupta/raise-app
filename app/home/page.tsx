@@ -9,7 +9,8 @@ import { currentFirstLine } from "@/lib/cards";
 import JourneyCard, { whenText } from "@/components/JourneyCard";
 import { activeJourneys } from "@/lib/journey";
 import { greetName, loadProfile, type Profile } from "@/lib/profile";
-import { openJourneyStarts } from "@/lib/journeyLog";
+import { loadJourneyRecords, openJourneyStarts } from "@/lib/journeyLog";
+import { topicsTalkedAbout } from "@/lib/metric";
 import { JOURNEY_DAYS, loadOpenTopics, loadPlans, momentOf, planStage, type Plan } from "@/lib/talks";
 import { TOPICS, type TopicId } from "@/lib/topics";
 
@@ -23,6 +24,7 @@ export default function Home() {
   const [plans, setPlans] = useState<Plan[]>([]);
   const [openTopics, setOpenTopics] = useState<TopicId[]>([]);
   const [starts, setStarts] = useState<Partial<Record<TopicId, string>>>({});
+  const [talkedAbout, setTalkedAbout] = useState(0);
   const [now, setNow] = useState(() => Date.now());
   const [ready, setReady] = useState(false);
 
@@ -36,6 +38,7 @@ export default function Home() {
     setPlans(loadPlans());
     setOpenTopics(loadOpenTopics());
     setStarts(openJourneyStarts());
+    setTalkedAbout(topicsTalkedAbout(loadJourneyRecords()));
     setReady(true);
     // Re-check every minute, so "It's time" appears without reloading.
     const timer = setInterval(() => setNow(Date.now()), 60_000);
@@ -57,6 +60,8 @@ export default function Home() {
         {/* Greeting */}
         <h1 style={{ fontSize: 30, lineHeight: 1.15 }}>Hello {greetName(profile)}</h1>
         <div style={{ fontSize: 15, color: "var(--muted)", marginTop: 4 }}>One small conversation at a time.</div>
+
+        <SuperParentGoal done={talkedAbout} total={TOPICS.length} />
 
         {/* In-app reminder: inside the planned window */}
         {nowPlans.map((p) => (
@@ -116,5 +121,33 @@ export default function Home() {
       </div>
       <BottomNav />
     </main>
+  );
+}
+
+// "Becoming a Super Parent" (Aayushi's decision, 28 Oct 2026): one step for each topic the parent has
+// had a talk about. Kind wording only: it never says a parent isn't one, it only goes up, no streaks.
+function SuperParentGoal({ done, total }: { done: number; total: number }) {
+  const reached = done >= total;
+  const message =
+    done === 0
+      ? "Every Super Parent starts with one talk. Pick a topic below to begin."
+      : reached
+        ? `You've talked about all ${total} topics. Keep the conversations going.`
+        : "You're on your way ⭐ Next: have a talk about one more topic.";
+  return (
+    <section className="goal-card" aria-label={`Becoming a Super Parent: ${done} of ${total} topics talked about`}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 8 }}>
+        <span className="goal-title">{reached ? "Super Parent ⭐" : "Becoming a Super Parent"}</span>
+        <span className="goal-count">
+          {Math.min(done, total)} of {total} topics
+        </span>
+      </div>
+      <div className="goal-bar" aria-hidden="true">
+        {Array.from({ length: total }, (_, i) => (
+          <span key={i} className={i < done ? "done" : ""} />
+        ))}
+      </div>
+      <p className="goal-message">{message}</p>
+    </section>
   );
 }

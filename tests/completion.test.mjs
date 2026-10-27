@@ -1,7 +1,7 @@
 // Run: node tests/completion.test.mjs
 // The completed-conversation metric (Aayushi's simple rule, 28 Oct 2026):
 // completed = a reflection where the talk happened, saved within 14 days of the topic's start.
-const { journeyStats, withinWindow } = await import(new URL("../lib/metric.ts", import.meta.url).href);
+const { journeyStats, topicsTalkedAbout, withinWindow } = await import(new URL("../lib/metric.ts", import.meta.url).href);
 
 const DAY = 86_400_000;
 const now = Date.parse("2026-11-20T12:00:00Z");
@@ -36,6 +36,16 @@ check("2 not completed", s.notCompleted === 2);
 check("rate = 2 ÷ 5 = 40%", s.ratePct === 40);
 // A talk that went badly still counts: the record only stores THAT it happened, never how it went.
 check("a hard talk still counts as completed", journeyStats([rec("h", 2, { endedAt: iso(now - DAY), completedAt: iso(now - DAY) })], now).completed === 1);
+// Super Parent goal: different topics talked about. Repeats of a topic count once; help-offered don't count.
+const goal = [
+  { id: "1", topic: "stress", startedAt: iso(now - 9 * DAY), completedAt: iso(now - 8 * DAY) },
+  { id: "2", topic: "stress", startedAt: iso(now - 5 * DAY), completedAt: iso(now - 4 * DAY) },
+  { id: "3", topic: "friends", startedAt: iso(now - 3 * DAY), completedAt: iso(now - 2 * DAY) },
+  { id: "4", topic: "body", startedAt: iso(now - 3 * DAY) },
+  { id: "5", topic: "consent", startedAt: iso(now - 3 * DAY), completedAt: iso(now - 2 * DAY), helpOffered: true },
+];
+check("goal counts different topics talked about (2)", topicsTalkedAbout(goal) === 2);
+check("nothing talked about yet → 0", topicsTalkedAbout([]) === 0);
 check("nothing started → no rate", journeyStats([], now).ratePct === null);
 check("a completedAt after day 14 doesn't count", journeyStats([rec("x", 30, { endedAt: iso(now), completedAt: iso(now) })], now).completed === 0);
 

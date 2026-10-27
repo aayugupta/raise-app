@@ -52,3 +52,9 @@ export function journeyStats(records: JourneyRecord[], now = Date.now()): Journe
     ratePct: started ? Math.round((1000 * completed) / started) / 10 : null,
   };
 }
+
+// Home's "Becoming a Super Parent" goal (Aayushi, 28 Oct 2026): how many different topics the parent
+// has had a talk about (a completed journey). It only ever goes up: nothing is lost for a missed day.
+export function topicsTalkedAbout(records: JourneyRecord[]): number {
+  return new Set(records.filter((r) => r.completedAt && !r.helpOffered).map((r) => r.topic)).size;
+}
