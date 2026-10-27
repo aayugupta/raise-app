@@ -44,7 +44,7 @@ export function getBaseCard(id: TopicId): BaseCard {
 export function baseTalkCard(base: BaseCard, language: Language): TalkCard {
   return {
     whyNow: base.whyNow,
-    firstLine: base.firstLine[language],
+    firstLine: base.firstLine[language] ?? base.firstLine.hinglish,
     followUps: base.followUps,
     say: base.say,
     avoid: base.avoid,

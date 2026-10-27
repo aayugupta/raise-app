@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { baseTalkCard, getBaseCard, SAFETY_PROMISE, type Language } from "@/lib/cards";
+import { baseTalkCard, getBaseCard, SAFETY_PROMISE, type Language, type TalkCard } from "@/lib/cards";
+import type { Family } from "@/lib/cardPrompt";
 import { loadProfile } from "@/lib/profile";
 import { addOpenTopic } from "@/lib/talks";
 import { TOPICS, type TopicId } from "@/lib/topics";
@@ -17,19 +18,108 @@ const REACTIONS: { key: "quiet" | "upset" | "disagree" | "noTalk"; label: string
 
 const LANGUAGE_NAMES: Record<Language, string> = { hinglish: "Hinglish", hindi: "हिन्दी", english: "English" };
 
+const CLIENT_TIMEOUT_MS = 9000;
+
+type Loaded = { source: "ai" | "base"; card: TalkCard; language: Language };
+
+// One request per card at a time, even if the screen asks twice (React does this in development).
+const inFlight = new Map<string, Promise<{ source?: string; card?: TalkCard } | null>>();
+
+function requestCard(key: string, topic: TopicId, family: Family) {
+  let request = inFlight.get(key);
+  if (!request) {
+    request = fetch("/api/card", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ topic, family }),
+      signal: AbortSignal.timeout(CLIENT_TIMEOUT_MS),
+    })
+      .then((res) => (res.ok ? res.json() : null))
+      .catch(() => null)
+      .finally(() => inFlight.delete(key));
+    inFlight.set(key, request);
+  }
+  return request;
+}
+
+// Personalised cards are remembered on this phone, so reopening a card doesn't call the AI again.
+function cacheKey(topic: TopicId, f: Family, checkedOn: string) {
+  return `raise.card.${topic}.${f.role}.${f.ageBand}.${f.teenGender}.${f.language}.${f.comfort}.${checkedOn}`;
+}
+
 export default function TalkCardView({ topic }: { topic: TopicId }) {
   const router = useRouter();
-  const [language, setLanguage] = useState<Language>("hinglish");
-
-  // The parent's language comes from setup, saved on this phone.
-  useEffect(() => {
-    const saved = loadProfile()?.language;
-    if (saved) setLanguage(saved);
-  }, []);
-
   const base = getBaseCard(topic);
-  const card = baseTalkCard(base, language);
   const meta = TOPICS.find((t) => t.id === topic)!;
+  const [loaded, setLoaded] = useState<Loaded | null>(null);
+
+  useEffect(() => {
+    const profile = loadProfile();
+    if (!profile) {
+      setLoaded({ source: "base", card: baseTalkCard(base, "hinglish"), language: "hinglish" });
+      return;
+    }
+    // Only tapped answers leave the phone: never the nickname or what the parent typed.
+    const family: Family = {
+      role: profile.role,
+      ageBand: profile.ageBand,
+      teenGender: profile.teenGender,
+      language: profile.language,
+      comfort: profile.comfort,
+    };
+    const showBase = () => setLoaded({ source: "base", card: baseTalkCard(base, family.language), language: family.language });
+
+    const key = cacheKey(topic, family, base.checkedOn);
+    try {
+      const cached = localStorage.getItem(key);
+      if (cached) {
+        setLoaded({ source: "ai", card: JSON.parse(cached) as TalkCard, language: family.language });
+        return;
+      }
+    } catch {
+      // Storage blocked: just ask the AI.
+    }
+
+    let cancelled = false;
+    requestCard(key, topic, family).then((data) => {
+      if (cancelled) return;
+      if (data?.source === "ai" && data.card) {
+        try {
+          localStorage.setItem(key, JSON.stringify(data.card));
+        } catch {}
+        setLoaded({ source: "ai", card: data.card, language: family.language });
+      } else {
+        showBase();
+      }
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [topic, base]);
+
+  if (!loaded) {
+    return (
+      <main style={{ minHeight: "100dvh", background: "var(--cream)" }}>
+        <div style={{ width: "100%", maxWidth: 480, margin: "0 auto", padding: "16px" }}>
+          <button onClick={() => router.push("/topics")} className="icon-btn" aria-label="Back">
+            ←
+          </button>
+          <h1 style={{ fontSize: 28, lineHeight: 1.15, margin: "18px 0 0", textWrap: "balance" }}>“{base.teenQuestion}”</h1>
+          <section className="first-line" aria-live="polite">
+            <div className="card-label">Your first line</div>
+            <p style={{ opacity: 0.6 }}>Writing your card…</p>
+            <div className="loading-dots" aria-hidden="true">
+              <span />
+              <span />
+              <span />
+            </div>
+          </section>
+        </div>
+      </main>
+    );
+  }
+
+  const { card, language, source } = loaded;
 
   function notNow() {
     addOpenTopic(topic);
@@ -63,7 +153,9 @@ export default function TalkCardView({ topic }: { topic: TopicId }) {
 
         {/* 2. First line: the heart of the card */}
         <section className="first-line">
-          <div className="card-label">Your first line · {LANGUAGE_NAMES[language]}</div>
+          <div className="card-label">
+            Your first line · {LANGUAGE_NAMES[language]} · {source === "ai" ? "written for you" : "standard card"}
+          </div>
           <p className={language === "hindi" ? "devanagari" : undefined} lang={language === "hindi" ? "hi" : language === "hinglish" ? "hi-Latn" : "en"}>
             {card.firstLine}
           </p>

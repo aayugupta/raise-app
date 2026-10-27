@@ -4,6 +4,46 @@ What we built, what broke, and how we fixed it. Newest entries at the top.
 
 ---
 
+## 2026-10-27 — AI-personalised Talk Card (Gemini)
+
+**Built**
+- Aayushi created a free Gemini API key and saved it in `.env.local` (never uploaded; checked).
+- **Model:** `gemini-3.5-flash-lite` with thinking set to minimal. Can be changed with a `GEMINI_MODEL` setting, no code change.
+- `lib/cardPrompt.ts`: the instructions for Gemini. It **rewords** the hand-written base card for one family and never writes a new one. It adapts to role (fathers get lighter openers and admit their own awkwardness), teen's age band and gender (Hindi/Hinglish grammar too), language and comfort level. **Only tapped answers are sent**, never the nickname or anything typed, matching the Privacy promise.
+- `app/api/card/route.ts`: the server part. The key stays on the server. It only accepts known setup values, gives up after 8 seconds, and retries once if a card is rejected and there's time.
+- `lib/cardSafety.ts`: **checks every AI card before a parent sees it.** It blocks: spying, phone threats or punishment (allowed only as warnings in "Avoid"), diagnosis, medicine, fear words, promised results, sexuality judgement, sexual detail, new statistics, missing parts, and the wrong script for the language.
+- Talk Card screen: "Writing your card…" while waiting, then the card marked **"written for you"**. On any problem it shows the base card marked **"standard card"**. Personalised cards are saved on the phone, so reopening one makes no new AI call.
+- `tests/card-safety.test.mjs`: 23 cases (all 6 base cards must pass; 15 kinds of bad output must be blocked).
+
+**Broke**
+1. Two models timed out (30 s+) and an older one is retired. Even the working ones took 4–6 s for one sentence.
+2. Hinglish cards left the follow-ups and some lines in English.
+3. A father's card assumed "College", but a 16–17 year old is usually in school.
+4. The guard blocked a good stress card for the number "12" (most likely "raat 12 baje", i.e. midnight). It also blocked it for mixing in Devanagari, which was a fair block.
+5. The Hindi relationships card was blocked twice for "spying": the AI wrote "I'm not spying on you" as a reassurance.
+6. In development, a new card asked the AI twice (React runs the step twice in development to catch bugs), which would use up the free limit faster.
+7. A corrupted language setting would have shown an empty first line.
+
+**Fix**
+1. Picked the flash-lite model with minimal thinking: 1.5–3.5 s for a full card (target: under 5 s).
+2. and 3. New prompt rules: write every field in the chosen language, and don't assume school or college.
+4. Numbers: "why now" may only use the base card's numbers. Other lines may not contain statistics ("45%", "9 of 10"), but everyday numbers are fine.
+5. New prompt rule: never mention spying or checking, not even to deny it. Kept the guard strict. Then 3 of 3 Hindi relationships cards passed.
+6. Duplicate requests for the same card are now merged: exactly 1 AI call per new card.
+7. Falls back to the Hinglish first line.
+
+**Checked**
+- 18 live cards across all 6 topics, 3 languages, mother/father/guardian: all personalised except 1 rejected card, which fell back to the base card as designed.
+- Saved card → 0 AI calls. New card → 1 AI call.
+- Broken setup answer → base card with the "standard card" tag.
+- Key not in any phone-side file, and not in Git. Build passes; safety tests 24/24 and 23/23.
+
+**Still to do**
+- The AI's Hinglish and Hindi need a read-through by Aayushi (e.g. one English card said "guys our age" from a father).
+- The "If they react" and other lines are personalised, but the safety promise and help text stay fixed from the base card, as designed.
+
+---
+
 ## 2026-10-27 — Screen 5: Talk Card (base cards, before AI)
 
 **Built**
