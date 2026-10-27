@@ -8,13 +8,13 @@ import ConfidenceScale from "@/components/ConfidenceScale";
 import { CONFIDENCE_QUESTION, recordConfidence } from "@/lib/confidence";
 import { track } from "@/lib/events";
 import { saveProfile, type Profile } from "@/lib/profile";
+import { PROFILE_CHOICES, type ChoiceKey } from "@/lib/profileOptions";
 import { checkSetupText, HELP_LINES, type TextCheck } from "@/lib/safety";
 import { topicName, type TopicId } from "@/lib/topics";
 
 // Screen 2: Setup (D1, FR1). One question per screen, tap to answer, under a minute.
 // Every question says why it is asked. No phone number, email or password.
 
-type ChoiceKey = "role" | "ageBand" | "teenGender" | "language" | "comfort";
 type Answers = Partial<Pick<Profile, ChoiceKey>>;
 
 type Step =
@@ -29,60 +29,8 @@ const STEPS: Step[] = [
     question: "What should we call you?",
     why: "Only to greet you. No real name needed.",
   },
-  {
-    kind: "choice",
-    key: "role",
-    question: "You are your teen's…",
-    why: "Mothers and fathers often find different first lines easier.",
-    options: [
-      { value: "mother", label: "Mother" },
-      { value: "father", label: "Father" },
-      { value: "guardian", label: "Other guardian" },
-    ],
-  },
-  {
-    kind: "choice",
-    key: "ageBand",
-    question: "How old is your child?",
-    why: "Openers are matched to their age. Younger children get gentler ones that start with their friends.",
-    options: [
-      { value: "10-13", label: "10 to 13" },
-      { value: "14-16", label: "14 to 16" },
-      { value: "17-19", label: "17 to 19" },
-    ],
-  },
-  {
-    kind: "choice",
-    key: "teenGender",
-    question: "Your teen is…",
-    why: "So the examples on your card fit your teen.",
-    options: [
-      { value: "girl", label: "A girl" },
-      { value: "boy", label: "A boy" },
-      { value: "unsaid", label: "Prefer not to say" },
-    ],
-  },
-  {
-    kind: "choice",
-    key: "language",
-    question: "Which language do you speak at home?",
-    why: "Your first line will be written in this language.",
-    options: [
-      { value: "hinglish", label: "Hinglish (Hindi + English)" },
-      { value: "hindi", label: "हिन्दी" },
-      { value: "english", label: "English" },
-    ],
-  },
-  {
-    kind: "choice",
-    key: "comfort",
-    question: "How openly does your family talk about personal things?",
-    why: "We'll match the wording to your family's comfort.",
-    options: [
-      { value: "gentle", label: "Gently, we're just starting" },
-      { value: "open", label: "Quite openly" },
-    ],
-  },
+  // Role, age band, gender, language, comfort: shared with Profile (lib/profileOptions.ts).
+  ...PROFILE_CHOICES.map((c) => ({ kind: "choice" as const, key: c.key, question: c.question, why: c.why, options: c.options })),
   {
     kind: "confidence",
     question: CONFIDENCE_QUESTION,

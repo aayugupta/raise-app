@@ -25,6 +25,26 @@ export function saveProfile(profile: Profile): void {
   }
 }
 
+// Profile edits (Profile screen). Talk Cards refresh by themselves: their saved copies are
+// keyed by these answers, so a changed answer means a new card is written.
+export function updateProfile(change: Partial<Profile>): Profile | null {
+  const current = loadProfile();
+  if (!current) return null;
+  const next = { ...current, ...change };
+  saveProfile(next);
+  return next;
+}
+
+// "Clear my data": removes everything Raise saved on this phone (setup, plans, notes,
+// confidence, saved cards, anonymous id). The content engine's log is Aayushi's tool and is kept.
+export function clearMyData(): void {
+  try {
+    Object.keys(localStorage)
+      .filter((k) => k.startsWith("raise.") && k !== "raise.engine.log")
+      .forEach((k) => localStorage.removeItem(k));
+  } catch {}
+}
+
 // Age bands changed on 27 Oct 2026 (13–15 / 16–18 → 10–13 / 14–16 / 17–19).
 const OLD_AGE_BANDS: Record<string, Profile["ageBand"]> = { "13-15": "14-16", "16-18": "17-19" };
 

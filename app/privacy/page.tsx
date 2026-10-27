@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import HelpPill from "@/components/HelpPill";
 import PhoneLock from "@/components/PhoneLock";
@@ -36,12 +37,17 @@ const PROMISES: { title: string; detail: string }[] = [
 
 export default function Privacy() {
   const router = useRouter();
+  // Shown during setup, and again any time from Profile ("?from=profile").
+  const [fromProfile, setFromProfile] = useState(false);
+  useEffect(() => {
+    setFromProfile(new URLSearchParams(window.location.search).get("from") === "profile");
+  }, []);
 
   return (
     <main style={{ minHeight: "100dvh", background: "var(--cream)" }}>
       <div style={{ width: "100%", maxWidth: 480, margin: "0 auto", padding: "16px 16px 0" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <button onClick={() => router.push("/setup")} className="icon-btn" aria-label="Back">
+          <button onClick={() => (fromProfile ? router.push("/profile") : router.push("/setup"))} className="icon-btn" aria-label="Back">
             ←
           </button>
           <HelpPill />
@@ -52,7 +58,7 @@ export default function Privacy() {
         </div>
 
         <h1 style={{ fontSize: 30, lineHeight: 1.15, textWrap: "balance" }}>Your talks stay yours</h1>
-        <p className="why">Before you start, here's our promise.</p>
+        <p className="why">{fromProfile ? "Our promise to you and your teen." : "Before you start, here's our promise."}</p>
 
         <ul style={{ listStyle: "none", padding: 0, margin: "0 0 24px", display: "grid", gap: 14 }}>
           {PROMISES.map((p) => (
@@ -69,8 +75,8 @@ export default function Privacy() {
         </ul>
 
         <div className="sticky-action">
-          <button className="btn-primary btn-block" onClick={() => router.push("/topics")}>
-            Got it, choose a topic
+          <button className="btn-primary btn-block" onClick={() => router.push(fromProfile ? "/profile" : "/topics")}>
+            {fromProfile ? "Back to Profile" : "Got it, choose a topic"}
           </button>
         </div>
       </div>
