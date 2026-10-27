@@ -24,6 +24,11 @@ const NOT_OUTSIDE_AVOID: { rule: string; pattern: RegExp }[] = [
   },
 ];
 
+// The writing rules for any line Raise publishes (also used by the content engine's drafts).
+export function writingRuleProblems(text: string): string[] {
+  return [...NEVER, ...NOT_OUTSIDE_AVOID].filter(({ pattern }) => pattern.test(text)).map(({ rule }) => rule);
+}
+
 const DEVANAGARI = /[ऀ-ॿ]/;
 
 // Devanagari digits (०-९) count as the same numbers as 0-9.

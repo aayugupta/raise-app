@@ -4,6 +4,44 @@ What we built, what broke, and how we fixed it. Newest entries at the top.
 
 ---
 
+## 2026-10-27 — Screen 12: Content engine (AI agent + panic test)
+
+**Built**
+- Content engine (`/engine`), brief item 5 and Step 3 section 5. It's a **hidden page locked with a passcode** (in `.env.local` as `ENGINE_PASSCODE`; never uploaded) and kept out of search engines.
+  1. Aayushi pastes **a claim and up to 5 source links**.
+  2. **The AI agent opens and reads the links itself** (Gemini's link-reading tool) and runs the **panic test**: Source, Scale, India fit, Action. Each gets ✅/❌ and a one-line reason. Each source shows 📖 opened (with its kind and what it says) or ⚠️ couldn't open.
+  3. **All 4 pass → "Waiting for you"**, with a drafted "why now" line for the matching Talk Card. **Any fail → Watch list** (not published).
+  4. **Approve / Reject.** Approved shows the next step: add the line to `content/base-talk-cards.md`, update "Checked on", advisor checks it.
+  5. **Log tabs:** Waiting for you · Approved · Rejected by you · Watch list, with counts.
+- `lib/panicTest.ts`: the 4 checks, the trusted-source list, the agent's instructions, and **hard rules enforced by code, not the AI**:
+  - A link the agent couldn't open is never evidence; if **no** link opened, Source fails.
+  - The verdict is worked out from the 4 checks, so the AI can't "accept" with a failed check.
+  - The drafted line must pass the Talk Card writing rules (no fear words etc.) and contain a number, or it's dropped.
+- `app/api/engine/route.ts`: the server side. Passcode check, input limits, 55 s time limit, retry and fallback when Google's AI is overloaded.
+- `tests/panic-test.test.mjs`: 10 checks of those hard rules.
+
+**Broke**
+1. **Gemini answered confidently about a page it couldn't open** (Common Sense Media blocks it), from memory. An agent that "checks sources" it never read would be dishonest.
+2. Google's AI returned "overloaded" (error 503) twice on the main model.
+3. Gemini can report an opened link slightly differently from how it was pasted (e.g. without "www" or the final "/").
+
+**Fix**
+1. The engine uses Gemini's own record of which links were **actually opened**. Unopened links are shown as ⚠️ and never count. The agent is told to judge only from what it read.
+2. On 503: wait 3 seconds and retry, then switch to the lighter model.
+3. Links are compared in a normalised form.
+
+**Checked (real runs, real sources)**
+- **Blue Whale "suicide game" rumour** → Watch list, 0/4. The agent read the source: the government found no link.
+- **"9 in 10 child cybercrime cases involve explicit material"** → Watch list, 2/4. The Siasat link couldn't be opened, and ThePrint is news (a lead, not proof). It needs an official source.
+- **"Only 4 in 10 young Indians think seeking mental-health help is good"** (UNICEF India) → Passed 4/4, topic Stress, drafted line: "Only 41 percent of young people in India believe it is good to seek help for mental health issues, according to a 2021 report by [UNICEF]." → Approved.
+- Wrong passcode refused. Phone width fits. Build passes; `npm test` 6/6 files.
+
+**Limits to know**
+- The log is saved in the browser where Aayushi uses the engine. It won't appear on another device unless we save it to Supabase.
+- Some sites block the agent from reading (e.g. Common Sense Media, Siasat). Use official pages where possible.
+
+---
+
 ## 2026-10-27 — Screen 11: 3-day follow-up (+ `npm test`)
 
 **Built**
