@@ -1,4 +1,4 @@
-import Link from "next/link";
+import StartButton from "@/components/StartButton";
 import WalkTogether from "@/components/WalkTogether";
 
 // Screen 1: Welcome. Layout follows Aayushi's reference design:
@@ -21,9 +21,7 @@ export default function Welcome() {
         <p style={{ fontSize: 17, lineHeight: 1.45, margin: "16px 0 24px", color: "var(--text)" }}>
           Raise gives you the first line, a good moment, and calm words for whatever comes next.
         </p>
-        <Link href="/setup" className="btn-primary">
-          Get started
-        </Link>
+        <StartButton />
         <p style={{ fontSize: 14, margin: "14px 0 0", color: "var(--muted)" }}>
           No sign-up. Stays private on your phone.
         </p>

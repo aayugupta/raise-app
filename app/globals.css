@@ -169,6 +169,52 @@ h3 {
   background: #e6f2f0;
 }
 
+/* Home */
+.avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--peach);
+  border: 2px solid var(--coral);
+  color: var(--ink);
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.time-banner {
+  background: var(--teal);
+  color: #fff;
+  border-radius: 22px;
+  padding: 18px;
+  margin-top: 20px;
+}
+
+.btn-light {
+  display: block;
+  background: #fff;
+  color: var(--teal-dark);
+  font-weight: 700;
+  font-size: 18px;
+  text-align: center;
+  text-decoration: none;
+  padding: 13px 20px;
+  border-radius: 12px;
+}
+
+.next-talk {
+  display: flex;
+  gap: 12px;
+  background: var(--card);
+  border: 2px solid #eadfcd;
+  border-radius: var(--radius);
+  padding: 14px;
+  text-decoration: none;
+}
+
 .chips {
   display: flex;
   flex-wrap: wrap;

@@ -55,7 +55,27 @@ export type Plan = {
   moment: MomentId;
   when: string; // ISO date-time of the planned moment
   createdAt: string; // when the plan was made (metric: "Planned")
+  reflectedAt?: string; // set once the parent has said how it went
 };
+
+// The planned window: from 1 hour before to 3 hours after the planned time.
+// Home shows "It's time" inside it, and a start inside it counts as "started on time".
+const WINDOW_BEFORE_MS = 60 * 60_000;
+const WINDOW_AFTER_MS = 3 * 60 * 60_000;
+
+export type PlanStage = "upcoming" | "now" | "check-in" | "done";
+
+export function planStage(plan: Plan, now = Date.now()): PlanStage {
+  if (plan.reflectedAt) return "done";
+  const at = new Date(plan.when).getTime();
+  if (now < at - WINDOW_BEFORE_MS) return "upcoming";
+  if (now <= at + WINDOW_AFTER_MS) return "now";
+  return "check-in";
+}
+
+export function momentOf(plan: Plan) {
+  return MOMENTS.find((m) => m.id === plan.moment)!;
+}
 
 const PLANS_KEY = "raise.plans";
 

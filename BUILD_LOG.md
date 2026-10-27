@@ -4,6 +4,37 @@ What we built, what broke, and how we fixed it. Newest entries at the top.
 
 ---
 
+## 2026-10-27 — Screen 7: Home
+
+**Built**
+- Home screen (`app/home/page.tsx`): brief item 4, "a reason to come back", plus the in-app reminder from D3. No streaks, no scores.
+  - **Greeting:** "Good afternoon, Mumma", with Help always at the top.
+  - **In-app reminder:** inside a plan's window (1 hour before to 3 hours after), a teal banner says "It's time for your walk", shows the first line, and has **Open Talk mode**. It re-checks every minute, so it appears without reloading.
+  - **Gentle check-in:** after the window, "How did your walk go? Whether you talked or not, it helps to note it." → Tell us how it went. Never "missed" or "failed".
+  - **Your next talk:** upcoming plans with day, time, moment and first line. Tap to reopen the card.
+  - **Open topics:** "Not now" topics, each with "Plan it →".
+  - **Empty state:** "Ready when you are", with the family illustration and Choose a topic.
+- `lib/talks.ts`: the plan window and stages (upcoming → now → check-in → done). The same window will decide "started on time" for the metric.
+- Welcome screen: returning parents see **Continue** (→ Home) instead of Get started, so they don't redo setup.
+- Placeholders for Talk mode (`/talk/[planId]`) and Reflection (`/reflect/[planId]`).
+
+**Broke**
+- Returning parents opening the app landed on Welcome, and "Get started" would have sent them through setup again.
+
+**Fix**
+- Welcome now checks the phone for saved setup answers and shows Continue → Home.
+
+**Checked**
+- Plans 20 minutes away, tomorrow and yesterday, plus an open topic: all four sections show correctly.
+- Empty state. No setup saved → sent to Welcome.
+- New visitor sees Get started → Setup; returning visitor sees Continue → Home.
+- 375 × 812 and 320 × 640. Build and both safety tests pass.
+
+**Still to do**
+- Talk mode and Reflection (next), then the 3-day follow-up on Home.
+
+---
+
 ## 2026-10-27 — Screen 6: Planner
 
 **Built**
