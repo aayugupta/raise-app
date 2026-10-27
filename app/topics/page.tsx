@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import BottomNav from "@/components/BottomNav";
 import TopicBubbles from "@/components/TopicBubbles";
 import { loadProfile } from "@/lib/profile";
 import { CRISIS_TOPICS, TOPICS, type TopicId } from "@/lib/topics";
@@ -24,10 +25,10 @@ export default function Topics() {
   const more = order.slice(3);
 
   return (
-    <main style={{ minHeight: "100dvh", background: "var(--cream)" }}>
+    <main className="has-bottom-nav" style={{ minHeight: "100dvh", background: "var(--cream)" }}>
       <div style={{ width: "100%", maxWidth: 480, margin: "0 auto", padding: "16px 16px 32px" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <button onClick={() => router.push("/privacy")} className="icon-btn" aria-label="Back">
+          <button onClick={() => router.back()} className="icon-btn" aria-label="Back">
             ←
           </button>
           <Link href="/help" className="help-pill">
@@ -71,6 +72,7 @@ export default function Topics() {
           </div>
         </div>
       </div>
+      <BottomNav />
     </main>
   );
 }

@@ -4,6 +4,34 @@ What we built, what broke, and how we fixed it. Newest entries at the top.
 
 ---
 
+## 2026-10-27 — Bottom tab bar + new Home (brainstorm screen 3)
+
+**Built**
+- `components/BottomNav.tsx`: **Home · Topics · AI Coach · Progress · Profile**, with simple line icons and the current tab in teal. It's shown **only on the 5 main screens**; it's hidden during setup, the Talk Card, the Planner, Talk mode and Reflection, which have their own bottom buttons and need focus.
+- **New Home**, following brainstorm screen 3:
+  - "Good afternoon, Mumma · Small steps. Big conversations." with Help.
+  - The "It's time" banner and the 3-day question, as before.
+  - **Continue your journey:** one card per active topic, with **Step x of 3 (Prepare → Talk → Reflect)**, a 3-part progress bar, the time, and the next action (Plan this talk / See your first line / Open Talk mode / Tell us how it went). Most urgent first. It **replaces** the old "next talk", "open topics" and check-in lists, so nothing shows twice. When nothing is active: a small "Ready when you are".
+  - **Start a new conversation:** a 2-column grid of all 8 topics with icons.
+  - 💬 I had a talk.
+- `lib/journey.ts`: works out each topic's step. `lib/topics.ts`: each topic now has a short name and an icon.
+- Topics screen: has the tab bar; Back now returns to the previous screen.
+- Placeholder AI Coach, Progress and Profile screens with the tab bar.
+- `tests/journey.test.mjs`: 8 checks.
+
+**Broke**
+- The tab buttons had no names for screen readers.
+
+**Fix**
+- Added labels.
+
+**Checked**
+- Home with a talk now, one yesterday, one tomorrow and an open topic: the banner shows the current one; the journey shows Reflect, Talk and Prepare in that order with the right actions.
+- Empty state; tab switching (Progress highlighted); Topics has the bar, the Talk Card doesn't; 320 px wide fits.
+- `npm test` 9/9 files. Build passes.
+
+---
+
 ## 2026-10-27 — Brainstorm flow: decisions, new age bands, 2 new topics
 
 **Decided (Aayushi, from her brainstorm `docs/brainstorm-app-flow.webp`; recorded in CLAUDE.md)**
