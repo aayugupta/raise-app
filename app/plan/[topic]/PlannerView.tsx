@@ -113,12 +113,13 @@ export default function PlannerView({ topic, suggestedMoment }: { topic: TopicId
 
           <p className="notice" style={{ marginTop: 16 }}>
             {saved.reminder === false
-              ? "No reminder. Your plan waits on Home under “Your 14-day journey”."
+              ? "No reminder. Your plan waits in your 14-day journey."
               : `🔔 When it's time, Home will show “It's time for your ${momentInfo.calendarTitle.replace(/^Your /, "").toLowerCase()}” with your first line. Raise sends no notifications, so nothing pops up for your teen to see.`}
           </p>
 
-          <Link href="/home" className="btn-primary btn-block" style={{ marginTop: 16 }}>
-            Done, go to Home
+          {/* Next: see the plan in the 14-day journey (Aayushi, 28 Oct 2026) */}
+          <Link href="/journey" className="btn-primary btn-block" style={{ marginTop: 16 }}>
+            Next
           </Link>
         </div>
       </main>
