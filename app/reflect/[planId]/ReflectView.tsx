@@ -14,8 +14,9 @@ import { finishJourney } from "@/lib/journeyLog";
 import { loadPlan, loadPlans, momentOf, updatePlan, type Plan } from "@/lib/talks";
 import { TOPICS, type TopicId } from "@/lib/topics";
 
-// Reflection (Aayushi's simplified flow, 28 Oct 2026): did it happen, what you said, what your child said,
-// who spoke more, how it went, and if it didn't go well, what got in the way.
+// Reflection (Aayushi's simplified flow, 28 Oct 2026): did it happen and how it went (two taps, enough to save),
+// then optionally what you said, what your child said, who spoke more, and what got in the way.
+// A talk that happened counts as completed even if it went badly.
 // Everything stays on this phone, never sent to the AI or anywhere else. No names or private details.
 
 const HAPPENED: { value: Happened; label: string }[] = [
@@ -36,7 +37,6 @@ const FEELINGS: { value: Feeling; emoji: string; label: string }[] = [
   { value: "hard", emoji: "😣", label: "Hard" },
 ];
 
-const MIN_TEXT = 3;
 
 export default function ReflectView({ planId }: { planId: string }) {
   const router = useRouter();
@@ -74,7 +74,7 @@ export default function ReflectView({ planId }: { planId: string }) {
     happened !== null &&
     (happened === "not-yet"
       ? blocker !== null
-      : discussed.trim().length >= MIN_TEXT && learned.trim().length >= MIN_TEXT && whoTalked && feeling);
+      : feeling !== null);
 
   function notYet() {
     updatePlan(planId, { closedAt: new Date().toISOString() });
@@ -171,7 +171,7 @@ export default function ReflectView({ planId }: { planId: string }) {
           {momentOf(plan).icon} {topicName}
         </div>
         <h1 style={{ fontSize: 28, lineHeight: 1.15, margin: "6px 0 0" }}>How did it go?</h1>
-        <p className="why">A minute. It stays on your phone and is never sent anywhere. Please don't write names or private details.</p>
+        <p className="why">Two taps are enough. It stays on your phone and is never sent anywhere. Please don't write names or private details.</p>
 
         <h2 className="section-title" style={{ marginTop: 4 }}>
           {plan.unplanned ? "Did you get into the topic?" : "Did the talk happen?"}
@@ -196,46 +196,8 @@ export default function ReflectView({ planId }: { planId: string }) {
 
         {(happened === "yes" || happened === "partly") && (
           <>
-            <label htmlFor="discussed" className="section-title" style={{ display: "block", fontFamily: "var(--font-serif), Georgia, serif", color: "var(--ink)" }}>
-              What did you say?
-            </label>
-            <textarea
-              id="discussed"
-              className="text-input"
-              rows={2}
-              maxLength={200}
-              value={discussed}
-              onChange={(e) => setDiscussed(e.target.value)}
-              placeholder="e.g. I asked about her friends, and how people know they like someone"
-            />
-
-            <label htmlFor="learned" className="section-title" style={{ display: "block", fontFamily: "var(--font-serif), Georgia, serif", color: "var(--ink)" }}>
-              What did your child say?
-            </label>
-            <textarea
-              id="learned"
-              className="text-input"
-              rows={2}
-              maxLength={200}
-              value={learned}
-              onChange={(e) => setLearned(e.target.value)}
-              placeholder="e.g. She said most crushes in her class are just for fun"
-            />
-
-            <h2 className="section-title" style={{ marginTop: 0 }}>
-              Who spoke more?
-            </h2>
-            <div className="chips">
-              {WHO.map((w) => (
-                <button key={w.value} className={`chip${whoTalked === w.value ? " selected" : ""}`} onClick={() => setWhoTalked(w.value)}>
-                  {w.label}
-                </button>
-              ))}
-            </div>
-
-            <h2 className="section-title" style={{ marginTop: 0 }}>
-              How did it go?
-            </h2>
+            {/* One tap here is enough to save (28 Oct 2026): everything after it is optional. */}
+            <h2 className="section-title">How did it go?</h2>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 8 }}>
               {FEELINGS.map((f) => (
                 <button
@@ -253,14 +215,59 @@ export default function ReflectView({ planId }: { planId: string }) {
                 </button>
               ))}
             </div>
+            {feeling === "hard" && (
+              <p style={{ fontSize: 15, color: "var(--muted)", margin: "10px 0 0" }}>Hard talks still count. You showed up, and that matters.</p>
+            )}
 
-            {askBlocker && <BlockerChoice value={blocker} onChoose={setBlocker} optional />}
+            <div className="reflect-optional">
+              <div style={{ fontWeight: 700, color: "var(--ink)" }}>Want to add what happened?</div>
+              <div style={{ fontSize: 14, color: "var(--muted)", marginTop: 2 }}>Optional. It helps you remember, and it stays on this phone.</div>
 
-            {/* Optional: confidence after the talk (survey Q14), for Progress and the Step 6 metric. */}
-            <h2 className="section-title">
-              {CONFIDENCE_AFTER_QUESTION} <span style={{ fontFamily: "var(--font-body)", fontSize: 14, color: "var(--muted)" }}>(optional)</span>
-            </h2>
-            <ConfidenceScale value={afterConfidence} onChoose={setAfterConfidence} />
+              <label htmlFor="discussed" className="section-title" style={{ display: "block", fontFamily: "var(--font-serif), Georgia, serif", color: "var(--ink)" }}>
+                What did you say? <span style={{ fontFamily: "var(--font-body)", fontSize: 14, color: "var(--muted)" }}>(optional)</span>
+              </label>
+              <textarea
+                id="discussed"
+                className="text-input"
+                rows={2}
+                maxLength={300}
+                value={discussed}
+                onChange={(e) => setDiscussed(e.target.value)}
+                placeholder="e.g. I asked about her friends, and how people know they like someone"
+              />
+
+              <label htmlFor="learned" className="section-title" style={{ display: "block", fontFamily: "var(--font-serif), Georgia, serif", color: "var(--ink)" }}>
+                What did your child say? <span style={{ fontFamily: "var(--font-body)", fontSize: 14, color: "var(--muted)" }}>(optional)</span>
+              </label>
+              <textarea
+                id="learned"
+                className="text-input"
+                rows={2}
+                maxLength={300}
+                value={learned}
+                onChange={(e) => setLearned(e.target.value)}
+                placeholder="e.g. She said most crushes in her class are just for fun"
+              />
+
+              <h2 className="section-title" style={{ marginTop: 0 }}>
+                Who spoke more? <span style={{ fontFamily: "var(--font-body)", fontSize: 14, color: "var(--muted)" }}>(optional)</span>
+              </h2>
+              <div className="chips">
+                {WHO.map((w) => (
+                  <button key={w.value} className={`chip${whoTalked === w.value ? " selected" : ""}`} onClick={() => setWhoTalked(whoTalked === w.value ? null : w.value)}>
+                    {w.label}
+                  </button>
+                ))}
+              </div>
+
+              {askBlocker && <BlockerChoice value={blocker} onChoose={setBlocker} optional />}
+
+              {/* Confidence after the talk (survey Q14), for Progress and the Step 6 metric. */}
+              <h2 className="section-title">
+                {CONFIDENCE_AFTER_QUESTION} <span style={{ fontFamily: "var(--font-body)", fontSize: 14, color: "var(--muted)" }}>(optional)</span>
+              </h2>
+              <ConfidenceScale value={afterConfidence} onChoose={setAfterConfidence} />
+            </div>
           </>
         )}
 

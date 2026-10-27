@@ -1293,3 +1293,12 @@ h3 {
   border-radius: 50%;
   font-size: 20px;
 }
+
+/* Reflection: the optional part after the two required taps */
+.reflect-optional {
+  margin-top: 22px;
+  padding: 14px;
+  border-radius: var(--radius);
+  background: var(--card);
+  border: 2px dashed #eadfcd;
+}

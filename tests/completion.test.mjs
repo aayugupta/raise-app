@@ -34,6 +34,8 @@ check("2 completed", s.completed === 2);
 check("1 in progress", s.inProgress === 1);
 check("2 not completed", s.notCompleted === 2);
 check("rate = 2 ÷ 5 = 40%", s.ratePct === 40);
+// A talk that went badly still counts: the record only stores THAT it happened, never how it went.
+check("a hard talk still counts as completed", journeyStats([rec("h", 2, { endedAt: iso(now - DAY), completedAt: iso(now - DAY) })], now).completed === 1);
 check("nothing started → no rate", journeyStats([], now).ratePct === null);
 check("a completedAt after day 14 doesn't count", journeyStats([rec("x", 30, { endedAt: iso(now), completedAt: iso(now) })], now).completed === 0);
 

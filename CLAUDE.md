@@ -172,7 +172,7 @@ Failures go on a watch list. Accepted claims still need human approval before re
 
 ## The metric
 
-**Current rule (28 Oct 2026, Aayushi's decision; replaces the definitions below):** Completed Conversation Rate = topics with a reflection where the talk happened (Yes or Partly) saved within 14 days of the topic's start ÷ topics started. A topic starts when its 14-day journey begins (flashcards first opened, picked in setup, or planned): the `journey_started` event. "Not yet" doesn't complete a journey; journeys where help was offered are left out. Computed on the phone in `lib/metric.ts` (tested in `tests/completion.test.mjs`) and in Supabase (`supabase/schema.sql`, views `topic_outcomes` and `completion_rate`). Parents see counts only, never a percentage.
+**Current rule (28 Oct 2026, Aayushi's decision; replaces the definitions below):** Completed Conversation Rate = topics with a reflection where the talk happened (Yes or Partly) saved within 14 days of the topic's start ÷ topics started. A topic starts when its 14-day journey begins (flashcards first opened, picked in setup, or planned): the `journey_started` event. **A logged talk counts even if it went badly** (😣 Hard): only whether it happened matters, not how it went (Aayushi, 28 Oct 2026). "Not yet" doesn't complete a journey; journeys where help was offered are left out. **Reflection is two taps** (did it happen + how it went); what was said, who spoke more and the rest are optional. Computed on the phone in `lib/metric.ts` (tested in `tests/completion.test.mjs`) and in Supabase (`supabase/schema.sql`, views `topic_outcomes` and `completion_rate`). Parents see counts only, never a percentage.
 
 *Earlier definitions, kept for the record:*
 

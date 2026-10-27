@@ -3,6 +3,7 @@
 //
 //   A topic is STARTED when its 14-day journey begins (flashcards first opened, picked in setup, or planned).
 //   It is COMPLETED when a reflection where the talk happened (Yes or Partly) is saved within 14 days.
+//   It counts even if the talk went badly: how it went doesn't matter, only that it happened.
 //   Completed Conversation Rate = completed ÷ started.
 // Journeys where help was offered are left out, either way. "Not yet" doesn't complete a journey.
 // ".ts" endings so the tests (plain Node) can load this file too.
