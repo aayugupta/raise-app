@@ -169,6 +169,85 @@ h3 {
   background: #e6f2f0;
 }
 
+/* Logo: sprout above the wordmark */
+.logo {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1;
+}
+
+.logo-sprout {
+  margin-bottom: -0.08em;
+  margin-left: 0.35em;
+}
+
+.logo-word {
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #134e52;
+}
+
+/* Welcome (brainstorm screen 1) */
+.welcome {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background: linear-gradient(to bottom, #fbf8f1, #f4f1e4);
+  overflow: hidden;
+}
+
+.welcome-body {
+  padding: clamp(24px, 9vh, 72px) 28px 0;
+  max-width: 420px;
+}
+
+.welcome-tagline {
+  font-size: 22px;
+  line-height: 1.35;
+  color: var(--ink);
+  font-weight: 600;
+  margin: 18px 0 0;
+}
+
+.welcome-support {
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--muted);
+  margin: 14px auto 0;
+  max-width: 300px;
+}
+
+.welcome-bottom {
+  margin-top: auto;
+  width: 100%;
+  max-width: 480px;
+  position: relative;
+}
+
+/* Hills shrink on short screens; they crop from the top, so only sky is lost. */
+.welcome-bottom svg {
+  height: clamp(110px, 24vh, 220px);
+}
+
+.welcome-action {
+  background: #8cc29f;
+  padding: 0 24px calc(28px + env(safe-area-inset-bottom));
+  margin-top: -1px;
+}
+
+.welcome-action p {
+  color: #1f4d3a !important;
+}
+
+.btn-round {
+  border-radius: 999px;
+  padding: 16px 24px;
+}
+
 /* Confidence 1–5 */
 .confidence-scale {
   display: grid;

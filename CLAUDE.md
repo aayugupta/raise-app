@@ -74,7 +74,7 @@ Aayushi's reference design (25 Oct 2026) is a warm, illustrated parenting app: a
 
   | Screen | Scene |
   | --- | --- |
-  | Welcome | Parent and teen walking side by side (done) |
+  | Welcome | Raise logo with sprout, tagline "Better conversations. A stronger tomorrow.", soft green hills (brainstorm screen 1) |
   | Setup / late-evening moment | Family on a sofa in warm lamp light, parents listening |
   | Pick a topic | Family sitting together, each topic in a thought bubble |
   | Recovery / repair | Parent's hand on the teen's shoulder, both smiling |

@@ -7,13 +7,13 @@ const body = Nunito({ subsets: ["latin"], variable: "--font-body" });
 
 export const metadata: Metadata = {
   title: "Raise",
-  description: "Start the talk you keep putting off with your teen.",
+  description: "Better conversations. A stronger tomorrow. Practical support for parents to have meaningful conversations with their teenagers.",
 };
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#f9d898",
+  themeColor: "#fbf8f1",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

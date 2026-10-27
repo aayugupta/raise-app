@@ -4,6 +4,26 @@ What we built, what broke, and how we fixed it. Newest entries at the top.
 
 ---
 
+## 2026-10-27 — New Welcome screen (brainstorm screen 1)
+
+**Built**
+- `components/Logo.tsx`: the **Raise wordmark** in deep teal with a **sprout** (an orange and a green leaf) above the "i", as in the brainstorm.
+- `components/GreenHills.tsx`: soft rolling green hills with a warm glow, a few small trees and a path.
+- Welcome screen rebuilt to match brainstorm screen 1: the logo, the tagline **"Better conversations. A stronger tomorrow."**, "Practical support for parents to have meaningful conversations with their teenagers.", the hills, and a wide rounded **Get Started** button (Continue for returning parents).
+- Kept from earlier rules: Help at the top, and "No sign-up. Stays private on your phone."
+- The tagline is now also the app's description (shown when the link is shared), and the phone's top-bar colour matches the new screen.
+
+**Broke**
+- On the smallest phone (320 × 640) the page was a little taller than the screen, so the privacy line was cut off.
+
+**Fix**
+- The hills shrink on short screens, cropping only sky from the top. Now fits with no scrolling.
+
+**Checked**
+- 375 × 812 and 320 × 640. New visitor → Get Started → Setup; returning → Continue → Home. `npm test` 9/9, build passes.
+
+---
+
 ## 2026-10-27 — Progress + confidence before → after (brainstorm screen 13)
 
 **Built**
