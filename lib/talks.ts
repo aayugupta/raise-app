@@ -55,8 +55,37 @@ export type Plan = {
   moment: MomentId;
   when: string; // ISO date-time of the planned moment
   createdAt: string; // when the plan was made (metric: "Planned")
+  startedAt?: string; // Talk mode "Start"
+  doneAt?: string; // Talk mode "Done"
   reflectedAt?: string; // set once the parent has said how it went
 };
+
+export function loadPlan(id: string): Plan | undefined {
+  return loadPlans().find((p) => p.id === id);
+}
+
+export function updatePlan(id: string, change: Partial<Plan>): Plan | undefined {
+  const plans = loadPlans();
+  const i = plans.findIndex((p) => p.id === id);
+  if (i === -1) return undefined;
+  plans[i] = { ...plans[i], ...change };
+  try {
+    localStorage.setItem(PLANS_KEY, JSON.stringify(plans));
+  } catch {}
+  return plans[i];
+}
+
+// Metric, step 2 (FR6): "Start" tapped inside the planned window, then "Done" at least 5 minutes later.
+// Recorded quietly; never shown to the parent as a pass or fail.
+const MIN_TALK_MS = 5 * 60_000;
+
+export function startedOnTime(plan: Plan): boolean {
+  if (!plan.startedAt || !plan.doneAt) return false;
+  const at = new Date(plan.when).getTime();
+  const start = new Date(plan.startedAt).getTime();
+  const inWindow = start >= at - WINDOW_BEFORE_MS && start <= at + WINDOW_AFTER_MS;
+  return inWindow && new Date(plan.doneAt).getTime() - start >= MIN_TALK_MS;
+}
 
 // The planned window: from 1 hour before to 3 hours after the planned time.
 // Home shows "It's time" inside it, and a start inside it counts as "started on time".
@@ -67,6 +96,7 @@ export type PlanStage = "upcoming" | "now" | "check-in" | "done";
 
 export function planStage(plan: Plan, now = Date.now()): PlanStage {
   if (plan.reflectedAt) return "done";
+  if (plan.doneAt) return "check-in";
   const at = new Date(plan.when).getTime();
   if (now < at - WINDOW_BEFORE_MS) return "upcoming";
   if (now <= at + WINDOW_AFTER_MS) return "now";

@@ -205,6 +205,27 @@ h3 {
   border-radius: 12px;
 }
 
+/* Talk mode, while talking: calm, dark-teal, phone away */
+.talking {
+  min-height: 100dvh;
+  background: var(--teal-dark);
+  color: #fff;
+}
+
+.talk-glance {
+  margin-top: 28px;
+  padding: 16px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.talk-confirm {
+  background: var(--cream);
+  border-radius: 18px;
+  padding: 16px;
+  text-align: center;
+}
+
 .next-talk {
   display: flex;
   gap: 12px;

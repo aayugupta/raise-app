@@ -4,6 +4,29 @@ What we built, what broke, and how we fixed it. Newest entries at the top.
 
 ---
 
+## 2026-10-27 — Screen 8: Talk mode
+
+**Built**
+- Talk mode (`app/talk/[planId]`), covering D4 and FR6:
+  - **Before:** "Your first line" in big type, two reminders from the teen survey ("Listen more than you talk", "Stay calm, whatever they say"), the safety promise, and a big **Start**.
+  - **While talking:** a calm dark-teal screen, "You've started. Put the phone away.", with the first line under "If you need it", quiet minutes ("6 min"), a big **Done**, and "Something serious came up? Get help".
+  - **Start is saved on the phone straight away**, so a locked phone or closed page doesn't lose the talk. Reopening Talk mode resumes it.
+  - **Done within the first minute** asks "Finish already?", with **Keep going** as the main button, to catch accidental taps.
+  - Done → Reflection.
+- `lib/talks.ts`: Start/Done times on the plan, and the metric rule `startedOnTime`: Start inside the planned window (1 h before to 3 h after) **and** Done 5+ minutes later. **Recorded quietly, never shown to the parent as pass or fail.**
+- Home: after Done, the plan shows "How did your walk go?" instead of "It's time".
+- `tests/metric.test.mjs`: 15 cases for the "started on time" rule and the plan stages.
+
+**Broke**
+- Nothing broke in testing.
+
+**Checked**
+- Home → Open Talk mode → Start → reload → still talking (Start was saved).
+- Done straight away → "Finish already?". A 6-minute talk → Done → Reflection, with 6 minutes recorded. Home then shows the check-in.
+- Metric test 15/15 (e.g. 4 minutes doesn't count, 5 does; starting 4 hours late doesn't count). Build and safety tests pass.
+
+---
+
 ## 2026-10-27 — Screen 7: Home
 
 **Built**
