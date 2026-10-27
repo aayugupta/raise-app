@@ -43,8 +43,9 @@ export function getBaseCard(id: TopicId): BaseCard {
 type CacheFamily = Pick<Profile, "role" | "ageBand" | "teenGender" | "language" | "comfort">;
 
 // Personalised cards are remembered on this phone, so reopening a card doesn't call the AI again.
+// "v2" (28 Oct 2026): cards now have 10 gentle questions, so older saved cards are written again.
 export function cardCacheKey(topic: TopicId, f: CacheFamily, checkedOn: string) {
-  return `raise.card.${topic}.${f.role}.${f.ageBand}.${f.teenGender}.${f.language}.${f.comfort}.${checkedOn}`;
+  return `raise.card.v2.${topic}.${f.role}.${f.ageBand}.${f.teenGender}.${f.language}.${f.comfort}.${checkedOn}`;
 }
 
 // The first line the parent last saw for this topic: the personalised one if saved, else the base one.

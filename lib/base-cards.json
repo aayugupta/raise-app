@@ -14,7 +14,15 @@
       },
       "followUps": [
         "What do you think makes someone good for you?",
-        "A lot of what we see in shows and online isn't how real relationships work. What feels fake to you?"
+        "A lot of what we see in shows and online isn't how real relationships work. What feels fake to you?",
+        "Is there a show or song about love that you think gets it right?",
+        "How do people your age usually let someone know they like them?",
+        "What makes a friendship or relationship feel safe?",
+        "How can you tell when someone is being nice just to get something?",
+        "What would you want me to understand about how people your age think about relationships?",
+        "If a friend's relationship didn't seem okay, how would you know?",
+        "What do you wish parents understood about crushes?",
+        "If you ever had a question about this, how would you like to ask me: face to face, on a walk, or by text?"
       ],
       "say": [
         "You won't be in trouble for telling me.",
@@ -30,7 +38,7 @@
         "quiet": "No rush. We can talk another time. I'm here whenever.",
         "upset": "I'm not checking up on you. I just want you to be able to come to me.",
         "disagree": "That's fair. Tell me how it looks from your side.",
-        "noTalk": "Okay. Just know you can ask me anything, any time. No questions asked."
+        "noTalk": "That's okay, we don't have to talk about it now. I won't push. Whenever you want, even by text, I'll listen without judging."
       },
       "getHelp": "if your teen mentions being pressured, threatened, hurt, or asked for photos → see the help screen (Childline 1098, Cybercrime 1930).",
       "sources": "Raise teen survey, 12 teens, Oct 2026",
@@ -49,7 +57,15 @@
       },
       "followUps": [
         "What helps you feel a bit better when it gets heavy?",
-        "Is there anything I do that makes it harder?"
+        "Is there anything I do that makes it harder?",
+        "What's one thing that went okay this week?",
+        "How do you know when stress is starting to build up?",
+        "Who do you talk to when something is bothering you?",
+        "What's something you wish you had more time for?",
+        "When you tell me something, do you want me to just listen, or help you think it through?",
+        "What's the hardest part of your day right now?",
+        "Is there something you've been holding back because you thought I'd be upset?",
+        "What could we do together that would feel relaxing?"
       ],
       "say": [
         "You won't be in trouble for telling me.",
@@ -65,7 +81,7 @@
         "quiet": "That's okay. We can just sit for a bit.",
         "upset": "I'm sorry. I'm not trying to push. I'm on your side.",
         "disagree": "You know your life better than I do. Help me understand.",
-        "noTalk": "Okay. If you ever want to talk, even at midnight, I'm here."
+        "noTalk": "That's okay, you don't have to talk. I'm right here. If you like, we can just sit together, or go for a walk later."
       },
       "getHelp": "if for weeks your teen isn't eating or sleeping properly, pulls away from everyone, or says life feels pointless → Tele-MANAS 14416 (free, 24×7). If they talk about hurting themselves → 112 now, and stay with them.",
       "sources": "NCERT student mental health survey, 2022 · Raise teen survey, Oct 2026",
@@ -84,7 +100,15 @@
       },
       "followUps": [
         "Has anyone in your group ever been pushed into something they didn't want to do?",
-        "What do you think makes someone a good friend?"
+        "What do you think makes someone a good friend?",
+        "Who in your group makes you laugh the most?",
+        "What do you and your friends enjoy doing together these days?",
+        "Have you seen a friend stand up for someone? What happened?",
+        "How does your group decide what to do when people want different things?",
+        "What's a way to say no that still works with your friends?",
+        "Is there a friend you miss, or someone you've drifted away from?",
+        "What do you think people your age feel the most pressure about?",
+        "If you ever need a way out of something, would it help to say 'my parents won't allow it'?"
       ],
       "say": [
         "You won't be in trouble for telling me.",
@@ -100,7 +124,7 @@
         "quiet": "No pressure. I was just curious about your world.",
         "upset": "I'm not judging your friends. I just want to know what your days are like.",
         "disagree": "Fair enough. What am I missing?",
-        "noTalk": "Okay. My offer stands: you can always use me as your excuse."
+        "noTalk": "Fair enough, I won't push. And if you ever need help saying no to someone, you can always use me as your excuse."
       },
       "getHelp": "if your teen is being bullied, threatened, or pushed into alcohol, drugs or anything risky → see the help screen (Childline 1098; Cybercrime 1930 if it's online).",
       "sources": "Raise teen survey, 12 teens, Oct 2026",
@@ -119,7 +143,15 @@
       },
       "followUps": [
         "Have you heard of anyone getting a weird message or a photo threat? What did they do?",
-        "If something like that happened to a friend, what would you tell them?"
+        "If something like that happened to a friend, what would you tell them?",
+        "Which apps or games do you and your friends enjoy most right now?",
+        "What's something funny or interesting you came across online this week?",
+        "How can you tell if an account is fake?",
+        "What do people your age do when someone they don't know sends a request?",
+        "What would you do if someone online got angry or rude with you?",
+        "Has anything online ever made you or a friend feel uncomfortable?",
+        "What do you think parents get wrong about the internet?",
+        "Is there a game, creator or app you could teach me about?"
       ],
       "say": [
         "If anyone ever threatens you with a photo, come straight to me. You won't be in trouble.",
@@ -135,7 +167,7 @@
         "quiet": "That's okay. I just want you to know the door's open.",
         "upset": "I'm not accusing you of anything. I trust you. I just don't trust some people online.",
         "disagree": "You probably know more about this than me. Tell me what I've got wrong.",
-        "noTalk": "Okay. Just remember: whatever happens online, you won't be in trouble for telling me."
+        "noTalk": "That's okay, we can leave it for now. Just remember: whatever happens online, you can come to me, and you won't be in trouble."
       },
       "getHelp": "if your teen is being blackmailed or threatened, or a fake or private image is shared → Cybercrime 1930 or cybercrime.gov.in, and Take It Down to remove images. Don't pay, don't delete messages (they're evidence), don't contact the person yourself, and don't blame your teen.",
       "sources": "McAfee, Cyberbullying in Plain Sight, India 2022 · OECD AI incident report (IIIT Raipur), 2025",
@@ -154,7 +186,15 @@
       },
       "followUps": [
         "How can you tell when someone really means yes, and when they just feel they have to say it?",
-        "Who are the adults you'd feel okay going to if something felt wrong?"
+        "Who are the adults you'd feel okay going to if something felt wrong?",
+        "What does it look like when someone respects your 'no'?",
+        "Is it okay to say no to a hug, even from a relative? What do you think?",
+        "How do you usually let a friend know you're not comfortable with something?",
+        "Have you ever seen someone keep pushing after a no? What happened?",
+        "What makes a secret okay to keep, and what makes a secret not okay?",
+        "If you ever needed to leave somewhere quickly, would a code word between us help?",
+        "What could you do if a friend shared something private about someone else?",
+        "How can I make sure you always feel safe saying no to me too?"
       ],
       "say": [
         "You won't be in trouble for telling me, whoever it's about.",
@@ -170,7 +210,7 @@
         "quiet": "That's okay. I just want you to know you can always say no, and always tell me.",
         "upset": "I'm not worried about anything you did. I just want you to feel safe.",
         "disagree": "Tell me more. How do people your age think about it?",
-        "noTalk": "Okay. Just remember: if anyone ever makes you uncomfortable, you can tell me, and you won't be in trouble."
+        "noTalk": "That's okay, no pressure at all. If anyone ever makes you uncomfortable, you can tell me any time, and you won't be in trouble."
       },
       "getHelp": "if your teen tells you someone touched them, hurt them or made them feel unsafe → stay calm, believe them, and call Childline 1098, or 112 if they're in danger now. Don't confront the person yourself.",
       "sources": "NCRB Crime in India 2024, POCSO data · Raise parent survey, 18 parents, Oct 2026",
@@ -189,7 +229,15 @@
       },
       "followUps": [
         "What do people your age wonder about but feel too awkward to ask?",
-        "Where do your friends usually look up stuff like this?"
+        "Where do your friends usually look up stuff like this?",
+        "Is there anything about growing up that people joke about but don't really understand?",
+        "How do you feel about the changes people go through at your age?",
+        "What do you think shows and ads get wrong about how bodies look?",
+        "What would make it easier to ask me something awkward?",
+        "Are your sleep, food and energy feeling okay these days?",
+        "Would you rather talk about this with me, or with someone else in the family?",
+        "Is there something you'd rather ask a doctor than me? That's okay too.",
+        "If you saw something online about bodies that confused you, would you tell me?"
       ],
       "say": [
         "You won't be in trouble for asking me anything.",
@@ -205,7 +253,7 @@
         "quiet": "It's a bit awkward for me too. We can keep it short.",
         "upset": "I'm sorry. I didn't mean to embarrass you. I just want you to have real answers.",
         "disagree": "Okay, tell me what you've heard. Let's figure out what's true.",
-        "noTalk": "Okay. You can always ask me later, or text me if that's easier."
+        "noTalk": "No problem, it can feel awkward. You can ask me later, write it down for me, or text me, whatever feels easier."
       },
       "getHelp": "for any medical worry (pain, very irregular periods, anything that doesn't seem right) → a doctor. If your teen seems very unhappy with their body or stops eating properly → Tele-MANAS 14416.",
       "sources": "Rashmi et al., parent-adolescent communication on SRH, Bengaluru, IJCMPH 2026 · Likith, factors influencing parent-adolescent SRH communication, 2024",

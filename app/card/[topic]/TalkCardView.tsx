@@ -50,6 +50,7 @@ export default function TalkCardView({ topic }: { topic: TopicId }) {
   const meta = TOPICS.find((t) => t.id === topic)!;
   const [loaded, setLoaded] = useState<Loaded | null>(null);
   const [index, setIndex] = useState(0);
+  const [allQuestions, setAllQuestions] = useState(false);
   const deckRef = useRef<HTMLDivElement>(null);
 
   // Opened from Home's carousel or the topic library: go back there.
@@ -172,14 +173,20 @@ export default function TalkCardView({ topic }: { topic: TopicId }) {
       title: "Gentle questions to ask",
       body: (
         <>
-          <p style={{ fontSize: 15, color: "var(--muted)", margin: "0 0 10px" }}>After your first line, ask one of these. Then listen.</p>
+          <p style={{ fontSize: 15, color: "var(--muted)", margin: "0 0 10px" }}>After your first line, pick one that feels natural. Then listen.</p>
+          {/* 10 questions: 5 at first, so the cards stay a comfortable height */}
           <ol className="card-list flash-questions">
-            {card.followUps.map((q) => (
+            {card.followUps.slice(0, allQuestions ? undefined : 5).map((q) => (
               <li key={q} {...langProps}>
                 {q}
               </li>
             ))}
           </ol>
+          {card.followUps.length > 5 && (
+            <button className="btn-link" onClick={() => setAllQuestions(!allQuestions)} aria-expanded={allQuestions}>
+              {allQuestions ? "Show fewer" : `Show ${card.followUps.length - 5} more questions`}
+            </button>
+          )}
         </>
       ),
     },

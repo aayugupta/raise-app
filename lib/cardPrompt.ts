@@ -72,6 +72,8 @@ RULES (follow all of them):
 4. "say": keep 3 lines. The first must keep its meaning: the teen won't be in trouble for telling the parent.
 5. "avoid": keep 3 lines. These describe things the parent should NOT do or say. Keep them as warnings.
 6. "react": one calm line for each of: quiet, upset, disagree, noTalk.
+   "noTalk" (the teen doesn't want to talk): accept the no without guilt or pressure, say the parent won't push, and leave one easy door open (later, a walk, or a text). Never ask why they won't talk, never sound hurt or disappointed.
+12. "followUps": keep all 10 gentle questions, in the same order, each reworded for this family. Short, open questions the teen can answer in their own way, never yes/no interrogations ("who", "where were you"). For a younger teen, keep them about friends and "people your age".
 7. Never diagnose, never give medical, medicine or legal advice, never shame or scare, never use fear words, never suggest spying, tracking, reading messages or checking the teen's phone, never suggest taking the phone away or any punishment, never judge sexuality or gender identity, no sexual detail, never promise results.
 8. Warm, calm, short sentences. No emojis.
 9. Write EVERY field in the chosen language, including followUps, say, avoid and react. Do not leave any line in the base card's English unless the chosen language is English.
@@ -79,5 +81,5 @@ RULES (follow all of them):
 11. Never mention spying, tracking, monitoring or checking up, not even to say the parent is NOT doing it. Reassure in other words (e.g. "I just want you to feel you can come to me"). The "avoid" list is the only place the phone or checking may be mentioned, as a warning.
 
 Reply with JSON only, in exactly this shape:
-{"whyNow": "...", "firstLine": "...", "followUps": ["...", "..."], "say": ["...", "...", "..."], "avoid": ["...", "...", "..."], "react": {"quiet": "...", "upset": "...", "disagree": "...", "noTalk": "..."}}`;
+{"whyNow": "...", "firstLine": "...", "followUps": ["...", "...", "...", "...", "...", "...", "...", "...", "...", "..."], "say": ["...", "...", "..."], "avoid": ["...", "...", "..."], "react": {"quiet": "...", "upset": "...", "disagree": "...", "noTalk": "..."}}`;
 }

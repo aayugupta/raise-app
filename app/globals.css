@@ -982,8 +982,8 @@ h3 {
 .flash-questions li {
   background: var(--cream);
   border-radius: 12px;
-  padding: 12px 14px;
-  font-size: 17px;
+  padding: 10px 12px;
+  font-size: 16px;
   font-weight: 600;
   color: var(--ink);
   list-style-position: inside;

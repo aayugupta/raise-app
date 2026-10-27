@@ -49,7 +49,7 @@ export function checkAiCard(raw: unknown, base: BaseCard, language: Language): S
   if (!c || typeof c !== "object") return { ok: false, problems: ["not a card"] };
   if (!isText(c.whyNow, 400)) problems.push("why now missing or too long");
   if (!isText(c.firstLine, 220)) problems.push("first line missing or too long");
-  if (!isList(c.followUps, 2)) problems.push("needs exactly 2 follow-ups");
+  if (!isList(c.followUps, 10)) problems.push("needs exactly 10 gentle questions");
   if (!isList(c.say, 3)) problems.push("needs exactly 3 'say' lines");
   if (!isList(c.avoid, 3)) problems.push("needs exactly 3 'avoid' lines");
   const r = c.react;

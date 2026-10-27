@@ -46,9 +46,17 @@ The AI only rewords. It never adds new facts, numbers, advice or help numbers. T
 - Hindi: "तुम्हारे दोस्तों में आजकल किसी को कोई पसंद है? लोग कैसे पता करते हैं?"
 - English: "Do any of your friends like someone these days? How do people figure it out?"
 
-**Two follow-up questions:**
+**Gentle questions to ask (10):**
 1. "What do you think makes someone good for you?"
 2. "A lot of what we see in shows and online isn't how real relationships work. What feels fake to you?"
+3. "Is there a show or song about love that you think gets it right?"
+4. "How do people your age usually let someone know they like them?"
+5. "What makes a friendship or relationship feel safe?"
+6. "How can you tell when someone is being nice just to get something?"
+7. "What would you want me to understand about how people your age think about relationships?"
+8. "If a friend's relationship didn't seem okay, how would you know?"
+9. "What do you wish parents understood about crushes?"
+10. "If you ever had a question about this, how would you like to ask me: face to face, on a walk, or by text?"
 
 **Say:**
 1. "You won't be in trouble for telling me." (the safety promise)
@@ -64,7 +72,7 @@ The AI only rewords. It never adds new facts, numbers, advice or help numbers. T
 - **Go quiet:** "No rush. We can talk another time. I'm here whenever."
 - **Get upset:** "I'm not checking up on you. I just want you to be able to come to me."
 - **Disagree:** "That's fair. Tell me how it looks from your side."
-- **Don't want to talk:** "Okay. Just know you can ask me anything, any time. No questions asked."
+- **Don't want to talk:** "That's okay, we don't have to talk about it now. I won't push. Whenever you want, even by text, I'll listen without judging."
 
 **When to get help:** if your teen mentions being pressured, threatened, hurt, or asked for photos → see the help screen (Childline 1098, Cybercrime 1930).
 
@@ -88,9 +96,17 @@ The AI only rewords. It never adds new facts, numbers, advice or help numbers. T
 - Hindi: "आजकल तुम्हारे मन में सबसे ज़्यादा क्या चल रहा है? बस सुनने का मन है, कुछ सुलझाना नहीं है।"
 - English: "What's taking up most of your headspace these days? I just want to listen, not fix anything."
 
-**Two follow-up questions:**
+**Gentle questions to ask (10):**
 1. "What helps you feel a bit better when it gets heavy?"
 2. "Is there anything I do that makes it harder?"
+3. "What's one thing that went okay this week?"
+4. "How do you know when stress is starting to build up?"
+5. "Who do you talk to when something is bothering you?"
+6. "What's something you wish you had more time for?"
+7. "When you tell me something, do you want me to just listen, or help you think it through?"
+8. "What's the hardest part of your day right now?"
+9. "Is there something you've been holding back because you thought I'd be upset?"
+10. "What could we do together that would feel relaxing?"
 
 **Say:**
 1. "You won't be in trouble for telling me." (the safety promise)
@@ -106,7 +122,7 @@ The AI only rewords. It never adds new facts, numbers, advice or help numbers. T
 - **Go quiet:** "That's okay. We can just sit for a bit."
 - **Get upset:** "I'm sorry. I'm not trying to push. I'm on your side."
 - **Disagree:** "You know your life better than I do. Help me understand."
-- **Don't want to talk:** "Okay. If you ever want to talk, even at midnight, I'm here."
+- **Don't want to talk:** "That's okay, you don't have to talk. I'm right here. If you like, we can just sit together, or go for a walk later."
 
 **When to get help:** if for weeks your teen isn't eating or sleeping properly, pulls away from everyone, or says life feels pointless → Tele-MANAS 14416 (free, 24×7). If they talk about hurting themselves → 112 now, and stay with them.
 
@@ -128,9 +144,17 @@ The AI only rewords. It never adds new facts, numbers, advice or help numbers. T
 - Hindi: "तुम्हारे ग्रुप में आजकल सब किस चीज़ के पीछे पड़े हैं? क्या ट्रेंड चल रहा है?"
 - English: "What's everyone in your group into these days? What's the big thing right now?"
 
-**Two follow-up questions:**
+**Gentle questions to ask (10):**
 1. "Has anyone in your group ever been pushed into something they didn't want to do?"
 2. "What do you think makes someone a good friend?"
+3. "Who in your group makes you laugh the most?"
+4. "What do you and your friends enjoy doing together these days?"
+5. "Have you seen a friend stand up for someone? What happened?"
+6. "How does your group decide what to do when people want different things?"
+7. "What's a way to say no that still works with your friends?"
+8. "Is there a friend you miss, or someone you've drifted away from?"
+9. "What do you think people your age feel the most pressure about?"
+10. "If you ever need a way out of something, would it help to say 'my parents won't allow it'?"
 
 **Say:**
 1. "You won't be in trouble for telling me." (the safety promise)
@@ -146,7 +170,7 @@ The AI only rewords. It never adds new facts, numbers, advice or help numbers. T
 - **Go quiet:** "No pressure. I was just curious about your world."
 - **Get upset:** "I'm not judging your friends. I just want to know what your days are like."
 - **Disagree:** "Fair enough. What am I missing?"
-- **Don't want to talk:** "Okay. My offer stands: you can always use me as your excuse."
+- **Don't want to talk:** "Fair enough, I won't push. And if you ever need help saying no to someone, you can always use me as your excuse."
 
 **When to get help:** if your teen is being bullied, threatened, or pushed into alcohol, drugs or anything risky → see the help screen (Childline 1098; Cybercrime 1930 if it's online).
 
@@ -168,9 +192,17 @@ The AI only rewords. It never adds new facts, numbers, advice or help numbers. T
 - Hindi: "तुम लोग ऑनलाइन सबसे ज़्यादा कहाँ समय बिताते हो? मुझे भी समझाओ, मैं थोड़ा पीछे हूँ।"
 - English: "Where do you and your friends spend most of your time online? Teach me, I'm a bit behind."
 
-**Two follow-up questions:**
+**Gentle questions to ask (10):**
 1. "Have you heard of anyone getting a weird message or a photo threat? What did they do?"
 2. "If something like that happened to a friend, what would you tell them?"
+3. "Which apps or games do you and your friends enjoy most right now?"
+4. "What's something funny or interesting you came across online this week?"
+5. "How can you tell if an account is fake?"
+6. "What do people your age do when someone they don't know sends a request?"
+7. "What would you do if someone online got angry or rude with you?"
+8. "Has anything online ever made you or a friend feel uncomfortable?"
+9. "What do you think parents get wrong about the internet?"
+10. "Is there a game, creator or app you could teach me about?"
 
 **Say:**
 1. "If anyone ever threatens you with a photo, come straight to me. You won't be in trouble." (the safety promise)
@@ -186,7 +218,7 @@ The AI only rewords. It never adds new facts, numbers, advice or help numbers. T
 - **Go quiet:** "That's okay. I just want you to know the door's open."
 - **Get upset:** "I'm not accusing you of anything. I trust you. I just don't trust some people online."
 - **Disagree:** "You probably know more about this than me. Tell me what I've got wrong."
-- **Don't want to talk:** "Okay. Just remember: whatever happens online, you won't be in trouble for telling me."
+- **Don't want to talk:** "That's okay, we can leave it for now. Just remember: whatever happens online, you can come to me, and you won't be in trouble."
 
 **When to get help:** if your teen is being blackmailed or threatened, or a fake or private image is shared → Cybercrime 1930 or cybercrime.gov.in, and Take It Down to remove images. Don't pay, don't delete messages (they're evidence), don't contact the person yourself, and don't blame your teen.
 
@@ -208,9 +240,17 @@ Most people who harm children are known to them: about 97% of offenders in India
 - Hindi: "कभी ऐसा हुआ है कि किसी दोस्त का कुछ करने का मन नहीं था, पर वह मना नहीं कर पाया? लोग ऐसा क्यों करते हैं?"
 - English: "Has a friend ever not wanted to do something but couldn't say no? Why do you think people go along with it?"
 
-**Two follow-up questions:**
+**Gentle questions to ask (10):**
 1. "How can you tell when someone really means yes, and when they just feel they have to say it?"
 2. "Who are the adults you'd feel okay going to if something felt wrong?"
+3. "What does it look like when someone respects your 'no'?"
+4. "Is it okay to say no to a hug, even from a relative? What do you think?"
+5. "How do you usually let a friend know you're not comfortable with something?"
+6. "Have you ever seen someone keep pushing after a no? What happened?"
+7. "What makes a secret okay to keep, and what makes a secret not okay?"
+8. "If you ever needed to leave somewhere quickly, would a code word between us help?"
+9. "What could you do if a friend shared something private about someone else?"
+10. "How can I make sure you always feel safe saying no to me too?"
 
 **Say:**
 1. "You won't be in trouble for telling me, whoever it's about." (the safety promise)
@@ -226,7 +266,7 @@ Most people who harm children are known to them: about 97% of offenders in India
 - **Go quiet:** "That's okay. I just want you to know you can always say no, and always tell me."
 - **Get upset:** "I'm not worried about anything you did. I just want you to feel safe."
 - **Disagree:** "Tell me more. How do people your age think about it?"
-- **Don't want to talk:** "Okay. Just remember: if anyone ever makes you uncomfortable, you can tell me, and you won't be in trouble."
+- **Don't want to talk:** "That's okay, no pressure at all. If anyone ever makes you uncomfortable, you can tell me any time, and you won't be in trouble."
 
 **When to get help:** if your teen tells you someone touched them, hurt them or made them feel unsafe → stay calm, believe them, and call Childline 1098, or 112 if they're in danger now. Don't confront the person yourself.
 
@@ -248,9 +288,17 @@ Puberty questions are often left to school or friends. In a 2026 Bengaluru study
 - Hindi: "स्कूल में शरीर के बदलावों के बारे में कुछ पढ़ाया है? कुछ ऐसा है जो उन्होंने ठीक से नहीं समझाया?"
 - English: "Has school taught anything about how bodies change? Anything they didn't explain properly?"
 
-**Two follow-up questions:**
+**Gentle questions to ask (10):**
 1. "What do people your age wonder about but feel too awkward to ask?"
 2. "Where do your friends usually look up stuff like this?"
+3. "Is there anything about growing up that people joke about but don't really understand?"
+4. "How do you feel about the changes people go through at your age?"
+5. "What do you think shows and ads get wrong about how bodies look?"
+6. "What would make it easier to ask me something awkward?"
+7. "Are your sleep, food and energy feeling okay these days?"
+8. "Would you rather talk about this with me, or with someone else in the family?"
+9. "Is there something you'd rather ask a doctor than me? That's okay too."
+10. "If you saw something online about bodies that confused you, would you tell me?"
 
 **Say:**
 1. "You won't be in trouble for asking me anything." (the safety promise)
@@ -266,7 +314,7 @@ Puberty questions are often left to school or friends. In a 2026 Bengaluru study
 - **Go quiet:** "It's a bit awkward for me too. We can keep it short."
 - **Get upset:** "I'm sorry. I didn't mean to embarrass you. I just want you to have real answers."
 - **Disagree:** "Okay, tell me what you've heard. Let's figure out what's true."
-- **Don't want to talk:** "Okay. You can always ask me later, or text me if that's easier."
+- **Don't want to talk:** "No problem, it can feel awkward. You can ask me later, write it down for me, or text me, whatever feels easier."
 
 **When to get help:** for any medical worry (pain, very irregular periods, anything that doesn't seem right) → a doctor. If your teen seems very unhappy with their body or stops eating properly → Tele-MANAS 14416.
 

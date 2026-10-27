@@ -63,10 +63,10 @@ const cards = blocks.map((block) => {
     else problems.push(`${name}: missing ${lang} first line`);
   }
 
-  const followUps = listItems(need("Two follow-up questions:"));
+  const followUps = listItems(need("Gentle questions to ask (10):"));
   const say = listItems(need("Say:"));
   const avoid = listItems(need("Avoid:"));
-  if (followUps.length !== 2) problems.push(`${name}: needs exactly 2 follow-up questions (found ${followUps.length})`);
+  if (followUps.length !== 10) problems.push(`${name}: needs exactly 10 gentle questions (found ${followUps.length})`);
   if (say.length !== 3) problems.push(`${name}: needs exactly 3 "Say" lines (found ${say.length})`);
   if (avoid.length !== 3) problems.push(`${name}: needs exactly 3 "Avoid" lines (found ${avoid.length})`);
 
