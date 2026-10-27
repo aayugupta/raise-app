@@ -8,6 +8,7 @@ import HelpPill from "@/components/HelpPill";
 import type { Family } from "@/lib/cardPrompt";
 import { track } from "@/lib/events";
 import { loadProfile } from "@/lib/profile";
+import { startJourney } from "@/lib/journeyLog";
 import { addOpenTopic } from "@/lib/talks";
 import { TOPICS, type TopicId } from "@/lib/topics";
 
@@ -109,6 +110,7 @@ export default function TalkCardView({ topic }: { topic: TopicId }) {
   useEffect(() => {
     if (!shownSource) return;
     track("card_viewed", { topic, source: shownSource });
+    startJourney(topic);
     addOpenTopic(topic);
   }, [shownSource, topic]);
 

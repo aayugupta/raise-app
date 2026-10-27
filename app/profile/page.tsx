@@ -128,7 +128,7 @@ export default function ProfileScreen() {
         {/* More */}
         <h2 className="section-title">More</h2>
         <div className="settings-list">
-          <Link href="/progress" className="settings-link">
+          <Link href="/journey" className="settings-link">
             <span aria-hidden="true">📈</span> My progress <span className="settings-arrow">→</span>
           </Link>
 

@@ -35,87 +35,52 @@ group by event
 order by parents desc;
 
 -- ---------------------------------------------------------------------------
--- View 2: completed conversations (Step 2 definition, plus unplanned talks from 27 Oct 2026).
--- A topic is STARTED when the parent first opens its card, or first logs a talk on it.
--- It counts as COMPLETED when, within 14 days of starting, EITHER:
---   A planned talk:  planned (plan_set) → started on time and talked 5+ minutes (talk_done, on_time)
---                    → reflected within 24 hours, and it happened (reflection_saved, yes/partly)
---                    → 3-day follow-up answered and it matched (follow_up_answered, matched)
---   An unplanned talk ("I had a talk"): logged (talk_logged) → reflected within 24 hours of logging,
---                    and it happened → 3-day follow-up answered and it matched
--- Topics where help was offered are left out (crisis topics don't count either way).
+-- View 2: completed conversations (Aayushi's simple rule, 28 Oct 2026; replaces the Step 2 definition).
+-- A topic is STARTED when its 14-day journey begins on the phone (journey_started).
+-- It is COMPLETED when a reflection where the talk happened (reflection_saved, yes/partly) is saved
+-- within 14 days of that start (and before the same topic's next journey).
+-- Journeys where help was offered are left out (crisis topics don't count either way).
+-- "Not yet" reflections don't complete a journey.
 -- ---------------------------------------------------------------------------
-create or replace view public.topic_outcomes with (security_invoker = true) as
-with started as (
-  select anon_id, topic, min(created_at) as started_at
-  from public.events where event in ('card_viewed', 'talk_logged')
-  group by anon_id, topic
+drop view if exists public.completion_rate;
+drop view if exists public.topic_outcomes;
+
+create view public.topic_outcomes with (security_invoker = true) as
+with journeys as (
+  select anon_id, topic, created_at as started_at,
+         lead(created_at) over (partition by anon_id, topic order by created_at) as next_start
+  from public.events where event = 'journey_started'
 ),
-crisis as (
-  select distinct anon_id, topic
-  from public.events where event = 'reflection_saved' and (props->>'help_offered')::boolean
-),
-plans as (
-  select anon_id, topic, plan_id, false as unplanned from public.events where event = 'plan_set'
-  union all
-  select anon_id, topic, plan_id, true  as unplanned from public.events where event = 'talk_logged'
-),
-done as (
-  -- Planned: Talk mode's Done. Unplanned: the moment it was logged (it had already happened).
-  select plan_id, created_at as done_at, (props->>'on_time')::boolean as on_time
-  from public.events where event = 'talk_done'
-  union all
-  select plan_id, created_at as done_at, true as on_time
-  from public.events where event = 'talk_logged'
-),
-reflected as (
-  select plan_id, created_at as reflected_at, props->>'happened' as happened
-  from public.events where event = 'reflection_saved'
-),
-followed as (
-  select plan_id, created_at as followed_at, (props->>'matched')::boolean as matched
-  from public.events where event = 'follow_up_answered'
-),
-per_plan as (
-  select p.anon_id, p.topic, p.plan_id, p.unplanned,
-         (d.on_time is true
-          and r.happened in ('yes', 'partly')
-          and r.reflected_at <= d.done_at + interval '24 hours'
-          and f.matched is true
-          and f.followed_at <= s.started_at + interval '14 days') as completed
-  from plans p
-  join started s on s.anon_id = p.anon_id and s.topic = p.topic
-  left join done d      on d.plan_id = p.plan_id
-  left join reflected r on r.plan_id = p.plan_id
-  left join followed f  on f.plan_id = p.plan_id
+windowed as (
+  select j.*, least(j.started_at + interval '14 days', coalesce(j.next_start, 'infinity'::timestamptz)) as window_end
+  from journeys j
 )
-select s.anon_id, s.topic, s.started_at,
-       exists (select 1 from plans p where p.anon_id = s.anon_id and p.topic = s.topic and not p.unplanned) as planned,
-       coalesce((select bool_or(pp.completed) from per_plan pp
-                 where pp.anon_id = s.anon_id and pp.topic = s.topic), false)                              as completed,
-       (s.started_at > now() - interval '14 days')                                                          as still_open,
-       coalesce((select bool_or(pp.completed) from per_plan pp
-                 where pp.anon_id = s.anon_id and pp.topic = s.topic and not pp.unplanned), false)          as completed_planned,
-       coalesce((select bool_or(pp.completed) from per_plan pp
-                 where pp.anon_id = s.anon_id and pp.topic = s.topic and pp.unplanned), false)              as completed_unplanned
-from started s
-where not exists (select 1 from crisis c where c.anon_id = s.anon_id and c.topic = s.topic);
+select w.anon_id, w.topic, w.started_at,
+       exists (select 1 from public.events r
+               where r.event = 'reflection_saved' and r.anon_id = w.anon_id and r.topic = w.topic
+                 and r.created_at between w.started_at and w.window_end
+                 and r.props->>'happened' in ('yes', 'partly')
+                 and not coalesce((r.props->>'help_offered')::boolean, false))              as completed,
+       (w.started_at > now() - interval '14 days')                                           as still_open,
+       exists (select 1 from public.events r
+               where r.event = 'reflection_saved' and r.anon_id = w.anon_id and r.topic = w.topic
+                 and r.created_at between w.started_at and w.window_end
+                 and coalesce((r.props->>'help_offered')::boolean, false))                  as help_offered
+from windowed w;
 
 -- ---------------------------------------------------------------------------
--- View 3: the headline number. Target: 40% of topics started reach a completed conversation.
--- "still open" topics are under 14 days old and can still complete, so they're shown separately.
--- Planned and unplanned completions are also shown apart, so Raise's own effect stays visible.
+-- View 3: the headline number. Completed Conversation Rate = completed ÷ topics started.
+-- Target: 40%. Topics under 14 days old can still complete, so they're also shown separately.
 -- ---------------------------------------------------------------------------
-create or replace view public.completion_rate with (security_invoker = true) as
-select count(*)                                       as topics_started,
-       count(*) filter (where completed)              as topics_completed,
+create view public.completion_rate with (security_invoker = true) as
+select count(*)                                                      as topics_started,
+       count(*) filter (where completed)                             as topics_completed,
        round(100.0 * count(*) filter (where completed) / nullif(count(*), 0), 1) as completion_rate_pct,
-       count(*) filter (where still_open and not completed) as still_within_14_days,
-       count(distinct anon_id)                        as parents,
-       count(distinct anon_id) filter (where completed) as parents_with_a_completed_talk,
-       count(*) filter (where completed_planned)      as completed_after_a_plan,
-       count(*) filter (where completed_unplanned and not completed_planned) as completed_unplanned_only
-from public.topic_outcomes;
+       count(*) filter (where still_open and not completed)          as still_within_14_days,
+       count(distinct anon_id)                                       as parents,
+       count(distinct anon_id) filter (where completed)              as parents_with_a_completed_talk
+from public.topic_outcomes
+where not help_offered;
 
 -- ---------------------------------------------------------------------------
 -- View 4: confidence before → after (Step 6 leading indicator; parent survey Q14, 1–5).

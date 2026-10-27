@@ -5,13 +5,13 @@ import { usePathname } from "next/navigation";
 
 // The bottom tab bar from Aayushi's simplified flow (28 Oct 2026):
 // Topics · AI Coach · Journey · Help · Profile. "Topics" opens Home (topic carousel + library link).
-// "Journey" opens Progress until the Journey screen is built. Shown only on these main screens,
+// "Journey" shows the 14-day journeys and progress. Shown only on these main screens,
 // never in the middle of preparing, talking or reflecting.
 
 const TABS = [
   { href: "/home", label: "Topics", icon: "topics", also: ["/topics"] },
   { href: "/coach", label: "AI Coach", icon: "coach", also: [] },
-  { href: "/progress", label: "Journey", icon: "journey", also: ["/journey"] },
+  { href: "/journey", label: "Journey", icon: "journey", also: ["/progress"] },
   { href: "/help", label: "Help", icon: "help", also: [] },
   { href: "/profile", label: "Profile", icon: "profile", also: [] },
 ] as const;

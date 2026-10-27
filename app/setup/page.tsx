@@ -9,6 +9,7 @@ import { CONFIDENCE_QUESTION, recordConfidence } from "@/lib/confidence";
 import { track } from "@/lib/events";
 import { saveProfile, type Profile } from "@/lib/profile";
 import { PROFILE_CHOICES } from "@/lib/profileOptions";
+import { startJourney } from "@/lib/journeyLog";
 import { addOpenTopic } from "@/lib/talks";
 import { TOPICS, type TopicId } from "@/lib/topics";
 
@@ -50,7 +51,10 @@ export default function Setup() {
     saveProfile(profile);
     if (confidence) recordConfidence(confidence, "setup");
     // The chosen topic shows on Home under "Continue your journey" (step 1, Prepare).
-    if (firstTopic) addOpenTopic(firstTopic);
+    if (firstTopic) {
+      startJourney(firstTopic);
+      addOpenTopic(firstTopic);
+    }
     // Tapped answers only.
     track("setup_completed", { role: profile.role, age_band: profile.ageBand, language: profile.language, comfort: profile.comfort });
     router.push("/home");

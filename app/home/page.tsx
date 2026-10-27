@@ -6,30 +6,16 @@ import { useRouter } from "next/navigation";
 import BottomNav from "@/components/BottomNav";
 import FamilySofa from "@/components/FamilySofa";
 import { currentFirstLine } from "@/lib/cards";
-import { activeJourneys, type Journey } from "@/lib/journey";
+import JourneyCard, { whenText } from "@/components/JourneyCard";
+import { activeJourneys } from "@/lib/journey";
 import { greetName, loadProfile, type Profile } from "@/lib/profile";
-import { JOURNEY_DAYS, loadOpenTopics, loadPlans, loadTopicStarts, momentOf, planStage, type Plan } from "@/lib/talks";
+import { openJourneyStarts } from "@/lib/journeyLog";
+import { JOURNEY_DAYS, loadOpenTopics, loadPlans, momentOf, planStage, type Plan } from "@/lib/talks";
 import { TOPICS, type TopicId } from "@/lib/topics";
 
 // Screen 5: Home (Aayushi's simplified flow, 28 Oct 2026), opened by the "Topics" tab.
 // "Hello Mumma/Papa", the in-app reminder, the active 14-day journeys, a topic carousel,
 // and "Choose topic from library". No streaks, no scores: just "Day 5 of 14".
-
-function whenText(iso: string) {
-  const d = new Date(iso);
-  const today = new Date();
-  const tomorrow = new Date();
-  tomorrow.setDate(today.getDate() + 1);
-  const yesterday = new Date();
-  yesterday.setDate(today.getDate() - 1);
-  const time = d.toLocaleTimeString("en-IN", { hour: "numeric", minute: "2-digit" });
-  if (d.toDateString() === today.toDateString()) return `Today, ${time}`;
-  if (d.toDateString() === tomorrow.toDateString()) return `Tomorrow, ${time}`;
-  if (d.toDateString() === yesterday.toDateString()) return `Yesterday, ${time}`;
-  return `${d.toLocaleDateString("en-IN", { weekday: "short", day: "numeric", month: "short" })}, ${time}`;
-}
-
-const topicMeta = (id: TopicId) => TOPICS.find((t) => t.id === id)!;
 
 export default function Home() {
   const router = useRouter();
@@ -49,7 +35,7 @@ export default function Home() {
     setProfile(p);
     setPlans(loadPlans());
     setOpenTopics(loadOpenTopics());
-    setStarts(loadTopicStarts());
+    setStarts(openJourneyStarts());
     setReady(true);
     // Re-check every minute, so "It's time" appears without reloading.
     const timer = setInterval(() => setNow(Date.now()), 60_000);
@@ -127,37 +113,5 @@ export default function Home() {
       </div>
       <BottomNav />
     </main>
-  );
-}
-
-// One active topic: "Day 5 of 14", its step (Prepare → Talk → Reflect), and the next action.
-function JourneyCard({ journey, whenLabel }: { journey: Journey; whenLabel?: string }) {
-  const t = topicMeta(journey.topic);
-  return (
-    <Link href={journey.href} className="journey-card">
-      <span className="topic-tile-icon" style={{ background: `${t.color}26` }} aria-hidden="true">
-        {t.icon}
-      </span>
-      <span style={{ flex: 1, minWidth: 0 }}>
-        <span style={{ display: "flex", justifyContent: "space-between", gap: 8, alignItems: "baseline" }}>
-          <span style={{ fontWeight: 700, color: "var(--ink)" }}>{t.short}</span>
-          {journey.day && (
-            <span className="journey-day">
-              Day {journey.day} of {JOURNEY_DAYS}
-            </span>
-          )}
-        </span>
-        <span style={{ display: "block", fontSize: 14, color: "var(--muted)", marginTop: 2 }}>
-          Step {journey.step} of 3 · {journey.stepName}
-          {whenLabel ? ` · ${whenLabel}` : ""}
-        </span>
-        <span className="journey-steps" aria-hidden="true">
-          {[1, 2, 3].map((s) => (
-            <span key={s} className={s <= journey.step ? "done" : ""} />
-          ))}
-        </span>
-        <span style={{ display: "block", fontSize: 15, fontWeight: 700, color: "var(--teal)", marginTop: 8 }}>{journey.action} →</span>
-      </span>
-    </Link>
   );
 }

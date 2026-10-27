@@ -80,7 +80,7 @@ Aayushi's simplified wireframe (10 screens + Emergency help) replaces the 14-scr
 
 | Question | Decision |
 | --- | --- |
-| Navigation | **Bottom tab bar: Topics · AI Coach · Journey · Help · Profile.** The Topics tab opens Home (carousel + "Choose topic from library"); the Help tab is labelled "Help" (read aloud as "Emergency help"). Journey opens Progress until the Journey screen is built |
+| Navigation | **Bottom tab bar: Topics · AI Coach · Journey · Help · Profile.** The Topics tab opens Home (carousel + "Choose topic from library"); the Help tab is labelled "Help" (read aloud as "Emergency help"). Journey opens `/journey`: active journeys, completed vs started, confidence, past talks (`/progress` redirects there) |
 | Home extras | **"I had a talk" and the 3-day follow-up are removed from Home** (Aayushi, 28 Oct 2026). The in-app "It's time" reminder stays |
 | Age bands | **12–14 / 15–16 / 17–19** |
 | Topics | **Back to the docs' 6** (relationships, stress, friends, online safety, consent, body). Study & future and Screen time come out |
@@ -171,6 +171,10 @@ Aayushi's reference design (25 Oct 2026) is a warm, illustrated parenting app: a
 Failures go on a watch list. Accepted claims still need human approval before reaching a card. Every card shows "Checked on [date] · Sources". No push alerts.
 
 ## The metric
+
+**Current rule (28 Oct 2026, Aayushi's decision; replaces the definitions below):** Completed Conversation Rate = topics with a reflection where the talk happened (Yes or Partly) saved within 14 days of the topic's start ÷ topics started. A topic starts when its 14-day journey begins (flashcards first opened, picked in setup, or planned): the `journey_started` event. "Not yet" doesn't complete a journey; journeys where help was offered are left out. Computed on the phone in `lib/metric.ts` (tested in `tests/completion.test.mjs`) and in Supabase (`supabase/schema.sql`, views `topic_outcomes` and `completion_rate`). Parents see counts only, never a percentage.
+
+*Earlier definitions, kept for the record:*
 
 A **completed conversation** = a topic the parent planned, started in the planned window ("Start", then "Done" at least 5 minutes later), reflected on within 24 hours, and followed up at 3 days, all within 14 days of choosing it. Target: 40% of topics started. Crisis topics are left out.
 

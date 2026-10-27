@@ -10,7 +10,8 @@ import { track } from "@/lib/events";
 import { BLOCKERS, type BlockerId } from "@/lib/recovery";
 import { saveReflection, type Feeling, type Happened, type Reflection, type WhoTalked } from "@/lib/reflections";
 import { hasDangerSign } from "@/lib/safety";
-import { clearTopicStart, loadPlan, loadPlans, momentOf, updatePlan, type Plan } from "@/lib/talks";
+import { finishJourney } from "@/lib/journeyLog";
+import { loadPlan, loadPlans, momentOf, updatePlan, type Plan } from "@/lib/talks";
 import { TOPICS, type TopicId } from "@/lib/topics";
 
 // Reflection (Aayushi's simplified flow, 28 Oct 2026): did it happen, what you said, what your child said,
@@ -108,7 +109,8 @@ export default function ReflectView({ planId }: { planId: string }) {
       gotInTheWay: askBlocker && blocker ? blocker : undefined,
     });
     updatePlan(planId, { reflectedAt: r.createdAt });
-    clearTopicStart(plan!.topic);
+    // Ends the 14-day journey: completed if the talk happened (Yes or Partly) within 14 days.
+    finishJourney(plan!.topic, happened === "yes" || happened === "partly", helpOffered);
     if (afterConfidence) recordConfidence(afterConfidence, "after_talk");
     // The fixed-choice answers only. The written notes never leave the phone.
     track("reflection_saved", {

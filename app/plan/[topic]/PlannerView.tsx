@@ -8,6 +8,7 @@ import HelpPill from "@/components/HelpPill";
 import WalkTogether from "@/components/WalkTogether";
 import { currentFirstLine } from "@/lib/cards";
 import { track } from "@/lib/events";
+import { startJourney } from "@/lib/journeyLog";
 import { loadProfile } from "@/lib/profile";
 import { MOMENTS, savePlan, type MomentId, type Plan } from "@/lib/talks";
 import type { TopicId } from "@/lib/topics";
@@ -91,6 +92,7 @@ export default function PlannerView({ topic, suggestedMoment }: { topic: TopicId
   function save() {
     if (!moment || !valid) return;
     const plan = savePlan({ topic, moment, when: when.toISOString(), reminder });
+    startJourney(topic);
     track("plan_set", { topic, plan_id: plan.id, moment });
     setSaved(plan);
     window.scrollTo(0, 0);

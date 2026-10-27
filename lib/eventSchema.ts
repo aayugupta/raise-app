@@ -15,6 +15,8 @@ export const EVENTS: Record<string, Record<string, FieldRule>> = {
     comfort: ["gentle", "open"],
   },
   card_viewed: { topic: TOPIC, source: ["ai", "base"] },
+  // A topic's 14-day journey began (the metric's "topic started").
+  journey_started: { topic: TOPIC },
   topic_not_now: { topic: TOPIC },
   plan_set: { topic: TOPIC, plan_id: PLAN_ID, moment: ["walk", "evening", "chores", "meal", "car"] },
   talk_started: { topic: TOPIC, plan_id: PLAN_ID },
