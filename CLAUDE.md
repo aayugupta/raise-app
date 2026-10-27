@@ -71,8 +71,8 @@ Aayushi's simplified wireframe (10 screens + Emergency help) replaces the 14-scr
 | 3 | About your teen | Age band + gender (Girl / Boy / Prefer not to say) on **one screen** |
 | 4 | Confidence + topic | Confidence 1–5, then pick a topic or "Skip, I'll choose later". **The free-text "what do you want to talk about" box is removed** |
 | 5 | Home | "Hello Mumma/Papa", topic carousel, active 14-day journey card, "Choose topic from library" |
-| 6 | Topic flashcards | The Talk Card split into **swipeable flashcards**: how to begin (first line) → common teen questions → say / don't say → how your child may react. Safety promise on every card |
-| 7 | AI Coach | Parent describes a problem, gets calm guidance; risk leads to Emergency help. Real Gemini, safety checks on every message |
+| 6 | Topic flashcards | The Talk Card split into **4 swipeable flashcards**: (1) opening lines, (2) gentle questions the parent can ask their teen, (3) what to say / what not to say, (4) how to respond when your child reacts (quiet, upset, disagrees, doesn't want to talk). Safety promise on every card |
+| 7 | AI Coach | Where parents **share how a talk went, ask their doubts, and bring any topic not in the flashcards**. Calm guidance from real Gemini, safety checks on every message in and out. **Serious concerns get a dismissible "Would you like help from a professional?" option** leading to Emergency help; the parent decides |
 | 8 | Plan the talk | When, time, setting, reminder, app's suggested best time |
 | 9 | Reflection | What did you say · what did your child say · who spoke more · if it didn't go well, what got in the way → Save. Stays on the phone |
 | 10 | Progress | Topics started vs completed, 14-day journey, confidence over time. Lives under the Journey tab |
@@ -86,6 +86,8 @@ Aayushi's simplified wireframe (10 screens + Emergency help) replaces the 14-scr
 | Reminders | **In-app only.** No push notifications, no "Add to calendar" |
 | Language / comfort | Not asked in setup. Hinglish by default; both changeable in Profile |
 | Streak | Shown as **"Day 5 of 14"**, never a streak counter (no-streaks rule stands) |
+| AI Coach privacy | What the parent types in AI Coach **is sent to Google's Gemini** to write a reply. Coach and the Privacy screen say so plainly: "What you type here goes to Google's Gemini AI to write a reply. Don't use names." Reflections still never leave the phone. Coach messages are never sent to Supabase |
+| AI Coach history | **Kept on this phone only**; "Clear my data" deletes it. If a message shows a crisis, the chat keeps only that help was shown, not the details |
 | Metric | **Completed Conversation Rate = topics with a reflection saved within 14 days ÷ topics started.** Replaces the Start/Done timing, 24-hour and 3-day follow-up rule in "The metric" below |
 
 ## Visual design
