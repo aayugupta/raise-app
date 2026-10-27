@@ -15,6 +15,7 @@ export type Journey = {
   planId?: string;
   when?: string;
   day?: number; // "Day 5 of 14", when the start date is known
+  reflectHref?: string; // a planned talk: "Already talked? Tell us how it went", any time
 };
 
 export function activeJourneys(
@@ -31,9 +32,9 @@ export function activeJourneys(
     if (stage === "check-in") {
       journeys.push({ topic: p.topic, step: 3, stepName: "Reflect", action: "Tell us how it went", href: `/reflect/${p.id}`, planId: p.id, when: p.when });
     } else if (stage === "now") {
-      journeys.push({ topic: p.topic, step: 2, stepName: "Talk", action: "Open Talk mode", href: `/talk/${p.id}`, planId: p.id, when: p.when });
+      journeys.push({ topic: p.topic, step: 2, stepName: "Talk", action: "Open Talk mode", href: `/talk/${p.id}`, planId: p.id, when: p.when, reflectHref: `/reflect/${p.id}` });
     } else if (stage === "upcoming") {
-      journeys.push({ topic: p.topic, step: 2, stepName: "Talk", action: "See your first line", href: `/card/${p.topic}`, planId: p.id, when: p.when });
+      journeys.push({ topic: p.topic, step: 2, stepName: "Talk", action: "See your first line", href: `/card/${p.topic}`, planId: p.id, when: p.when, reflectHref: `/reflect/${p.id}` });
     }
   }
 

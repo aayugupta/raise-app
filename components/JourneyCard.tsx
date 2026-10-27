@@ -23,30 +23,38 @@ export function whenText(iso: string) {
 export default function JourneyCard({ journey, whenLabel }: { journey: Journey; whenLabel?: string }) {
   const t = TOPICS.find((x) => x.id === journey.topic)!;
   return (
-    <Link href={journey.href} className="journey-card">
-      <span className="topic-tile-icon" style={{ background: `${t.color}26` }} aria-hidden="true">
-        {t.icon}
-      </span>
-      <span style={{ flex: 1, minWidth: 0 }}>
-        <span style={{ display: "flex", justifyContent: "space-between", gap: 8, alignItems: "baseline" }}>
-          <span style={{ fontWeight: 700, color: "var(--ink)" }}>{t.short}</span>
-          {journey.day && (
-            <span className="journey-day">
-              Day {journey.day} of {JOURNEY_DAYS}
-            </span>
-          )}
+    <div className="journey-card">
+      <Link href={journey.href} className="journey-card-main">
+        <span className="topic-tile-icon" style={{ background: `${t.color}26` }} aria-hidden="true">
+          {t.icon}
         </span>
-        <span style={{ display: "block", fontSize: 14, color: "var(--muted)", marginTop: 2 }}>
-          Step {journey.step} of 3 · {journey.stepName}
-          {whenLabel ? ` · ${whenLabel}` : ""}
+        <span style={{ flex: 1, minWidth: 0 }}>
+          <span style={{ display: "flex", justifyContent: "space-between", gap: 8, alignItems: "baseline" }}>
+            <span style={{ fontWeight: 700, color: "var(--ink)" }}>{t.short}</span>
+            {journey.day && (
+              <span className="journey-day">
+                Day {journey.day} of {JOURNEY_DAYS}
+              </span>
+            )}
+          </span>
+          <span style={{ display: "block", fontSize: 14, color: "var(--muted)", marginTop: 2 }}>
+            Step {journey.step} of 3 · {journey.stepName}
+            {whenLabel ? ` · ${whenLabel}` : ""}
+          </span>
+          <span className="journey-steps" aria-hidden="true">
+            {[1, 2, 3].map((s) => (
+              <span key={s} className={s <= journey.step ? "done" : ""} />
+            ))}
+          </span>
+          <span style={{ display: "block", fontSize: 15, fontWeight: 700, color: "var(--teal)", marginTop: 8 }}>{journey.action} →</span>
         </span>
-        <span className="journey-steps" aria-hidden="true">
-          {[1, 2, 3].map((s) => (
-            <span key={s} className={s <= journey.step ? "done" : ""} />
-          ))}
-        </span>
-        <span style={{ display: "block", fontSize: 15, fontWeight: 700, color: "var(--teal)", marginTop: 8 }}>{journey.action} →</span>
-      </span>
-    </Link>
+      </Link>
+      {/* Talks don't always happen at the planned time: reflect whenever it did. */}
+      {journey.reflectHref && (
+        <Link href={journey.reflectHref} className="journey-reflect">
+          Already talked? Tell us how it went
+        </Link>
+      )}
+    </div>
   );
 }

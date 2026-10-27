@@ -25,6 +25,8 @@ const byTopic = Object.fromEntries(j.map((x) => [x.topic, x]));
 check("past, not reflected → step 3 Reflect", byTopic.stress?.step === 3 && byTopic.stress.href === "/reflect/a");
 check("planned for tomorrow → step 2 Talk", byTopic["online-safety"]?.step === 2);
 check("happening now → step 2 with Talk mode", byTopic.friends?.step === 2 && byTopic.friends.href === "/talk/c");
+check("planned talks can be reflected on any time", byTopic["online-safety"]?.reflectHref === "/reflect/b" && byTopic.friends?.reflectHref === "/reflect/c");
+check("not-yet-planned topics have no reflect link", !byTopic.consent?.reflectHref);
 check("opened, not planned → step 1 Prepare", byTopic.consent?.step === 1 && byTopic.consent.href === "/card/consent");
 check("an open topic that's already planned isn't shown twice", j.filter((x) => x.topic === "online-safety").length === 1);
 check("reflected talks are finished and not shown", !byTopic.body);

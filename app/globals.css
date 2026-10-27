@@ -573,14 +573,40 @@ h3 {
 }
 
 .journey-card {
-  display: flex;
-  gap: 12px;
-  align-items: flex-start;
   background: var(--card);
   border: 2px solid #eadfcd;
   border-radius: var(--radius);
   padding: 14px;
   text-decoration: none;
+}
+
+.journey-card-main {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  text-decoration: none;
+}
+
+.journey-reflect,
+.banner-reflect {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.journey-reflect {
+  margin: 10px 0 0 50px;
+  padding-top: 10px;
+  border-top: 1px solid #eadfcd;
+  color: var(--muted);
+}
+
+.banner-reflect {
+  margin-top: 12px;
+  text-align: center;
+  color: #fff;
 }
 
 .journey-steps {

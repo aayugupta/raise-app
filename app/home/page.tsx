@@ -69,6 +69,9 @@ export default function Home() {
             <Link href={`/talk/${p.id}`} className="btn-light btn-block">
               Open Talk mode
             </Link>
+            <Link href={`/reflect/${p.id}`} className="banner-reflect">
+              Already talked? Tell us how it went
+            </Link>
           </section>
         ))}
 
