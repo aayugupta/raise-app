@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import BottomNav from "@/components/BottomNav";
 import { currentFirstLine } from "@/lib/cards";
 import { checkCoachMessage, COACH_BUSY, COACH_MAX_CHARS } from "@/lib/coachSafety";
-import { clearCoachChat, COACH_CLOSING, loadCoachChat, saveCoachChat, turnsForAi, type CoachEntry } from "@/lib/coachChat";
+import { CHECKIN_MORE, CHECKIN_READY, clearCoachChat, loadCoachChat, saveCoachChat, turnsForAi, type CoachEntry } from "@/lib/coachChat";
 import { track } from "@/lib/events";
 import { markPractised, startJourney } from "@/lib/journeyLog";
 import { loadProfile, type Profile } from "@/lib/profile";
@@ -42,7 +42,6 @@ export default function Coach() {
   const [roleplay, setRoleplay] = useState(false);
   const [practised, setPractised] = useState(false);
   const endRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
     const p = loadProfile();
@@ -228,25 +227,21 @@ export default function Coach() {
           {visible.map((e, i) => (
             <Entry key={i} entry={e} onDismiss={() => dismissHelp(e)} />
           ))}
-          {/* Check-in under the Coach's latest reply: the parent decides when the chat has done its job. */}
+          {/* Check-in under the Coach's latest reply: tapping one sends it as the parent's message and the
+              Coach answers (a warm close for "ready", an invitation to ask for "another question").
+              Not shown under the Coach's reply to "ready": the chat has ended there. */}
           {!waiting && (() => {
             const last = visible[visible.length - 1];
-            if (!last || last.role !== "coach" || !("text" in last) || last.fallback || last.closing) return null;
+            const before = visible[visible.length - 2];
+            if (!last || last.role !== "coach" || !("text" in last) || last.fallback) return null;
+            if (before && "text" in before && before.role === "parent" && before.text === CHECKIN_READY) return null;
             return (
               <div className="coach-checkin" role="group" aria-label="Did that help?">
-                <button
-                  className="chip"
-                  onClick={() =>
-                    update([
-                      ...chat,
-                      { role: "coach", text: COACH_CLOSING[profile.language], at: now(), closing: true, ...(roleplay && topic ? { roleplay: true, topic } : {}) },
-                    ])
-                  }
-                >
-                  ✓ That helps, I'm ready
+                <button className="chip" onClick={() => send(CHECKIN_READY)}>
+                  ✓ {CHECKIN_READY}
                 </button>
-                <button className="chip" onClick={() => inputRef.current?.focus()}>
-                  I have another question
+                <button className="chip" onClick={() => send(CHECKIN_MORE)}>
+                  {CHECKIN_MORE}
                 </button>
               </div>
             );
@@ -293,7 +288,6 @@ export default function Coach() {
           }}
         >
           <textarea
-            ref={inputRef}
             className="text-input"
             value={draft}
             onChange={(ev) => setDraft(ev.target.value)}
@@ -388,6 +382,5 @@ function Entry({ entry, onDismiss }: { entry: CoachEntry; onDismiss: () => void 
       </>
     );
   }
-  if (entry.closing) return <div className="bubble coach closing">{entry.text}</div>;
   return <div className={`bubble coach${entry.fallback ? " fallback" : ""}`}>{entry.text}</div>;
 }

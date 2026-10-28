@@ -66,7 +66,12 @@ export async function POST(request: Request) {
         signal: AbortSignal.timeout(TIMEOUT_MS - (Date.now() - started)),
         body: JSON.stringify({
           systemInstruction: { parts: [{ text: coachInstructions(family, practice) }] },
-          contents: turns.map((t) => ({ role: t.role === "parent" ? "user" : "model", parts: [{ text: t.text }] })),
+          // Earlier coach replies go back in the same JSON shape we ask for, so the AI keeps answering in it.
+          contents: turns.map((t) =>
+            t.role === "parent"
+              ? { role: "user", parts: [{ text: t.text }] }
+              : { role: "model", parts: [{ text: JSON.stringify({ reply: t.text, concern: "none" }) }] }
+          ),
           generationConfig: {
             responseMimeType: "application/json",
             temperature: 0.7,
@@ -91,10 +96,20 @@ export async function POST(request: Request) {
 
     let parsed: { reply?: unknown; tip?: unknown; concern?: unknown };
     try {
-      parsed = JSON.parse(text);
+      // The AI sometimes wraps its JSON in a code fence or a stray sentence: read the {...} inside.
+      const start = text.indexOf("{");
+      const end = text.lastIndexOf("}");
+      parsed = JSON.parse(start >= 0 && end > start ? text.slice(start, end + 1) : text);
+      if (typeof parsed !== "object" || parsed === null) parsed = { reply: String(parsed) };
     } catch {
-      reason = "not json";
-      continue;
+      // Plain text instead of JSON: still a usable reply. It goes through the same rule checks below.
+      if (text.trim() && !practice?.roleplay) {
+        parsed = { reply: text.trim(), concern: "none" };
+      } else {
+        console.warn(`[coach] reply was not JSON on attempt ${attempt}`);
+        reason = "not json";
+        continue;
+      }
     }
     const reply = typeof parsed.reply === "string" ? parsed.reply.trim() : "";
     // In a role-play the coach's tip is checked by the same rules as the child's line.

@@ -1566,17 +1566,10 @@ a {
   border-radius: 999px;
 }
 
-/* Coach: check-in under the latest reply, and the warm close */
+/* Coach: check-in under the latest reply */
 .coach-checkin {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
   align-self: flex-start;
-}
-
-.bubble.coach.closing {
-  background: var(--surface-sage);
-  border-color: var(--border-sage);
-  font-family: var(--font-display);
-  font-weight: 500;
 }
