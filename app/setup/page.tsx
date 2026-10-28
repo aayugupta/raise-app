@@ -9,8 +9,6 @@ import { CONFIDENCE_QUESTION, recordConfidence } from "@/lib/confidence";
 import { track } from "@/lib/events";
 import { saveProfile, type Profile } from "@/lib/profile";
 import { PROFILE_CHOICES } from "@/lib/profileOptions";
-import { startJourney } from "@/lib/journeyLog";
-import { addOpenTopic } from "@/lib/talks";
 import { TOPICS, type TopicId } from "@/lib/topics";
 
 // Screens 2–4 of Aayushi's simplified flow (28 Oct 2026, FR1): about you, about your teen,
@@ -50,11 +48,8 @@ export default function Setup() {
     };
     saveProfile(profile);
     if (confidence) recordConfidence(confidence, "setup");
-    // The chosen topic shows on Home under "Continue your journey" (step 1, Prepare).
-    if (firstTopic) {
-      startJourney(firstTopic);
-      addOpenTopic(firstTopic);
-    }
+    // The chosen topic (saved as suggestedTopic) comes first in Home's carousel, tagged "Your pick".
+    // Its 14-day journey starts only when the parent opens its flashcards.
     // Tapped answers only.
     track("setup_completed", { role: profile.role, age_band: profile.ageBand, language: profile.language, comfort: profile.comfort });
     router.push("/home");

@@ -7,6 +7,7 @@ import BottomNav from "@/components/BottomNav";
 import FamilySofa from "@/components/FamilySofa";
 import { currentFirstLine } from "@/lib/cards";
 import JourneyCard, { whenText } from "@/components/JourneyCard";
+import TopicCarousel from "@/components/TopicCarousel";
 import { activeJourneys } from "@/lib/journey";
 import { greetName, loadProfile, type Profile } from "@/lib/profile";
 import { loadJourneyRecords, openJourneyStarts, openJourneySteps } from "@/lib/journeyLog";
@@ -52,7 +53,10 @@ export default function Home() {
   const journeys = activeJourneys(plans, openTopics, now, starts, openJourneySteps()).filter((j) => !nowPlans.some((p) => p.id === j.planId));
   const activeTopics = new Set(journeys.map((j) => j.topic));
   // Carousel: topics not already in a journey first, so there's always something new to start.
-  const carousel = [...TOPICS].sort((a, b) => Number(activeTopics.has(a.id)) - Number(activeTopics.has(b.id)));
+  // The topic picked in setup comes first (until its journey starts), then new topics, then ones already started.
+  const pick = profile.suggestedTopic && !activeTopics.has(profile.suggestedTopic) ? profile.suggestedTopic : undefined;
+  const rank = (id: TopicId) => (id === pick ? 0 : activeTopics.has(id) ? 2 : 1);
+  const carousel = [...TOPICS].sort((a, b) => rank(a.id) - rank(b.id));
 
   return (
     <main className="has-bottom-nav" style={{ minHeight: "100dvh", background: "var(--cream)" }}>
@@ -80,20 +84,9 @@ export default function Home() {
           </section>
         ))}
 
-        {/* Topic carousel: swipe sideways */}
+        {/* Topic carousel: moves by itself, and can be swiped */}
         <h2 className="section-title">Start a conversation</h2>
-        <div className="topic-carousel" role="list" aria-label="Topics">
-          {carousel.map((t) => (
-            <Link key={t.id} href={`/card/${t.id}`} className="carousel-card" role="listitem" style={{ background: `${t.color}1f`, borderColor: `${t.color}55` }}>
-              <span className="carousel-icon" aria-hidden="true">
-                {t.icon}
-              </span>
-              <span className="carousel-name">{t.name}</span>
-              <span className="carousel-question">Teens wonder: “{t.teenQuestion}”</span>
-              <span className="carousel-open">{activeTopics.has(t.id) ? "Continue →" : "Open flashcards →"}</span>
-            </Link>
-          ))}
-        </div>
+        <TopicCarousel topics={carousel} pick={pick} active={activeTopics} />
 
         {/* Active 14-day journeys */}
         <h2 className="section-title">Your {JOURNEY_DAYS}-day journey</h2>
