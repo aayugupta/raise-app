@@ -384,7 +384,7 @@ export default function TalkCardView({ topic }: { topic: TopicId }) {
             Next: practise with AI Coach
           </Link>
           <div className="card-next-links">
-            <Link href={`/plan/${topic}?skipPractice=1`}>Skip, plan a moment</Link>
+            <Link href={`/plan/${topic}?skipPractice=1`}>Plan a moment</Link>
             <button className="btn-link" onClick={notNow}>
               Not now
             </button>

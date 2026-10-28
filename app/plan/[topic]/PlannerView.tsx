@@ -91,7 +91,7 @@ export default function PlannerView({
     setFirstLine(currentFirstLine(topic, loadProfile()));
     setSuggested(suggestion());
     if (suggestedMoment) chooseMoment(suggestedMoment);
-    // "Skip, plan a moment": step 2 (practise) is passed over, never required.
+    // "Plan a moment" without practising: step 2 is passed over, never required.
     if (skippedPractice) markPractised(topic, true);
   }, [topic, suggestedMoment, skippedPractice]);
 

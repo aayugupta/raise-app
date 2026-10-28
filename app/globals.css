@@ -1798,3 +1798,10 @@ a {
   font-style: italic;
   font-weight: 500;
 }
+
+/* Journey card, step 2: "Plan a moment" next to "Practise with AI Coach" */
+.journey-plan {
+  margin: 10px 0 0 50px;
+  width: calc(100% - 50px);
+  text-decoration: none;
+}

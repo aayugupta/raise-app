@@ -2,12 +2,11 @@
 // so Progress and the metric can look back. The metric itself is in lib/metric.ts.
 import { track } from "./events";
 import type { StepsDone } from "./journey";
-import { JOURNEY_DAYS, isOpen, withinWindow, type JourneyRecord } from "./metric";
+import { isOpen, withinWindow, type JourneyRecord } from "./metric";
 import type { TopicId } from "./topics";
 
 const KEY = "raise.journeys";
 const OLD_STARTS_KEY = "raise.topicStarts"; // 28 Oct 2026, before records were kept
-const DAY_MS = 86_400_000;
 
 function newId(): string {
   return typeof crypto.randomUUID === "function" ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
@@ -34,13 +33,12 @@ function save(records: JourneyRecord[]): void {
   } catch {}
 }
 
-// Starts a topic's 14-day journey, unless one is already running. A journey left past day 14
-// without a talk is closed quietly and a fresh one starts (never "failed").
+// Starts a topic's journey, unless one is already running. A journey stays open, even past day 14,
+// until the parent logs a reflection (Aayushi, 29 Oct 2026): the goal is one real talk, whenever it comes.
+// (Only talks logged within 14 days count toward the Completed Conversation Rate.)
 export function startJourney(topic: TopicId, now = Date.now()): void {
   const records = loadJourneyRecords();
-  const open = records.find((r) => r.topic === topic && isOpen(r));
-  if (open && now - Date.parse(open.startedAt) <= JOURNEY_DAYS * DAY_MS) return;
-  if (open) open.endedAt = new Date(now).toISOString();
+  if (records.some((r) => r.topic === topic && isOpen(r))) return;
   records.push({ id: newId(), topic, startedAt: new Date(now).toISOString() });
   save(records);
   track("journey_started", { topic });

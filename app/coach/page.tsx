@@ -196,7 +196,7 @@ export default function Coach() {
                 : "Ask anything about this talk: how to start, what to say, what if it goes wrong."}
             </p>
             <Link href={`/plan/${topicMeta.id}`} className={`btn-block ${practised ? "btn-primary" : "btn-secondary"}`} style={{ marginTop: 12, textAlign: "center", textDecoration: "none" }}>
-              {practised ? "Next: plan a moment →" : "Skip, plan a moment"}
+              {practised ? "Next: plan a moment →" : "Plan a moment"}
             </Link>
           </section>
         )}

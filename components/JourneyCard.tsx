@@ -36,6 +36,7 @@ export default function JourneyCard({ journey, whenLabel }: { journey: Journey; 
                 Day {journey.day} of {JOURNEY_DAYS}
               </span>
             )}
+            {journey.stillOpen && <span className="journey-day">Still open</span>}
           </span>
           <span style={{ display: "block", fontSize: 14, color: "var(--text-muted)", marginTop: 2 }}>
             Step {journey.step} of {STEP_NAMES.length} · {journey.stepName}
@@ -50,9 +51,10 @@ export default function JourneyCard({ journey, whenLabel }: { journey: Journey; 
         </span>
       </Link>
       {/* Talks don't always happen at the planned time: reflect whenever it did. */}
-      {journey.skipHref && (
-        <Link href={journey.skipHref} className="journey-reflect" style={{ borderTop: "none", paddingTop: 0, marginTop: 8 }}>
-          Skip practice, plan a moment
+      {/* Step 2: planning is always on offer, whether or not the parent practises with the Coach. */}
+      {journey.planHref && (
+        <Link href={journey.planHref} className="btn-secondary btn-block journey-plan">
+          Plan a moment
         </Link>
       )}
       <Link href={journey.reflectHref} className="journey-reflect">

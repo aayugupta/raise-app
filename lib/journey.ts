@@ -5,7 +5,7 @@
 //   4 Reflect:  after the talk, two taps: did it happen, how did it go
 // A talk that already happened can be logged from any step ("Already talked?").
 // ".ts" ending so the tests (plain Node) can load this file too.
-import { journeyDay, planStage, type Plan } from "./talks.ts";
+import { JOURNEY_DAYS, journeyDay, planStage, type Plan } from "./talks.ts";
 import type { TopicId } from "./topics";
 
 export const STEP_NAMES = ["Learn", "Practise", "Plan", "Reflect"] as const;
@@ -18,10 +18,11 @@ export type Journey = {
   stepName: (typeof STEP_NAMES)[number];
   action: string;
   href: string;
-  skipHref?: string; // step 2: "Skip, plan a moment"
+  planHref?: string; // step 2: "Plan a moment" is always offered next to practising
   planId?: string;
   when?: string;
   day?: number; // "Day 5 of 14", when the start date is known
+  stillOpen?: boolean; // past day 14 with no reflection yet: the topic waits for the parent
   reflectHref: string; // "Already talked? Tell us how it went", from any step
 };
 
@@ -60,7 +61,7 @@ export function activeJourneys(
         stepName: "Practise",
         action: "Practise with AI Coach",
         href: `/coach?topic=${topic}`,
-        skipHref: `/plan/${topic}?skipPractice=1`,
+        planHref: `/plan/${topic}?skipPractice=1`,
         reflectHref,
       });
     } else {
@@ -70,7 +71,11 @@ export function activeJourneys(
 
   for (const j of journeys) {
     const start = starts[j.topic] ?? plans.find((p) => p.id === j.planId)?.createdAt;
-    if (start) j.day = journeyDay(start, now);
+    if (!start) continue;
+    const day = journeyDay(start, now);
+    const pastWindow = now - Date.parse(start) > JOURNEY_DAYS * 86_400_000;
+    if (pastWindow) j.stillOpen = true;
+    else j.day = day;
   }
 
   // Furthest along first: the talk that needs a reflection comes before one still being learned.
