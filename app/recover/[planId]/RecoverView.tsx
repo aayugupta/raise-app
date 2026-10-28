@@ -9,7 +9,6 @@ import { track } from "@/lib/events";
 import { loadProfile } from "@/lib/profile";
 import { BLOCKERS, REPAIR_LINE, SOFTER_RESTART, type BlockerId } from "@/lib/recovery";
 import { updateReflection } from "@/lib/reflections";
-import { finishJourney } from "@/lib/journeyLog";
 import { addOpenTopic, loadPlan, type Plan } from "@/lib/talks";
 import { TOPICS } from "@/lib/topics";
 
@@ -58,9 +57,8 @@ export default function RecoverView({ planId, why, picked }: { planId: string; w
     router.push("/home");
   }
 
-  // Not now: set the topic aside. Its journey ends (not completed); it can be started fresh any time.
+  // Not now: back to Home. The topic stays open in the journey until a talk is logged (Aayushi, 29 Oct 2026).
   function notNow() {
-    finishJourney(plan!.topic, false, false);
     router.push("/home");
   }
 

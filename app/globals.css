@@ -1805,3 +1805,39 @@ a {
   width: calc(100% - 50px);
   text-decoration: none;
 }
+
+/* Home: gentle prompt to have the talk, then reflect */
+.talk-prompt {
+  margin-top: 16px;
+  padding: 16px;
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  border: 1px solid var(--border-sage);
+  border-left: 5px solid var(--primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.talk-prompt-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--fs-lg);
+  line-height: var(--lh-tight);
+  color: var(--text);
+  margin-top: 4px;
+}
+
+.talk-prompt-text {
+  margin: 6px 0 14px;
+  font-size: var(--fs-sm);
+  line-height: var(--lh-body);
+  color: var(--text-muted);
+}
+
+.talk-prompt-link {
+  display: block;
+  margin-top: 10px;
+  text-align: center;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--primary);
+}

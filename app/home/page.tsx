@@ -7,6 +7,7 @@ import BottomNav from "@/components/BottomNav";
 import FamilySofa from "@/components/FamilySofa";
 import { currentFirstLine } from "@/lib/cards";
 import JourneyCard, { whenText } from "@/components/JourneyCard";
+import type { Journey } from "@/lib/journey";
 import TopicCarousel from "@/components/TopicCarousel";
 import { activeJourneys } from "@/lib/journey";
 import { greetName, loadProfile, type Profile } from "@/lib/profile";
@@ -90,6 +91,9 @@ export default function Home() {
           </section>
         )}
 
+        {/* The gentle nudge: have the talk, then tell Raise how it went, and a new topic can follow. */}
+        {journeys.length > 0 && nowPlans.length === 0 && <TalkPrompt journey={journeys[0]} />}
+
         <SuperParentGoal done={talkedAbout} total={TOPICS.length} />
 
         {/* In-app reminder: inside the planned window */}
@@ -166,6 +170,32 @@ function SuperParentGoal({ done, total }: { done: number; total: number }) {
         ))}
       </div>
       <p className="goal-message">{message}</p>
+    </section>
+  );
+}
+
+// Home's prompt for the topic furthest along (Aayushi, 29 Oct 2026): the goal is one real talk.
+// It asks gently, never says a parent is behind, and points to the two-tap reflection.
+function TalkPrompt({ journey }: { journey: Journey }) {
+  const t = TOPICS.find((x) => x.id === journey.topic)!;
+  return (
+    <section className="talk-prompt" aria-label="Your next step">
+      <div className="card-label">Your next step</div>
+      <div className="talk-prompt-title">
+        <span aria-hidden="true">{t.icon}</span> Have your talk about {t.short}
+      </div>
+      <p className="talk-prompt-text">
+        Whenever it feels right, talk with your child. Then tell us how it went, it takes two taps. After that, a new topic is
+        waiting for you.
+      </p>
+      <Link href={journey.reflectHref} className="btn-primary btn-block" style={{ textDecoration: "none" }}>
+        I had the talk, tell us how it went
+      </Link>
+      {journey.href !== journey.reflectHref && (
+        <Link href={journey.href} className="talk-prompt-link">
+          Not yet? {journey.action}
+        </Link>
+      )}
     </section>
   );
 }
