@@ -22,7 +22,22 @@ export default function Celebration({ topic, hard = false, onContinue }: { topic
 
   return (
     <main className="celebrate" role="dialog" aria-modal="true" aria-labelledby="celebrate-title">
-      {!hard && (
+      {hard ? (
+        // A hard talk: soft leaves drifting down slowly, in sage and terracotta (growth, not a party).
+        <div className="celebrate-leaves" aria-hidden="true">
+          {Array.from({ length: 10 }, (_, i) => (
+            <svg
+              key={i}
+              viewBox="0 0 20 12"
+              width={16 + (i % 3) * 5}
+              style={{ left: `${(i * 41 + 7) % 96}%`, animationDelay: `${(i % 5) * 1.1 + (i > 4 ? 0.6 : 0)}s`, animationDuration: `${7 + (i % 4)}s` }}
+            >
+              <path d="M1 6 C 5 0 14 0 19 5 C 14 11 5 11 1 6 Z" fill={i % 3 === 0 ? "#e5b99d" : i % 3 === 1 ? "#9cb89a" : "#cfe3c6"} />
+              <path d="M2 6 C 7 5 13 5 18 5.2" stroke="rgba(41,45,42,0.25)" strokeWidth="0.8" fill="none" />
+            </svg>
+          ))}
+        </div>
+      ) : (
         <div className="celebrate-sparkles" aria-hidden="true">
           {Array.from({ length: 14 }, (_, i) => (
             <span key={i} style={{ left: `${(i * 37) % 100}%`, animationDelay: `${(i % 7) * 0.35}s` }} />

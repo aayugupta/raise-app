@@ -1704,12 +1704,46 @@ a {
 }
 
 /* Phones set to reduce motion get the same screen, standing still. */
+/* After a hard talk: leaves drift down slowly, swaying, and fade near the bottom. */
+.celebrate-leaves svg {
+  position: absolute;
+  top: -24px;
+  opacity: 0.9;
+  animation-name: leaf-fall;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+@keyframes leaf-fall {
+  0% {
+    transform: translateY(0) translateX(0) rotate(-10deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.9;
+  }
+  25% {
+    transform: translateY(25vh) translateX(18px) rotate(25deg);
+  }
+  50% {
+    transform: translateY(52vh) translateX(-14px) rotate(-15deg);
+  }
+  75% {
+    transform: translateY(78vh) translateX(16px) rotate(30deg);
+  }
+  100% {
+    transform: translateY(105vh) translateX(-8px) rotate(-5deg);
+    opacity: 0;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .celebrate,
   .celebrate-emoji {
     animation: none;
   }
-  .celebrate-sparkles {
+  .celebrate-sparkles,
+  .celebrate-leaves {
     display: none;
   }
 }
