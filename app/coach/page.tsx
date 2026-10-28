@@ -8,7 +8,9 @@ import { currentFirstLine } from "@/lib/cards";
 import { checkCoachMessage, COACH_BUSY, COACH_MAX_CHARS } from "@/lib/coachSafety";
 import { CHECKIN_MORE, CHECKIN_READY, clearCoachChat, loadCoachChat, saveCoachChat, turnsForAi, type CoachEntry } from "@/lib/coachChat";
 import { track } from "@/lib/events";
-import { markPractised, startJourney } from "@/lib/journeyLog";
+import { activeJourneys } from "@/lib/journey";
+import { markPractised, openJourneyStarts, openJourneySteps, startJourney } from "@/lib/journeyLog";
+import { loadOpenTopics, loadPlans } from "@/lib/talks";
 import { loadProfile, type Profile } from "@/lib/profile";
 import { HELP_LINES } from "@/lib/safety";
 import { TOPICS, type TopicId } from "@/lib/topics";
@@ -41,6 +43,8 @@ export default function Coach() {
   const [topic, setTopic] = useState<TopicId | null>(null);
   const [roleplay, setRoleplay] = useState(false);
   const [practised, setPractised] = useState(false);
+  // Topics started but not planned yet (journey steps 1–3): where "Plan a moment" can lead after the chat ends.
+  const [toPlan, setToPlan] = useState<TopicId[]>([]);
   const endRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -53,6 +57,11 @@ export default function Coach() {
     setChat(loadCoachChat());
     const t = TOPICS.find((x) => x.id === new URLSearchParams(window.location.search).get("topic"))?.id ?? null;
     setTopic(t);
+    setToPlan(
+      activeJourneys(loadPlans(), loadOpenTopics(), Date.now(), openJourneyStarts(), openJourneySteps())
+        .filter((j) => j.step < 4)
+        .map((j) => j.topic)
+    );
     if (t) startJourney(t); // no-op if this topic's journey is already running
   }, [router]);
 
@@ -244,6 +253,42 @@ export default function Coach() {
                   {CHECKIN_MORE}
                 </button>
               </div>
+            );
+          })()}
+          {/* After "That helps, I'm ready" and the Coach's goodbye: the way on to step 3, Plan a moment. */}
+          {!waiting && (() => {
+            const last = visible[visible.length - 1];
+            const before = visible[visible.length - 2];
+            const ended = last?.role === "coach" && "text" in last && !last.fallback && before?.role === "parent" && "text" in before && before.text === CHECKIN_READY;
+            if (!ended) return null;
+            const planTopics = topicMeta ? [topicMeta] : TOPICS.filter((t) => toPlan.includes(t.id)).slice(0, 3);
+            return (
+              <section className="coach-next" aria-label="Your next step">
+                <div className="card-label">Next · Step 3 of 4</div>
+                <div className="coach-next-title">Plan a moment for your talk</div>
+                <p style={{ margin: "2px 0 12px", fontSize: "var(--fs-sm)", color: "var(--text-muted)" }}>
+                  A walk or a quiet evening works well. It takes less than a minute.
+                </p>
+                {planTopics.length > 0 ? (
+                  <div style={{ display: "grid", gap: 8 }}>
+                    {planTopics.map((t) => (
+                      <Link
+                        key={t.id}
+                        href={`/plan/${t.id}`}
+                        onClick={() => markPractised(t.id, false)}
+                        className={`btn-block ${planTopics.length === 1 ? "btn-primary" : "btn-secondary"}`}
+                        style={{ textDecoration: "none" }}
+                      >
+                        {planTopics.length === 1 ? `Plan a moment for ${t.short} →` : `${t.icon} Plan: ${t.short}`}
+                      </Link>
+                    ))}
+                  </div>
+                ) : (
+                  <Link href="/home" className="btn-primary btn-block" style={{ textDecoration: "none" }}>
+                    Choose a topic to plan →
+                  </Link>
+                )}
+              </section>
             );
           })()}
           {waiting && (

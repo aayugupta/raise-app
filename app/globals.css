@@ -1573,3 +1573,20 @@ a {
   gap: 8px;
   align-self: flex-start;
 }
+
+/* Coach: the next step (plan a moment) after the chat ends */
+.coach-next {
+  align-self: stretch;
+  padding: 14px 16px;
+  border-radius: var(--radius);
+  background: var(--surface-sage);
+  border: 1px solid var(--border-sage);
+}
+
+.coach-next-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--fs-lg);
+  color: var(--text);
+  margin-top: 2px;
+}
