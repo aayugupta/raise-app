@@ -4,12 +4,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 // The bottom tab bar from Aayushi's simplified flow (28 Oct 2026):
-// Topics · AI Coach · Journey · Help · Profile. "Topics" opens Home (topic carousel + library link).
+// Home · AI Coach · Journey · Help · Profile (first tab renamed from "Topics" to "Home", 29 Oct 2026).
 // "Journey" shows the 14-day journeys and progress. Shown only on these main screens,
 // never in the middle of preparing, talking or reflecting.
 
 const TABS = [
-  { href: "/home", label: "Topics", icon: "topics", also: ["/topics"] },
+  { href: "/home", label: "Home", icon: "home", also: ["/topics"] },
   { href: "/coach", label: "AI Coach", icon: "coach", also: [] },
   { href: "/journey", label: "Journey", icon: "journey", also: ["/progress"] },
   { href: "/help", label: "Help", icon: "help", also: [] },
@@ -19,11 +19,11 @@ const TABS = [
 function Icon({ name }: { name: (typeof TABS)[number]["icon"] }) {
   const common = { width: 24, height: 24, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: 2, strokeLinecap: "round" as const, strokeLinejoin: "round" as const, "aria-hidden": true };
   switch (name) {
-    case "topics":
+    case "home":
       return (
         <svg {...common}>
-          <path d="M12 3a6 6 0 0 1 3.5 10.9V17h-7v-3.1A6 6 0 0 1 12 3Z" />
-          <path d="M9.5 20.5h5" />
+          <path d="M3 10.5 12 3l9 7.5" />
+          <path d="M5 9.5V21h5v-6h4v6h5V9.5" />
         </svg>
       );
     case "coach":
