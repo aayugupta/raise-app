@@ -190,14 +190,14 @@ function TalkPrompt({ journey }: { journey: Journey }) {
     <section className="talk-prompt" aria-label="Your next step">
       <div className="card-label">Your next step</div>
       <div className="talk-prompt-title">
-        <span aria-hidden="true">{t.icon}</span> Have your talk about {t.short}
+        <span aria-hidden="true">{t.icon}</span> Have you talked about {t.short}?
       </div>
       <p className="talk-prompt-text">
-        Whenever it feels right, talk with your child. Then tell us how it went, it takes two taps. After that, a new topic is
+        Whenever it feels right, talk with your child. Then tell us how it went: it only takes two taps. After that, a new topic is
         waiting for you.
       </p>
       <Link href={journey.reflectHref} className="btn-primary btn-block" style={{ textDecoration: "none" }}>
-        I had the talk, tell us how it went
+        Yes, tell us how it went
       </Link>
       {journey.href !== journey.reflectHref && (
         <Link href={journey.href} className="talk-prompt-link">

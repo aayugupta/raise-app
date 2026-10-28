@@ -12,7 +12,7 @@ export const MAP_STOPS = [
   { icon: "💛", short: "Talk", title: "Talk, then tell us how it went", text: "Two taps. Your Super Parent bar fills, and a new topic opens up." },
 ] as const;
 
-const HERE_LABEL = ["Pick a topic", "Learn about", "Practise", "Plan a moment for", "Have your talk about"];
+const HERE_LABEL = ["Pick a topic", "Learn about", "Practise", "Plan a moment for", "Talk about"];
 
 export function mapPosition(journeys: Journey[], pick?: TopicId): { index: number; label: string } {
   const j = journeys[0]; // activeJourneys sorts the furthest along first
