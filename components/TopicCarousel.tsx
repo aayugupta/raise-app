@@ -13,7 +13,7 @@ const PAUSE_AFTER_TOUCH_MS = 8000;
 
 type Topic = (typeof TOPICS)[number];
 
-export default function TopicCarousel({ topics, pick, active }: { topics: Topic[]; pick?: TopicId; active: Set<TopicId> }) {
+export default function TopicCarousel({ topics, active }: { topics: Topic[]; active: Set<TopicId> }) {
   const rowRef = useRef<HTMLDivElement>(null);
   const pausedUntil = useRef(0);
   const [index, setIndex] = useState(0);
@@ -62,7 +62,6 @@ export default function TopicCarousel({ topics, pick, active }: { topics: Topic[
               <span className="carousel-icon" aria-hidden="true">
                 {t.icon}
               </span>
-              {t.id === pick && <span className="carousel-pick">Your pick</span>}
             </span>
             <span className="carousel-name">{t.name}</span>
             <span className="carousel-question">Teens wonder: “{t.teenQuestion}”</span>

@@ -26,6 +26,8 @@ export default function Home() {
   const [openTopics, setOpenTopics] = useState<TopicId[]>([]);
   const [starts, setStarts] = useState<Partial<Record<TopicId, string>>>({});
   const [talkedAbout, setTalkedAbout] = useState(0);
+  // Topics that have ever had a 14-day journey: the setup pick stops being "your chosen topic" once started.
+  const [everStarted, setEverStarted] = useState<Set<TopicId>>(new Set());
   const [now, setNow] = useState(() => Date.now());
   const [ready, setReady] = useState(false);
 
@@ -39,7 +41,9 @@ export default function Home() {
     setPlans(loadPlans());
     setOpenTopics(loadOpenTopics());
     setStarts(openJourneyStarts());
-    setTalkedAbout(topicsTalkedAbout(loadJourneyRecords()));
+    const records = loadJourneyRecords();
+    setTalkedAbout(topicsTalkedAbout(records));
+    setEverStarted(new Set(records.map((r) => r.topic)));
     setReady(true);
     // Re-check every minute, so "It's time" appears without reloading.
     const timer = setInterval(() => setNow(Date.now()), 60_000);
@@ -53,9 +57,13 @@ export default function Home() {
   const journeys = activeJourneys(plans, openTopics, now, starts, openJourneySteps()).filter((j) => !nowPlans.some((p) => p.id === j.planId));
   const activeTopics = new Set(journeys.map((j) => j.topic));
   // Carousel: topics not already in a journey first, so there's always something new to start.
-  // The topic picked in setup comes first (until its journey starts), then new topics, then ones already started.
-  const pick = profile.suggestedTopic && !activeTopics.has(profile.suggestedTopic) ? profile.suggestedTopic : undefined;
-  const rank = (id: TopicId) => (id === pick ? 0 : activeTopics.has(id) ? 2 : 1);
+  // The topic picked in setup gets its own "Your chosen topic" card until its journey starts (Aayushi, 29 Oct 2026);
+  // after that it lives in "Your 14-day journey". The carousel then lists new topics before started ones.
+  const pick =
+    profile.suggestedTopic && !activeTopics.has(profile.suggestedTopic) && !everStarted.has(profile.suggestedTopic)
+      ? TOPICS.find((t) => t.id === profile.suggestedTopic)
+      : undefined;
+  const rank = (id: TopicId) => (activeTopics.has(id) ? 1 : 0);
   const carousel = [...TOPICS].sort((a, b) => rank(a.id) - rank(b.id));
 
   return (
@@ -64,6 +72,23 @@ export default function Home() {
         {/* Greeting */}
         <h1 style={{ fontSize: 30, lineHeight: 1.15 }}>Hello {greetName(profile)}</h1>
         <div style={{ fontSize: 15, color: "var(--text-muted)", marginTop: 4 }}>One small conversation at a time.</div>
+
+        {/* The topic picked in setup, on its own so it's clearly "mine" */}
+        {pick && (
+          <section className="chosen-topic" style={{ borderColor: `${pick.color}66`, background: `${pick.color}14` }}>
+            <div className="card-label">Your chosen topic</div>
+            <div className="chosen-topic-name">
+              <span aria-hidden="true">{pick.icon}</span> {pick.name}
+            </div>
+            <p className="chosen-topic-question">Teens wonder: “{pick.teenQuestion}”</p>
+            <Link href={`/card/${pick.id}`} className="btn-primary btn-block" style={{ textDecoration: "none" }}>
+              Let&apos;s get started →
+            </Link>
+            <p style={{ margin: "8px 0 0", fontSize: "var(--fs-sm)", color: "var(--text-muted)", textAlign: "center" }}>
+              Step 1 of 4: read the flashcards
+            </p>
+          </section>
+        )}
 
         <SuperParentGoal done={talkedAbout} total={TOPICS.length} />
 
@@ -86,7 +111,7 @@ export default function Home() {
 
         {/* Topic carousel: moves by itself, and can be swiped */}
         <h2 className="section-title">Start a conversation</h2>
-        <TopicCarousel topics={carousel} pick={pick} active={activeTopics} />
+        <TopicCarousel topics={carousel} active={activeTopics} />
 
         {/* Active 14-day journeys */}
         <h2 className="section-title">Your {JOURNEY_DAYS}-day journey</h2>

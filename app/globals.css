@@ -1526,16 +1526,6 @@ a {
   font-size: 15px;
 }
 
-/* Home carousel: the topic picked in setup */
-.carousel-pick {
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--on-primary);
-  background: var(--primary);
-  border-radius: 999px;
-  padding: 3px 10px;
-}
-
 /* Flashcards: "When to get help" in red, the signal to reach out */
 .get-help {
   margin-top: 12px;
@@ -1721,4 +1711,28 @@ a {
   .celebrate-sparkles {
     display: none;
   }
+}
+
+/* Home: the topic picked in setup, on its own card */
+.chosen-topic {
+  margin-top: 16px;
+  padding: 16px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+
+.chosen-topic-name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--fs-xl);
+  line-height: var(--lh-tight);
+  color: var(--text);
+  margin-top: 4px;
+}
+
+.chosen-topic-question {
+  margin: 6px 0 14px;
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
 }
