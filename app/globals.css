@@ -2208,3 +2208,65 @@ a {
   color: var(--text-muted);
   line-height: 1.4;
 }
+
+/* Home journey section: up next and done topics */
+.up-next {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+  padding: 14px;
+  border-radius: var(--radius);
+  background: var(--surface);
+  border: 1px dashed var(--border-strong);
+  text-decoration: none;
+  color: var(--text);
+}
+
+.up-next .card-label {
+  display: block;
+}
+
+.up-next-name {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--fs-md);
+  margin-top: 2px;
+}
+
+.up-next-question {
+  display: block;
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.up-next-go {
+  color: var(--primary);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.done-topics {
+  display: grid;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.done-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: 14px;
+  background: var(--surface-sage-light);
+  border: 1px solid var(--border-sage);
+}
+
+.done-tag {
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  color: var(--primary);
+  white-space: nowrap;
+}

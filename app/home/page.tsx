@@ -33,6 +33,8 @@ export default function Home() {
   const [talkedAbout, setTalkedAbout] = useState(0);
   // Topics that have ever had a 14-day journey: the setup pick stops being "your chosen topic" once started.
   const [everStarted, setEverStarted] = useState<Set<TopicId>>(new Set());
+  // Topics talked about (a completed journey), newest first: shown as "Done ✓" in the journey section.
+  const [doneTopics, setDoneTopics] = useState<{ topic: TopicId; at: string }[]>([]);
   const [now, setNow] = useState(() => Date.now());
   const [ready, setReady] = useState(false);
 
@@ -49,6 +51,11 @@ export default function Home() {
     const records = loadJourneyRecords();
     setTalkedAbout(topicsTalkedAbout(records));
     setEverStarted(new Set(records.map((r) => r.topic)));
+    const latest = new Map<TopicId, string>();
+    for (const rec of records) {
+      if (rec.completedAt && !rec.helpOffered && (latest.get(rec.topic) ?? "") < rec.completedAt) latest.set(rec.topic, rec.completedAt);
+    }
+    setDoneTopics([...latest].map(([topic, at]) => ({ topic, at })).sort((a, b) => b.at.localeCompare(a.at)));
     setReady(true);
     // Re-check every minute, so "It's time" appears without reloading.
     const timer = setInterval(() => setNow(Date.now()), 60_000);
@@ -69,8 +76,12 @@ export default function Home() {
     profile.suggestedTopic && !activeTopics.has(profile.suggestedTopic) && !everStarted.has(profile.suggestedTopic)
       ? TOPICS.find((t) => t.id === profile.suggestedTopic)
       : undefined;
-  const rank = (id: TopicId) => (activeTopics.has(id) ? 1 : 0);
+  // New topics first, then ones in progress, then ones already talked about.
+  const done = new Set(doneTopics.map((d) => d.topic));
+  const rank = (id: TopicId) => (done.has(id) ? 2 : activeTopics.has(id) ? 1 : 0);
   const carousel = [...TOPICS].sort((a, b) => rank(a.id) - rank(b.id));
+  // Up next: the first topic (in the library's order) not done, not in progress and not the setup pick.
+  const upNext = TOPICS.find((t) => !done.has(t.id) && !activeTopics.has(t.id) && t.id !== pick?.id);
 
   return (
     <main className="has-bottom-nav" style={{ minHeight: "100dvh", background: "var(--bg)" }}>
@@ -134,7 +145,7 @@ export default function Home() {
               <JourneyCard key={j.planId ?? j.topic} journey={j} whenLabel={j.when ? whenText(j.when) : undefined} />
             ))}
           </div>
-        ) : (
+        ) : upNext || doneTopics.length > 0 ? null : (
           <section className="notice journey-empty">
             <div className="journey-empty-art" aria-hidden="true">
               <FamilySofa />
@@ -144,6 +155,38 @@ export default function Home() {
               <div style={{ fontSize: 15, color: "var(--text-muted)", marginTop: 2 }}>Pick a topic and you'll have {JOURNEY_DAYS} days to prepare, talk and reflect.</div>
             </div>
           </section>
+        )}
+
+        {/* Up next: one topic not started yet (the setup pick has its own card above) */}
+        {upNext && (
+          <Link href={`/card/${upNext.id}`} className="up-next" style={{ borderColor: `${upNext.color}66` }}>
+            <TopicArt id={upNext.id} size={44} />
+            <span style={{ flex: 1, minWidth: 0 }}>
+              <span className="card-label">Up next</span>
+              <span className="up-next-name">{upNext.name}</span>
+              <span className="up-next-question">Teens wonder: “{upNext.teenQuestion}”</span>
+            </span>
+            <span className="up-next-go">Start →</span>
+          </Link>
+        )}
+
+        {/* Done: topics already talked about, so progress stays visible */}
+        {doneTopics.length > 0 && (
+          <div className="done-topics">
+            <div className="card-label">Done</div>
+            {doneTopics.map((d) => {
+              const t = TOPICS.find((x) => x.id === d.topic)!;
+              return (
+                <div key={d.topic} className="done-row">
+                  <TopicArt id={t.id} size={32} />
+                  <span style={{ flex: 1, minWidth: 0, fontWeight: 600 }}>{t.short}</span>
+                  <span className="done-tag">
+                    ✓ Talked about · {new Date(d.at).toLocaleDateString("en-IN", { day: "numeric", month: "short" })}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
         )}
 
         <Link href="/topics" className="btn-secondary btn-block" style={{ marginTop: 18, textAlign: "center", textDecoration: "none" }}>
