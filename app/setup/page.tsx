@@ -59,7 +59,8 @@ export default function Setup() {
     // Its 14-day journey starts only when the parent opens its flashcards.
     // Tapped answers only.
     track("setup_completed", { role: profile.role, age_band: profile.ageBand, language: profile.language, comfort: profile.comfort });
-    router.push("/home");
+    // First time only: the journey map (How Raise works), then Home.
+    router.push("/how-it-works");
   }
 
   return (
