@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import BottomNav from "@/components/BottomNav";
+import TopicArt from "@/components/TopicArt";
 import TopicBubbles from "@/components/TopicBubbles";
 import { loadProfile } from "@/lib/profile";
 import { CRISIS_TOPICS, TOPICS, type TopicId } from "@/lib/topics";
@@ -81,7 +82,7 @@ function TopicButton({ id, matched }: { id: TopicId; matched?: boolean }) {
   const topic = TOPICS.find((t) => t.id === id)!;
   return (
     <Link href={`/card/${id}`} className="topic-card">
-      <span className="topic-dot" style={{ background: topic.color }} aria-hidden="true" />
+      <TopicArt id={id} size={44} />
       <span style={{ flex: 1 }}>
         <span style={{ display: "block", fontWeight: 700, color: "var(--text)", fontSize: 17 }}>{topic.name}</span>
         <span style={{ display: "block", fontSize: 15, color: "var(--text-muted)", fontStyle: "italic", marginTop: 3 }}>

@@ -2040,3 +2040,145 @@ a {
   font-weight: 600;
   white-space: nowrap;
 }
+
+/* Flashcard 1: the research number as a picture */
+.stat-graphic {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 2px 0 10px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: var(--surface-sage-light);
+}
+
+.stat-graphic svg {
+  flex: 1;
+  min-width: 0;
+}
+
+.stat-graphic.ring svg {
+  flex: 0 0 auto;
+}
+
+.stat-number {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 26px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.stat-number span {
+  font-size: var(--fs-base);
+}
+
+/* Super Parent goal with the growing sprout */
+.goal-sprout {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.celebrate-goal {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Topic drawings never shrink in flex rows */
+.topic-art {
+  flex-shrink: 0;
+}
+
+/* Journey tab: confidence gauge */
+.gauge {
+  padding: 30px 14px 0;
+}
+
+.gauge-track {
+  position: relative;
+  height: 10px;
+  border-radius: 5px;
+  background: linear-gradient(to right, var(--surface-sage-light), var(--surface-sage));
+  border: 1px solid var(--border-sage);
+}
+
+.gauge-gap {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background: var(--primary);
+  opacity: 0.35;
+  border-radius: 5px;
+}
+
+.gauge-marker {
+  position: absolute;
+  top: 50%;
+  width: 18px;
+  height: 18px;
+  margin: -9px 0 0 -9px;
+  border-radius: 50%;
+  border: 3px solid var(--surface);
+  box-shadow: var(--shadow-sm);
+}
+
+.gauge-marker.before {
+  background: var(--accent);
+}
+
+.gauge-marker.now {
+  background: var(--primary);
+}
+
+.gauge-tag {
+  position: absolute;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  color: var(--text);
+}
+
+.gauge-marker.now .gauge-tag {
+  bottom: auto;
+  top: 18px;
+  color: var(--primary);
+}
+
+.gauge-scale {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 26px;
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+}
+
+/* Journey tab: talks as a timeline */
+.talk-timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 14px;
+  border-left: 2px solid var(--border-sage);
+  display: grid;
+  gap: 10px;
+}
+
+.timeline-entry {
+  position: relative;
+}
+
+.timeline-entry::before {
+  content: "";
+  position: absolute;
+  left: -22px;
+  top: 20px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--primary);
+  border: 2px solid var(--bg);
+}

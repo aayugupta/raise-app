@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import BottomNav from "@/components/BottomNav";
+import ConfidenceGauge from "@/components/ConfidenceGauge";
+import TopicArt from "@/components/TopicArt";
 import ConfidenceScale from "@/components/ConfidenceScale";
 import HelpPill from "@/components/HelpPill";
 import { CONFIDENCE_QUESTION, confidenceChange, loadConfidence, recordConfidence, type ConfidenceEntry } from "@/lib/confidence";
@@ -106,19 +108,7 @@ export default function JourneyScreen() {
               </section>
             ) : (
               <section className="notice">
-                <div className="confidence-compare">
-                  <div className="confidence-box">
-                    <div className="card-label">Before</div>
-                    <div className="confidence-value">{before}/5</div>
-                  </div>
-                  <span aria-hidden="true" style={{ fontSize: 24, color: "var(--primary)" }}>
-                    →
-                  </span>
-                  <div className="confidence-box now">
-                    <div className="card-label">Now</div>
-                    <div className="confidence-value">{now !== undefined ? `${now}/5` : "–"}</div>
-                  </div>
-                </div>
+                <ConfidenceGauge before={before} now={now} />
                 <p style={{ fontSize: 15, margin: "12px 0 0", lineHeight: 1.45 }}>
                   {now === undefined
                     ? "After your next talk, we'll ask again so you can see how it changes."
@@ -134,14 +124,12 @@ export default function JourneyScreen() {
             {talks.length === 0 ? (
               <section className="notice">Your talks will show here after you note how they went.</section>
             ) : (
-              <div style={{ display: "grid", gap: 10 }}>
+              <ol className="talk-timeline">
                 {talks.map((r) => {
                   const t = TOPICS.find((x) => x.id === r.topic)!;
                   return (
-                    <article key={r.planId} className="talk-entry">
-                      <span className="topic-tile-icon" style={{ background: `${t.color}26` }} aria-hidden="true">
-                        {t.icon}
-                      </span>
+                    <li key={r.planId} className="talk-entry timeline-entry">
+                      <TopicArt id={t.id} size={38} />
                       <div style={{ flex: 1, minWidth: 0 }}>
                         <div style={{ display: "flex", justifyContent: "space-between", gap: 8 }}>
                           <span style={{ fontWeight: 700, color: "var(--text)" }}>{t.short}</span>
@@ -154,10 +142,10 @@ export default function JourneyScreen() {
                         </div>
                         {r.learned && <div style={{ fontSize: 15, fontStyle: "italic", marginTop: 6 }}>“{r.learned}”</div>}
                       </div>
-                    </article>
+                    </li>
                   );
                 })}
-              </div>
+              </ol>
             )}
           </>
         )}

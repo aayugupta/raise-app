@@ -1,4 +1,5 @@
 import Link from "next/link";
+import TopicArt from "@/components/TopicArt";
 import { STEP_NAMES, type Journey } from "@/lib/journey";
 import { JOURNEY_DAYS } from "@/lib/metric";
 import { TOPICS } from "@/lib/topics";
@@ -25,9 +26,7 @@ export default function JourneyCard({ journey, whenLabel }: { journey: Journey; 
   return (
     <div className="journey-card">
       <Link href={journey.href} className="journey-card-main">
-        <span className="topic-tile-icon" style={{ background: `${t.color}26` }} aria-hidden="true">
-          {t.icon}
-        </span>
+        <TopicArt id={t.id} size={40} />
         <span style={{ flex: 1, minWidth: 0 }}>
           <span style={{ display: "flex", justifyContent: "space-between", gap: 8, alignItems: "baseline" }}>
             <span style={{ fontWeight: 700, color: "var(--text)" }}>{t.short}</span>

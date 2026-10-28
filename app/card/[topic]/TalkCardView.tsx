@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { baseTalkCard, cardCacheKey, getBaseCard, SAFETY_PROMISE, type Language, type TalkCard } from "@/lib/cards";
 import FlashArt, { type FlashArtKind } from "@/components/FlashArt";
+import StatGraphic from "@/components/StatGraphic";
 import HelpPill from "@/components/HelpPill";
 import type { Family } from "@/lib/cardPrompt";
 import { track } from "@/lib/events";
@@ -189,6 +190,8 @@ export default function TalkCardView({ topic }: { topic: TopicId }) {
       body: (
         <>
           <h3 className="flash-sub">Why this matters</h3>
+          {/* The research number as a picture (from the hand-written card, never the AI wording) */}
+          <StatGraphic text={base.whyNow} color={meta.color} />
           <p style={{ fontSize: 15, lineHeight: 1.5, margin: 0 }}>{card.whyNow}</p>
           {base.whySource && <p style={{ fontSize: 13, color: "var(--text-muted)", margin: "4px 0 0" }}>{base.whySource}</p>}
 

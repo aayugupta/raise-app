@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import FamilySofa from "@/components/FamilySofa";
 import HelpPill from "@/components/HelpPill";
+import TopicArt from "@/components/TopicArt";
 import ConfidenceScale from "@/components/ConfidenceScale";
 import { CONFIDENCE_QUESTION, recordConfidence } from "@/lib/confidence";
 import { track } from "@/lib/events";
@@ -181,7 +182,10 @@ export default function Setup() {
                   aria-pressed={topic === t.id}
                   onClick={() => setTopic(topic === t.id ? null : t.id)}
                 >
-                  <span aria-hidden="true">{t.icon}</span> {t.short}
+                  <span style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                    <TopicArt id={t.id} size={30} />
+                    <span>{t.short}</span>
+                  </span>
                 </button>
               ))}
             </div>

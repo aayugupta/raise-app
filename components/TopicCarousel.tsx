@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import TopicArt from "@/components/TopicArt";
 import type { TOPICS, TopicId } from "@/lib/topics";
 
 // Home's topic carousel. It slides to the next topic every few seconds and loops back to the start.
@@ -59,9 +60,7 @@ export default function TopicCarousel({ topics, active }: { topics: Topic[]; act
         {topics.map((t) => (
           <Link key={t.id} href={`/card/${t.id}`} className="carousel-card" role="listitem" style={{ background: `${t.color}1f`, borderColor: `${t.color}55` }}>
             <span style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-              <span className="carousel-icon" aria-hidden="true">
-                {t.icon}
-              </span>
+              <TopicArt id={t.id} size={48} />
             </span>
             <span className="carousel-name">{t.name}</span>
             <span className="carousel-question">Teens wonder: “{t.teenQuestion}”</span>

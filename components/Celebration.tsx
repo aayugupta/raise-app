@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Sprout from "@/components/Sprout";
 import { loadJourneyRecords } from "@/lib/journeyLog";
 import { topicsTalkedAbout } from "@/lib/metric";
 import { TOPICS, type TopicId } from "@/lib/topics";
@@ -37,16 +38,12 @@ export default function Celebration({ topic, onContinue }: { topic: TopicId; onC
         </p>
 
         <div className="celebrate-goal" aria-label={`Becoming a Super Parent: ${done} of ${TOPICS.length} topics`}>
-          <div style={{ display: "flex", justifyContent: "space-between", fontSize: "var(--fs-sm)" }}>
-            <span>Becoming a Super Parent</span>
+          <Sprout done={done} total={TOPICS.length} size={64} onDark />
+          <div style={{ fontSize: "var(--fs-sm)" }}>
+            <div>Becoming a Super Parent</div>
             <strong>
-              {done} of {TOPICS.length} topics
+              A new leaf: {done} of {TOPICS.length} topics
             </strong>
-          </div>
-          <div className="goal-bar celebrate-bar" aria-hidden="true">
-            {TOPICS.map((t, i) => (
-              <span key={t.id} className={i < done ? "done" : ""} />
-            ))}
           </div>
         </div>
 
