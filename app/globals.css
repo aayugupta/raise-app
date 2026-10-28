@@ -1423,3 +1423,31 @@ h3 {
   border-radius: 999px;
   padding: 3px 10px;
 }
+
+/* Flashcards: "When to get help" in red, the signal to reach out */
+.get-help {
+  margin-top: 12px;
+  padding: 14px 16px;
+  border-radius: var(--radius);
+  background: #fdeee9;
+  border: 2px solid #e05a45;
+  border-left-width: 6px;
+  color: var(--ink);
+}
+
+.get-help-title {
+  font-weight: 800;
+  font-size: 17px;
+  color: #b4321f;
+}
+
+.get-help-button {
+  display: inline-block;
+  background: #c0392b;
+  color: #fff;
+  font-weight: 700;
+  font-size: 15px;
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 999px;
+}

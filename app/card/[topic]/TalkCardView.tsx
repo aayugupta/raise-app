@@ -305,10 +305,13 @@ export default function TalkCardView({ topic }: { topic: TopicId }) {
           </button>
         </div>
 
-        <section className="notice" style={{ marginTop: 12 }}>
-          <div style={{ fontWeight: 700, color: "var(--ink)" }}>When to get help</div>
-          <p style={{ margin: "4px 0 8px", fontSize: 15 }}>{base.getHelp.charAt(0).toUpperCase() + base.getHelp.slice(1)}</p>
-          <Link href="/help" style={{ color: "var(--teal)", fontWeight: 700 }}>
+        {/* Red, because these are the signs to get help (Aayushi, 28 Oct 2026). Calm words, no alarm. */}
+        <section className="get-help" aria-label="When to get help">
+          <div className="get-help-title">
+            <span aria-hidden="true">🚩</span> When to get help
+          </div>
+          <p style={{ margin: "4px 0 10px", fontSize: 15 }}>{base.getHelp.charAt(0).toUpperCase() + base.getHelp.slice(1)}</p>
+          <Link href="/help" className="get-help-button">
             Open Help →
           </Link>
         </section>
