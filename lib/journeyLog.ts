@@ -47,15 +47,17 @@ export function startJourney(topic: TopicId, now = Date.now()): void {
 }
 
 // After a reflection. "Not yet" doesn't come here: the journey keeps going.
-export function finishJourney(topic: TopicId, happened: boolean, helpOffered: boolean, now = Date.now()): void {
+// Returns true when this reflection completed the topic (the celebration screen shows).
+export function finishJourney(topic: TopicId, happened: boolean, helpOffered: boolean, now = Date.now()): boolean {
   const records = loadJourneyRecords();
   const open = records.find((r) => r.topic === topic && isOpen(r));
-  if (!open) return;
+  if (!open) return false;
   const at = new Date(now).toISOString();
   open.endedAt = at;
   if (helpOffered) open.helpOffered = true;
   else if (happened && withinWindow(open.startedAt, at)) open.completedAt = at;
   save(records);
+  return Boolean(open.completedAt);
 }
 
 // Step 1 Learn: the topic's flashcards were opened.

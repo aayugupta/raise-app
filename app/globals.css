@@ -1590,3 +1590,135 @@ a {
   color: var(--text);
   margin-top: 2px;
 }
+
+/* Celebration: a topic completed (a reflection where the talk happened) */
+.celebrate {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 20px calc(24px + env(safe-area-inset-bottom));
+  background: radial-gradient(circle at 50% 30%, var(--primary) 0%, var(--primary-pressed) 55%, #101f1a 100%);
+  color: var(--on-primary);
+  overflow: hidden;
+  animation: celebrate-in 0.35s ease-out both;
+}
+
+.celebrate-body {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.celebrate-emoji {
+  font-size: 64px;
+  line-height: 1;
+  margin-bottom: 16px;
+  animation: celebrate-pop 0.6s 0.15s ease-out both;
+}
+
+.celebrate-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 28px;
+  line-height: 1.25;
+  color: var(--on-primary);
+  text-wrap: balance;
+}
+
+.celebrate-sub {
+  margin: 14px 0 24px;
+  font-size: var(--fs-base);
+  line-height: var(--lh-body);
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.celebrate-goal {
+  text-align: left;
+  padding: 12px 14px;
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  margin-bottom: 24px;
+}
+
+.celebrate-bar span {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.celebrate-bar span.done {
+  background: var(--accent);
+}
+
+.celebrate-button {
+  min-height: var(--tap);
+  border: none;
+  font-family: var(--font-ui);
+  cursor: pointer;
+}
+
+.celebrate-sparkles span {
+  position: absolute;
+  top: -10px;
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  background: var(--accent);
+  opacity: 0.8;
+  animation: celebrate-fall 3.2s linear infinite;
+}
+
+.celebrate-sparkles span:nth-child(3n) {
+  background: var(--surface-sage);
+  border-radius: 50%;
+}
+
+.celebrate-sparkles span:nth-child(4n) {
+  background: #f1d9a8;
+}
+
+@keyframes celebrate-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes celebrate-pop {
+  0% {
+    transform: scale(0.4);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.15);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes celebrate-fall {
+  from {
+    transform: translateY(0) rotate(0deg);
+  }
+  to {
+    transform: translateY(110vh) rotate(320deg);
+  }
+}
+
+/* Phones set to reduce motion get the same screen, standing still. */
+@media (prefers-reduced-motion: reduce) {
+  .celebrate,
+  .celebrate-emoji {
+    animation: none;
+  }
+  .celebrate-sparkles {
+    display: none;
+  }
+}

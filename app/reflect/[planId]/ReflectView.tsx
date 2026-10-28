@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import ConfidenceScale from "@/components/ConfidenceScale";
+import Celebration from "@/components/Celebration";
 import HelpPill from "@/components/HelpPill";
 import { CONFIDENCE_AFTER_QUESTION, recordConfidence } from "@/lib/confidence";
 import { track } from "@/lib/events";
@@ -50,6 +51,8 @@ export default function ReflectView({ planId }: { planId: string }) {
   const [afterConfidence, setAfterConfidence] = useState<number | null>(null);
   const [helpOffer, setHelpOffer] = useState(false);
   const [saved, setSaved] = useState<Reflection | null>(null);
+  // A completed topic first shows the celebration; "Continue" then goes where the reflection leads.
+  const [celebrate, setCelebrate] = useState<null | (() => void)>(null);
 
   useEffect(() => {
     setPlan(loadPlan(planId) ?? null);
@@ -110,7 +113,7 @@ export default function ReflectView({ planId }: { planId: string }) {
     });
     updatePlan(planId, { reflectedAt: r.createdAt });
     // Ends the 14-day journey: completed if the talk happened (Yes or Partly) within 14 days.
-    finishJourney(plan!.topic, happened === "yes" || happened === "partly", helpOffered);
+    const completed = finishJourney(plan!.topic, happened === "yes" || happened === "partly", helpOffered);
     if (afterConfidence) recordConfidence(afterConfidence, "after_talk");
     // The fixed-choice answers only. The written notes never leave the phone.
     track("reflection_saved", {
@@ -122,13 +125,17 @@ export default function ReflectView({ planId }: { planId: string }) {
       help_offered: helpOffered,
     });
     setHelpOffer(false);
-    // A hard or partial talk goes to repair, never to a "failed" label (FR10).
-    if (!helpOffered && (happened === "partly" || feeling === "hard")) {
-      router.push(`/recover/${planId}?why=repair`);
-      return;
-    }
-    setSaved(r);
-    window.scrollTo(0, 0);
+    const next = () => {
+      // A hard or partial talk goes to repair, never to a "failed" label (FR10).
+      if (!helpOffered && (happened === "partly" || feeling === "hard")) {
+        router.push(`/recover/${planId}?why=repair`);
+        return;
+      }
+      setSaved(r);
+      window.scrollTo(0, 0);
+    };
+    if (completed) setCelebrate(() => next);
+    else next();
   }
 
   if (helpOffer) {
@@ -153,6 +160,7 @@ export default function ReflectView({ planId }: { planId: string }) {
     );
   }
 
+  if (celebrate) return <Celebration topic={plan.topic} onContinue={() => { const go = celebrate; setCelebrate(null); go(); }} />;
   if (saved) return <Saved reflection={saved} />;
 
   return (
