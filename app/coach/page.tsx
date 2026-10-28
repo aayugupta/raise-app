@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import BottomNav from "@/components/BottomNav";
 import { currentFirstLine } from "@/lib/cards";
 import { checkCoachMessage, COACH_BUSY, COACH_MAX_CHARS } from "@/lib/coachSafety";
-import { clearCoachChat, loadCoachChat, saveCoachChat, turnsForAi, type CoachEntry } from "@/lib/coachChat";
+import { clearCoachChat, COACH_CLOSING, loadCoachChat, saveCoachChat, turnsForAi, type CoachEntry } from "@/lib/coachChat";
 import { track } from "@/lib/events";
 import { markPractised, startJourney } from "@/lib/journeyLog";
 import { loadProfile, type Profile } from "@/lib/profile";
@@ -42,6 +42,7 @@ export default function Coach() {
   const [roleplay, setRoleplay] = useState(false);
   const [practised, setPractised] = useState(false);
   const endRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
     const p = loadProfile();
@@ -227,6 +228,29 @@ export default function Coach() {
           {visible.map((e, i) => (
             <Entry key={i} entry={e} onDismiss={() => dismissHelp(e)} />
           ))}
+          {/* Check-in under the Coach's latest reply: the parent decides when the chat has done its job. */}
+          {!waiting && (() => {
+            const last = visible[visible.length - 1];
+            if (!last || last.role !== "coach" || !("text" in last) || last.fallback || last.closing) return null;
+            return (
+              <div className="coach-checkin" role="group" aria-label="Did that help?">
+                <button
+                  className="chip"
+                  onClick={() =>
+                    update([
+                      ...chat,
+                      { role: "coach", text: COACH_CLOSING[profile.language], at: now(), closing: true, ...(roleplay && topic ? { roleplay: true, topic } : {}) },
+                    ])
+                  }
+                >
+                  ✓ That helps, I'm ready
+                </button>
+                <button className="chip" onClick={() => inputRef.current?.focus()}>
+                  I have another question
+                </button>
+              </div>
+            );
+          })()}
           {waiting && (
             <div className="bubble coach" aria-label="The coach is writing">
               <div className="loading-dots" aria-hidden="true">
@@ -236,7 +260,8 @@ export default function Coach() {
               </div>
             </div>
           )}
-          <div ref={endRef} />
+          {/* Scrolls far enough that the check-in buttons clear the message box and tab bar. */}
+          <div ref={endRef} style={{ scrollMarginBottom: 190 }} />
         </div>
 
         {chat.length > 0 && (
@@ -268,6 +293,7 @@ export default function Coach() {
           }}
         >
           <textarea
+            ref={inputRef}
             className="text-input"
             value={draft}
             onChange={(ev) => setDraft(ev.target.value)}
@@ -362,5 +388,6 @@ function Entry({ entry, onDismiss }: { entry: CoachEntry; onDismiss: () => void 
       </>
     );
   }
+  if (entry.closing) return <div className="bubble coach closing">{entry.text}</div>;
   return <div className={`bubble coach${entry.fallback ? " fallback" : ""}`}>{entry.text}</div>;
 }

@@ -59,6 +59,10 @@ const turns = turnsForAi(chat);
 check("the AI sees only real messages and replies", JSON.stringify(turns.map((t) => t.text)) === JSON.stringify(["How do I start?", "Try a walk.", "She went quiet after dinner."]));
 check("a refused request is never sent to the AI", !turns.some((t) => t.text.includes("WhatsApp")));
 
+// "That helps, I'm ready": Raise's own closing line is shown, never sent to the AI as if it had said it.
+const closed = turnsForAi([...chat.slice(0, 2), { role: "coach", text: "Glad that helped.", at, closing: true }, { role: "parent", text: "One more thing", at }]);
+check("the closing line is never sent to the AI", !closed.some((t) => t.text === "Glad that helped."));
+
 // Role-play (step 2, Practise): its turns stay apart from the normal chat, per topic.
 const mixed = [
   ...chat,

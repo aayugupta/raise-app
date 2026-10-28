@@ -5,7 +5,7 @@ import type { TopicId } from "./topics";
 export type CoachEntry =
   | { role: "parent"; text: string; at: string; roleplay?: boolean; topic?: TopicId }
   | { role: "parent"; hidden: true; at: string } // a danger sign: the words are not kept
-  | { role: "coach"; text: string; at: string; fallback?: boolean; roleplay?: boolean; topic?: TopicId; tip?: string } // in a role-play, text is the child's line
+  | { role: "coach"; text: string; at: string; fallback?: boolean; roleplay?: boolean; topic?: TopicId; tip?: string; closing?: boolean } // in a role-play, text is the child's line; closing = "That helps, I'm ready"
   | { role: "coach"; help: true; dismissed?: boolean; at: string }
   | { role: "coach"; refusal: string; offer: TopicId; offerText: string; at: string };
 
@@ -43,7 +43,7 @@ export function turnsForAi(all: CoachEntry[], roleplayTopic?: TopicId): Turn[] {
   const entries = all.filter((e) =>
     "text" in e ? (roleplayTopic ? e.roleplay && e.topic === roleplayTopic : !e.roleplay) : !roleplayTopic
   );
-  const isAiReply = (e?: CoachEntry) => !!e && e.role === "coach" && "text" in e && !e.fallback;
+  const isAiReply = (e?: CoachEntry) => !!e && e.role === "coach" && "text" in e && !e.fallback && !e.closing;
   return entries.flatMap((e, i): Turn[] => {
     if (!("text" in e)) return [];
     if (e.role === "coach") return isAiReply(e) ? [{ role: "coach", text: e.text }] : [];
@@ -51,3 +51,10 @@ export function turnsForAi(all: CoachEntry[], roleplayTopic?: TopicId): Turn[] {
     return !next || isAiReply(next) ? [{ role: "parent", text: e.text }] : [];
   });
 }
+
+// The Coach's own warm close when the parent taps "That helps, I'm ready" (written here, not by the AI).
+export const COACH_CLOSING: Record<"hinglish" | "hindi" | "english", string> = {
+  english: "Glad that helped. Go gently, one small conversation at a time. I'm here whenever you want to talk it through again.",
+  hinglish: "Achha laga ki yeh kaam aaya. Aaram se, ek chhoti baat se shuru kijiye. Jab bhi phir se baat karni ho, main yahin hoon.",
+  hindi: "अच्छा लगा कि यह काम आया। आराम से, एक छोटी बात से शुरू कीजिए। जब भी फिर से बात करनी हो, मैं यहीं हूँ।",
+};
