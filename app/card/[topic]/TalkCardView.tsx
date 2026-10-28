@@ -117,7 +117,7 @@ export default function TalkCardView({ topic }: { topic: TopicId }) {
 
   if (!loaded) {
     return (
-      <main style={{ minHeight: "100dvh", background: "var(--cream)" }}>
+      <main style={{ minHeight: "100dvh", background: "var(--bg)" }}>
         <div style={{ width: "100%", maxWidth: 480, margin: "0 auto", padding: "16px" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <button onClick={goBack} className="icon-btn" aria-label="Back">
@@ -168,7 +168,7 @@ export default function TalkCardView({ topic }: { topic: TopicId }) {
             Why now
           </h3>
           <p style={{ fontSize: 15, lineHeight: 1.5, margin: 0 }}>{card.whyNow}</p>
-          {base.whySource && <p style={{ fontSize: 13, color: "var(--muted)", margin: "4px 0 0" }}>{base.whySource}</p>}
+          {base.whySource && <p style={{ fontSize: 13, color: "var(--text-muted)", margin: "4px 0 0" }}>{base.whySource}</p>}
         </>
       ),
     },
@@ -176,7 +176,7 @@ export default function TalkCardView({ topic }: { topic: TopicId }) {
       title: "Gentle questions to ask",
       body: (
         <>
-          <p style={{ fontSize: 15, color: "var(--muted)", margin: "0 0 10px" }}>After your first line, pick one that feels natural. Then listen.</p>
+          <p style={{ fontSize: 15, color: "var(--text-muted)", margin: "0 0 10px" }}>After your first line, pick one that feels natural. Then listen.</p>
           {/* 10 questions: 5 at first, so the cards stay a comfortable height */}
           <ol className="card-list flash-questions">
             {card.followUps.slice(0, allQuestions ? undefined : 5).map((q) => (
@@ -197,7 +197,7 @@ export default function TalkCardView({ topic }: { topic: TopicId }) {
       title: "What to say, what not to say",
       body: (
         <>
-          <h3 className="flash-sub" style={{ color: "var(--teal)" }}>
+          <h3 className="flash-sub" style={{ color: "var(--primary)" }}>
             ✓ Say
           </h3>
           <ul className="card-list">
@@ -205,7 +205,7 @@ export default function TalkCardView({ topic }: { topic: TopicId }) {
               <li key={x}>{x}</li>
             ))}
           </ul>
-          <h3 className="flash-sub" style={{ color: "#b4472f" }}>
+          <h3 className="flash-sub" style={{ color: "var(--danger)" }}>
             ✕ Don't say
           </h3>
           <ul className="card-list">
@@ -222,7 +222,7 @@ export default function TalkCardView({ topic }: { topic: TopicId }) {
         <div style={{ display: "grid", gap: 8 }}>
           {REACTIONS.map((r) => (
             <div key={r.key} className="react-row">
-              <div style={{ fontWeight: 700, color: "var(--ink)", fontSize: 15 }}>{r.label}</div>
+              <div style={{ fontWeight: 700, color: "var(--text)", fontSize: 15 }}>{r.label}</div>
               <div style={{ fontStyle: "italic", marginTop: 2 }}>“{card.react[r.key]}”</div>
             </div>
           ))}
@@ -246,7 +246,7 @@ export default function TalkCardView({ topic }: { topic: TopicId }) {
   }
 
   return (
-    <main style={{ minHeight: "100dvh", background: "var(--cream)" }}>
+    <main style={{ minHeight: "100dvh", background: "var(--bg)" }}>
       <div style={{ width: "100%", maxWidth: 480, margin: "0 auto", padding: "16px 16px 0" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <button onClick={goBack} className="icon-btn" aria-label="Back">
@@ -260,7 +260,7 @@ export default function TalkCardView({ topic }: { topic: TopicId }) {
         {/* Topic, opened from the teen's side */}
         <div style={{ margin: "14px 0 4px", display: "flex", alignItems: "center", gap: 8 }}>
           <span className="topic-dot" style={{ background: meta.color, marginTop: 0 }} aria-hidden="true" />
-          <span style={{ fontSize: 14, fontWeight: 700, color: "var(--muted)", textTransform: "uppercase", letterSpacing: 0.5 }}>
+          <span style={{ fontSize: 14, fontWeight: 700, color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: 0.5 }}>
             {meta.name}
           </span>
         </div>

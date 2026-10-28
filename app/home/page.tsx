@@ -46,7 +46,7 @@ export default function Home() {
     return () => clearInterval(timer);
   }, [router]);
 
-  if (!ready || !profile) return <main style={{ minHeight: "100dvh", background: "var(--cream)" }} />;
+  if (!ready || !profile) return <main style={{ minHeight: "100dvh", background: "var(--bg)" }} />;
 
   const nowPlans = [...plans].sort((a, b) => a.when.localeCompare(b.when)).filter((p) => planStage(p, now) === "now" && p.reminder !== false);
   // The "It's time" banner already covers plans happening now, so they're not repeated below.
@@ -59,21 +59,21 @@ export default function Home() {
   const carousel = [...TOPICS].sort((a, b) => rank(a.id) - rank(b.id));
 
   return (
-    <main className="has-bottom-nav" style={{ minHeight: "100dvh", background: "var(--cream)" }}>
+    <main className="has-bottom-nav" style={{ minHeight: "100dvh", background: "var(--bg)" }}>
       <div style={{ width: "100%", maxWidth: 480, margin: "0 auto", padding: "20px 16px 24px" }}>
         {/* Greeting */}
         <h1 style={{ fontSize: 30, lineHeight: 1.15 }}>Hello {greetName(profile)}</h1>
-        <div style={{ fontSize: 15, color: "var(--muted)", marginTop: 4 }}>One small conversation at a time.</div>
+        <div style={{ fontSize: 15, color: "var(--text-muted)", marginTop: 4 }}>One small conversation at a time.</div>
 
         <SuperParentGoal done={talkedAbout} total={TOPICS.length} />
 
         {/* In-app reminder: inside the planned window */}
         {nowPlans.map((p) => (
           <section key={p.id} className="time-banner">
-            <div className="card-label" style={{ color: "#fff", opacity: 0.85 }}>
+            <div className="card-label" style={{ color: "var(--on-primary)", opacity: 0.85 }}>
               {momentOf(p).icon} {whenText(p.when)}
             </div>
-            <h2 style={{ fontSize: 26, color: "#fff", margin: "6px 0 10px" }}>It's time for your {momentOf(p).calendarTitle.replace(/^Your /, "").toLowerCase()}</h2>
+            <h2 style={{ fontSize: 26, color: "var(--on-primary)", margin: "6px 0 10px" }}>It's time for your {momentOf(p).calendarTitle.replace(/^Your /, "").toLowerCase()}</h2>
             <p style={{ margin: "0 0 14px", fontSize: 17, lineHeight: 1.4 }}>“{currentFirstLine(p.topic, profile)}”</p>
             <Link href={`/talk/${p.id}`} className="btn-light btn-block">
               Open Talk mode
@@ -102,8 +102,8 @@ export default function Home() {
               <FamilySofa />
             </div>
             <div>
-              <div style={{ fontWeight: 700, color: "var(--ink)" }}>Ready when you are</div>
-              <div style={{ fontSize: 15, color: "var(--muted)", marginTop: 2 }}>Pick a topic and you'll have {JOURNEY_DAYS} days to prepare, talk and reflect.</div>
+              <div style={{ fontWeight: 700, color: "var(--text)" }}>Ready when you are</div>
+              <div style={{ fontSize: 15, color: "var(--text-muted)", marginTop: 2 }}>Pick a topic and you'll have {JOURNEY_DAYS} days to prepare, talk and reflect.</div>
             </div>
           </section>
         )}
@@ -123,10 +123,10 @@ function SuperParentGoal({ done, total }: { done: number; total: number }) {
   const reached = done >= total;
   const message =
     done === 0
-      ? "Every Super Parent starts with one talk. Pick a topic below to begin."
+      ? "Every conversation starts somewhere. Pick a topic when you feel ready."
       : reached
-        ? `You've talked about all ${total} topics. Keep the conversations going.`
-        : "You're on your way ⭐ Next: have a talk about one more topic.";
+        ? `You've noted a talk on all ${total} topics. Keep the conversations going.`
+        : "You're on your way. Each talk you note fills one step, at your own pace.";
   return (
     <section className="goal-card" aria-label={`Becoming a Super Parent: ${done} of ${total} topics talked about`}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 8 }}>

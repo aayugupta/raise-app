@@ -32,7 +32,7 @@ export default function ProfileScreen() {
     setNickname(p.nickname);
   }, [router]);
 
-  if (!profile) return <main style={{ minHeight: "100dvh", background: "var(--cream)" }} />;
+  if (!profile) return <main style={{ minHeight: "100dvh", background: "var(--bg)" }} />;
 
   function choose(key: ChoiceKey, value: string) {
     const next = updateProfile({ [key]: value } as Partial<Profile>);
@@ -56,7 +56,7 @@ export default function ProfileScreen() {
   const name = greetName(profile);
 
   return (
-    <main className="has-bottom-nav" style={{ minHeight: "100dvh", background: "var(--cream)" }}>
+    <main className="has-bottom-nav" style={{ minHeight: "100dvh", background: "var(--bg)" }}>
       <div style={{ width: "100%", maxWidth: 480, margin: "0 auto", padding: "16px 16px 24px" }}>
         {/* Header */}
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
@@ -65,13 +65,13 @@ export default function ProfileScreen() {
           </div>
           <div style={{ flex: 1 }}>
             <h1 style={{ fontSize: 26 }}>Hi, {name}</h1>
-            <div style={{ fontSize: 14, color: "var(--muted)" }}>Your details stay on this phone. No account needed.</div>
+            <div style={{ fontSize: 14, color: "var(--text-muted)" }}>Your details stay on this phone. No account needed.</div>
           </div>
           <HelpPill />
         </div>
 
         {saved && (
-          <p className="notice" role="status" style={{ marginTop: 16, background: "#e6f2f0" }}>
+          <p className="notice" role="status" style={{ marginTop: 16, background: "var(--surface-sage)" }}>
             ✓ {saved}
           </p>
         )}
@@ -113,7 +113,7 @@ export default function ProfileScreen() {
               </button>
               {editing === c.key && (
                 <div className="settings-edit" style={{ display: "grid", gap: 8 }}>
-                  <p style={{ fontSize: 14, color: "var(--muted)", margin: 0 }}>{c.why}</p>
+                  <p style={{ fontSize: 14, color: "var(--text-muted)", margin: 0 }}>{c.why}</p>
                   {c.options.map((o) => (
                     <button key={o.value} className={`option${profile[c.key] === o.value ? " selected" : ""}`} onClick={() => choose(c.key, o.value)}>
                       {o.label}
@@ -155,7 +155,7 @@ export default function ProfileScreen() {
           {about && (
             <div className="settings-note" style={{ textAlign: "center" }}>
               <Logo size={40} />
-              <p style={{ margin: "10px 0 6px", fontWeight: 700, color: "var(--ink)" }}>Better conversations. Brighter tomorrows.</p>
+              <p style={{ margin: "10px 0 6px", fontWeight: 700, color: "var(--text)" }}>Better conversations. Brighter tomorrows.</p>
               <p style={{ margin: 0 }}>
                 Raise gives you a first line, a good moment and calm words for hard talks with your teen. It's built from a survey of
                 Indian parents and teens. Talk Cards are written with Google's Gemini AI and checked against safety rules. Raise
@@ -168,19 +168,19 @@ export default function ProfileScreen() {
         {/* Clear my data (instead of log out: there's no account) */}
         <div style={{ marginTop: 28 }}>
           {!confirmClear ? (
-            <button className="btn-link" style={{ color: "#b4472f" }} onClick={() => setConfirmClear(true)}>
+            <button className="btn-link" style={{ color: "var(--danger)" }} onClick={() => setConfirmClear(true)}>
               Clear my data from this phone
             </button>
           ) : (
-            <section className="notice" style={{ border: "2px solid #f3c7bc" }}>
-              <div style={{ fontWeight: 700, color: "var(--ink)" }}>Clear everything?</div>
+            <section className="notice" style={{ border: "2px solid var(--danger-border)" }}>
+              <div style={{ fontWeight: 700, color: "var(--text)" }}>Clear everything?</div>
               <p style={{ fontSize: 15, margin: "6px 0 12px" }}>
                 This deletes your setup, plans, notes and progress from this phone. It can't be undone.
               </p>
               <button className="btn-secondary btn-block" onClick={() => setConfirmClear(false)} style={{ marginBottom: 8 }}>
                 Keep my data
               </button>
-              <button className="btn-link" style={{ color: "#b4472f" }} onClick={clearEverything}>
+              <button className="btn-link" style={{ color: "var(--danger)" }} onClick={clearEverything}>
                 Yes, clear everything
               </button>
             </section>

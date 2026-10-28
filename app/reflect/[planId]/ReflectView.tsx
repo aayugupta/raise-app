@@ -55,7 +55,7 @@ export default function ReflectView({ planId }: { planId: string }) {
     setPlan(loadPlan(planId) ?? null);
   }, [planId]);
 
-  if (plan === undefined) return <main style={{ minHeight: "100dvh", background: "var(--cream)" }} />;
+  if (plan === undefined) return <main style={{ minHeight: "100dvh", background: "var(--bg)" }} />;
   if (plan === null) {
     return (
       <main style={{ padding: "56px 24px", maxWidth: 440, margin: "0 auto", textAlign: "center" }}>
@@ -133,7 +133,7 @@ export default function ReflectView({ planId }: { planId: string }) {
 
   if (helpOffer) {
     return (
-      <main style={{ minHeight: "100dvh", background: "var(--cream)" }}>
+      <main style={{ minHeight: "100dvh", background: "var(--bg)" }}>
         <div style={{ width: "100%", maxWidth: 480, margin: "0 auto", padding: "40px 16px 32px" }}>
           <section className="notice">
             <h1 style={{ fontSize: 26 }}>This sounds serious.</h1>
@@ -144,7 +144,7 @@ export default function ReflectView({ planId }: { planId: string }) {
             <button className="btn-secondary btn-block" onClick={() => finish(true)}>
               No, continue
             </button>
-            <p style={{ fontSize: 14, color: "var(--muted)", margin: "14px 0 0" }}>
+            <p style={{ fontSize: 14, color: "var(--text-muted)", margin: "14px 0 0" }}>
               For your privacy, what you wrote about this won't be saved.
             </p>
           </section>
@@ -156,7 +156,7 @@ export default function ReflectView({ planId }: { planId: string }) {
   if (saved) return <Saved reflection={saved} />;
 
   return (
-    <main style={{ minHeight: "100dvh", background: "var(--cream)" }}>
+    <main style={{ minHeight: "100dvh", background: "var(--bg)" }}>
       <div style={{ width: "100%", maxWidth: 480, margin: "0 auto", padding: "16px 16px 0" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <button onClick={() => router.push("/home")} className="icon-btn" aria-label="Back">
@@ -216,15 +216,15 @@ export default function ReflectView({ planId }: { planId: string }) {
               ))}
             </div>
             {feeling === "hard" && (
-              <p style={{ fontSize: 15, color: "var(--muted)", margin: "10px 0 0" }}>Hard talks still count. You showed up, and that matters.</p>
+              <p style={{ fontSize: 15, color: "var(--text-muted)", margin: "10px 0 0" }}>Hard talks still count. You showed up, and that matters.</p>
             )}
 
             <div className="reflect-optional">
-              <div style={{ fontWeight: 700, color: "var(--ink)" }}>Want to add what happened?</div>
-              <div style={{ fontSize: 14, color: "var(--muted)", marginTop: 2 }}>Optional. It helps you remember, and it stays on this phone.</div>
+              <div style={{ fontWeight: 700, color: "var(--text)" }}>Want to add what happened?</div>
+              <div style={{ fontSize: 14, color: "var(--text-muted)", marginTop: 2 }}>Optional. It helps you remember, and it stays on this phone.</div>
 
-              <label htmlFor="discussed" className="section-title" style={{ display: "block", fontFamily: "var(--font-serif), Georgia, serif", color: "var(--ink)" }}>
-                What did you say? <span style={{ fontFamily: "var(--font-body)", fontSize: 14, color: "var(--muted)" }}>(optional)</span>
+              <label htmlFor="discussed" className="section-title" style={{ display: "block", fontFamily: "var(--font-display)", color: "var(--text)" }}>
+                What did you say? <span style={{ fontFamily: "var(--font-ui)", fontSize: 14, color: "var(--text-muted)" }}>(optional)</span>
               </label>
               <textarea
                 id="discussed"
@@ -236,8 +236,8 @@ export default function ReflectView({ planId }: { planId: string }) {
                 placeholder="e.g. I asked about her friends, and how people know they like someone"
               />
 
-              <label htmlFor="learned" className="section-title" style={{ display: "block", fontFamily: "var(--font-serif), Georgia, serif", color: "var(--ink)" }}>
-                What did your child say? <span style={{ fontFamily: "var(--font-body)", fontSize: 14, color: "var(--muted)" }}>(optional)</span>
+              <label htmlFor="learned" className="section-title" style={{ display: "block", fontFamily: "var(--font-display)", color: "var(--text)" }}>
+                What did your child say? <span style={{ fontFamily: "var(--font-ui)", fontSize: 14, color: "var(--text-muted)" }}>(optional)</span>
               </label>
               <textarea
                 id="learned"
@@ -250,7 +250,7 @@ export default function ReflectView({ planId }: { planId: string }) {
               />
 
               <h2 className="section-title" style={{ marginTop: 0 }}>
-                Who spoke more? <span style={{ fontFamily: "var(--font-body)", fontSize: 14, color: "var(--muted)" }}>(optional)</span>
+                Who spoke more? <span style={{ fontFamily: "var(--font-ui)", fontSize: 14, color: "var(--text-muted)" }}>(optional)</span>
               </h2>
               <div className="chips">
                 {WHO.map((w) => (
@@ -264,7 +264,7 @@ export default function ReflectView({ planId }: { planId: string }) {
 
               {/* Confidence after the talk (survey Q14), for Progress and the Step 6 metric. */}
               <h2 className="section-title">
-                {CONFIDENCE_AFTER_QUESTION} <span style={{ fontFamily: "var(--font-body)", fontSize: 14, color: "var(--muted)" }}>(optional)</span>
+                {CONFIDENCE_AFTER_QUESTION} <span style={{ fontFamily: "var(--font-ui)", fontSize: 14, color: "var(--text-muted)" }}>(optional)</span>
               </h2>
               <ConfidenceScale value={afterConfidence} onChoose={setAfterConfidence} />
             </div>
@@ -295,7 +295,7 @@ function Saved({ reflection }: { reflection: Reflection }) {
   // After a danger sign: calm thanks and help, no "next topic" yet.
   if (reflection.helpOffered) {
     return (
-      <main style={{ minHeight: "100dvh", background: "var(--cream)" }}>
+      <main style={{ minHeight: "100dvh", background: "var(--bg)" }}>
         <div style={{ width: "100%", maxWidth: 480, margin: "0 auto", padding: "40px 16px 32px" }}>
           <h1 style={{ fontSize: 30, lineHeight: 1.15 }}>Thank you for listening to your teen.</h1>
           <p style={{ fontSize: 17, lineHeight: 1.5 }}>
@@ -313,12 +313,12 @@ function Saved({ reflection }: { reflection: Reflection }) {
   }
 
   return (
-    <main style={{ minHeight: "100dvh", background: "var(--cream)" }}>
+    <main style={{ minHeight: "100dvh", background: "var(--bg)" }}>
       <div style={{ width: "100%", maxWidth: 480, margin: "0 auto", padding: "16px 16px 32px" }}>
         <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 12 }}>
           <HelpPill />
         </div>
-        <h1 style={{ fontSize: 30, lineHeight: 1.15 }}>You did it. Thank you for trying.</h1>
+        <h1 style={{ fontSize: 30, lineHeight: 1.15 }}>Thank you for showing up for this talk.</h1>
         <p style={{ fontSize: 17, lineHeight: 1.5 }}>Every talk, even a short one, tells your teen the door is open.</p>
 
         {reflection.whoTalked === "me" && (
@@ -333,12 +333,12 @@ function Saved({ reflection }: { reflection: Reflection }) {
             <Link href={`/card/${nextTopic.id}`} className="topic-card">
               <span className="topic-dot" style={{ background: nextTopic.color }} aria-hidden="true" />
               <span style={{ flex: 1 }}>
-                <span style={{ display: "block", fontWeight: 700, color: "var(--ink)" }}>{nextTopic.name}</span>
-                <span style={{ display: "block", fontSize: 15, color: "var(--muted)", fontStyle: "italic", marginTop: 3 }}>
+                <span style={{ display: "block", fontWeight: 700, color: "var(--text)" }}>{nextTopic.name}</span>
+                <span style={{ display: "block", fontSize: 15, color: "var(--text-muted)", fontStyle: "italic", marginTop: 3 }}>
                   “{nextTopic.teenQuestion}”
                 </span>
               </span>
-              <span aria-hidden="true" style={{ color: "var(--teal)" }}>
+              <span aria-hidden="true" style={{ color: "var(--primary)" }}>
                 →
               </span>
             </Link>
@@ -359,7 +359,7 @@ function BlockerChoice({ value, onChoose, optional = false }: { value: BlockerId
     <>
       <h2 className="section-title">
         What got in the way?{" "}
-        {optional && <span style={{ fontFamily: "var(--font-body)", fontSize: 14, color: "var(--muted)" }}>(optional)</span>}
+        {optional && <span style={{ fontFamily: "var(--font-ui)", fontSize: 14, color: "var(--text-muted)" }}>(optional)</span>}
       </h2>
       <div style={{ display: "grid", gap: 8 }}>
         {BLOCKERS.map((b) => (

@@ -44,7 +44,7 @@ export default function Privacy() {
   }, []);
 
   return (
-    <main style={{ minHeight: "100dvh", background: "var(--cream)" }}>
+    <main style={{ minHeight: "100dvh", background: "var(--bg)" }}>
       <div style={{ width: "100%", maxWidth: 480, margin: "0 auto", padding: "16px 16px 0" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <button onClick={() => (fromProfile ? router.push("/profile") : router.push("/setup"))} className="icon-btn" aria-label="Back">
@@ -67,8 +67,8 @@ export default function Privacy() {
                 ✓
               </span>
               <div>
-                <div style={{ fontWeight: 700, color: "var(--ink)", fontSize: 16 }}>{p.title}</div>
-                <div style={{ fontSize: 15, color: "var(--muted)", lineHeight: 1.4, marginTop: 2 }}>{p.detail}</div>
+                <div style={{ fontWeight: 700, color: "var(--text)", fontSize: 16 }}>{p.title}</div>
+                <div style={{ fontSize: 15, color: "var(--text-muted)", lineHeight: 1.4, marginTop: 2 }}>{p.detail}</div>
               </div>
             </li>
           ))}

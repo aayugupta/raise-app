@@ -153,10 +153,10 @@ export default function Coach() {
     setConfirmClear(false);
   }
 
-  if (!profile) return <main style={{ minHeight: "100dvh", background: "var(--cream)" }} />;
+  if (!profile) return <main style={{ minHeight: "100dvh", background: "var(--bg)" }} />;
 
   return (
-    <main className="has-bottom-nav" style={{ minHeight: "100dvh", background: "var(--cream)" }}>
+    <main className="has-bottom-nav" style={{ minHeight: "100dvh", background: "var(--bg)" }}>
       <div style={{ width: "100%", maxWidth: 480, margin: "0 auto", padding: "16px 16px 0" }}>
         <h1 style={{ fontSize: 30 }}>AI Coach</h1>
         <p className="why" style={{ marginBottom: 10 }}>
@@ -170,7 +170,7 @@ export default function Coach() {
         {topicMeta && (
           <section className="practice-card">
             <div className="card-label">Step 2 of 4 · Practise</div>
-            <div style={{ fontWeight: 700, color: "var(--ink)", fontSize: 17, margin: "2px 0 10px" }}>
+            <div style={{ fontWeight: 700, color: "var(--text)", fontSize: 17, margin: "2px 0 10px" }}>
               {topicMeta.icon} {topicMeta.name}
             </div>
             <div className="practice-modes" role="tablist" aria-label="How to practise">
@@ -181,7 +181,7 @@ export default function Coach() {
                 Role-play
               </button>
             </div>
-            <p style={{ fontSize: 14, color: "var(--muted)", margin: "8px 0 0" }}>
+            <p style={{ fontSize: 14, color: "var(--text-muted)", margin: "8px 0 0" }}>
               {roleplay
                 ? "The AI plays your child. Say your first line and see how it goes. You'll get a short tip after each reply."
                 : "Ask anything about this talk: how to start, what to say, what if it goes wrong."}
@@ -248,7 +248,7 @@ export default function Coach() {
             ) : (
               <span style={{ fontSize: 14 }}>
                 Delete this chat from your phone?{" "}
-                <button className="btn-link" style={{ display: "inline", width: "auto", fontSize: 14, color: "#b4472f" }} onClick={clearChat}>
+                <button className="btn-link" style={{ display: "inline", width: "auto", fontSize: 14, color: "var(--danger)" }} onClick={clearChat}>
                   Yes, clear
                 </button>{" "}
                 ·{" "}
@@ -286,7 +286,7 @@ export default function Coach() {
             ➤
           </button>
         </form>
-        <p style={{ fontSize: 12, color: "var(--muted)", textAlign: "center", margin: "6px 0 0" }}>
+        <p style={{ fontSize: 12, color: "var(--text-muted)", textAlign: "center", margin: "6px 0 0" }}>
           The coach is AI and can get things wrong. It isn't counselling or medical advice.
         </p>
       </div>
@@ -314,7 +314,7 @@ function Entry({ entry, onDismiss }: { entry: CoachEntry; onDismiss: () => void 
     // The dismissible help offer (FR12): the parent decides.
     return (
       <section className="notice coach-help">
-        <div style={{ fontWeight: 700, color: "var(--ink)", fontSize: 18 }}>This sounds serious.</div>
+        <div style={{ fontWeight: 700, color: "var(--text)", fontSize: 18 }}>This sounds serious.</div>
         <p style={{ margin: "4px 0 10px" }}>Would you like help from a professional? You don't have to handle this alone.</p>
         <ul style={{ listStyle: "none", padding: 0, margin: "0 0 10px", display: "grid", gap: 6 }}>
           {HELP_LINES.map((h) => (

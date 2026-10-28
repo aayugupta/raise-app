@@ -33,7 +33,7 @@ export default function TalkMode({ planId }: { planId: string }) {
     return () => clearInterval(timer);
   }, [plan?.startedAt, plan?.doneAt]);
 
-  if (plan === undefined) return <main style={{ minHeight: "100dvh", background: "var(--cream)" }} />;
+  if (plan === undefined) return <main style={{ minHeight: "100dvh", background: "var(--bg)" }} />;
 
   if (plan === null) {
     return (
@@ -73,14 +73,14 @@ export default function TalkMode({ planId }: { planId: string }) {
     return (
       <main className="talking">
         <div style={{ width: "100%", maxWidth: 480, margin: "0 auto", padding: "40px 20px 32px", display: "flex", flexDirection: "column", minHeight: "100dvh" }}>
-          <div className="card-label" style={{ color: "#fff", opacity: 0.8 }}>
+          <div className="card-label" style={{ color: "var(--on-primary)", opacity: 0.8 }}>
             {moment.icon} {moment.calendarTitle}
           </div>
-          <h1 style={{ fontSize: 34, color: "#fff", margin: "10px 0 8px", lineHeight: 1.1 }}>You've started. Put the phone away.</h1>
+          <h1 style={{ fontSize: 34, color: "var(--on-primary)", margin: "10px 0 8px", lineHeight: 1.1 }}>You've started. Put the phone away.</h1>
           <p style={{ fontSize: 17, opacity: 0.9, margin: 0 }}>Listen more than you talk. Come back and tap Done when you've finished.</p>
 
           <div className="talk-glance">
-            <div className="card-label" style={{ color: "#fff", opacity: 0.75 }}>
+            <div className="card-label" style={{ color: "var(--on-primary)", opacity: 0.75 }}>
               If you need it
             </div>
             <p style={{ margin: "6px 0 0", fontSize: 18 }}>“{firstLine}”</p>
@@ -92,7 +92,7 @@ export default function TalkMode({ planId }: { planId: string }) {
 
           {confirmEarly ? (
             <div className="talk-confirm">
-              <p style={{ margin: "0 0 12px", fontWeight: 700, color: "var(--ink)" }}>Finish already?</p>
+              <p style={{ margin: "0 0 12px", fontWeight: 700, color: "var(--text)" }}>Finish already?</p>
               <button className="btn-primary btn-block" onClick={() => setConfirmEarly(false)}>
                 Keep going
               </button>
@@ -106,7 +106,7 @@ export default function TalkMode({ planId }: { planId: string }) {
             </button>
           )}
 
-          <Link href="/help" style={{ color: "#fff", textAlign: "center", marginTop: 16, fontSize: 15 }}>
+          <Link href="/help" style={{ color: "var(--on-primary)", textAlign: "center", marginTop: 16, fontSize: 15 }}>
             Something serious came up? Get help
           </Link>
         </div>
@@ -116,7 +116,7 @@ export default function TalkMode({ planId }: { planId: string }) {
 
   // ---------- Before starting: first line at a glance ----------
   return (
-    <main style={{ minHeight: "100dvh", background: "var(--cream)" }}>
+    <main style={{ minHeight: "100dvh", background: "var(--bg)" }}>
       <div style={{ width: "100%", maxWidth: 480, margin: "0 auto", padding: "16px 16px 32px" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <button onClick={() => router.push("/home")} className="icon-btn" aria-label="Back">
@@ -142,7 +142,7 @@ export default function TalkMode({ planId }: { planId: string }) {
         </ul>
 
         <section className="promise" style={{ marginTop: 18 }}>
-          <div className="card-label" style={{ color: "#fff", opacity: 0.85 }}>
+          <div className="card-label" style={{ color: "var(--on-primary)", opacity: 0.85 }}>
             Always say this
           </div>
           <p>“{SAFETY_PROMISE}”</p>
@@ -154,7 +154,7 @@ export default function TalkMode({ planId }: { planId: string }) {
         <p className="why" style={{ textAlign: "center", marginTop: 10 }}>
           Tap Start, put the phone away, and talk.
         </p>
-        <Link href={`/card/${plan.topic}`} style={{ display: "block", textAlign: "center", color: "var(--teal)", fontWeight: 600 }}>
+        <Link href={`/card/${plan.topic}`} style={{ display: "block", textAlign: "center", color: "var(--primary)", fontWeight: 600 }}>
           See the full card
         </Link>
       </div>

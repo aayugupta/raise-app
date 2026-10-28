@@ -63,7 +63,7 @@ export default function Setup() {
   }
 
   return (
-    <main style={{ minHeight: "100dvh", background: "var(--cream)", display: "flex", flexDirection: "column" }}>
+    <main style={{ minHeight: "100dvh", background: "var(--bg)", display: "flex", flexDirection: "column" }}>
       <div style={{ width: "100%", maxWidth: 480, margin: "0 auto", padding: "16px 16px 32px", flex: 1 }}>
         {/* Back and progress */}
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
@@ -73,7 +73,7 @@ export default function Setup() {
           <div className="progress" aria-label={`Step ${step + 1} of ${STEPS}`}>
             <div style={{ width: `${((step + 1) / STEPS) * 100}%` }} />
           </div>
-          <span style={{ fontSize: 14, color: "var(--muted)", minWidth: 32, textAlign: "right" }}>
+          <span style={{ fontSize: 14, color: "var(--text-muted)", minWidth: 32, textAlign: "right" }}>
             {step + 1}/{STEPS}
           </span>
           <HelpPill />
@@ -102,7 +102,7 @@ export default function Setup() {
                 </button>
               ))}
             </div>
-            <p style={{ fontSize: 13, color: "var(--muted)", margin: "6px 0 0" }}>Your first lines, questions and the AI Coach will use it.</p>
+            <p style={{ fontSize: 13, color: "var(--text-muted)", margin: "6px 0 0" }}>Your first lines, questions and the AI Coach will use it.</p>
 
             <h2 className="setup-question">You are your child's…</h2>
             <div style={{ display: "grid", gap: 10 }}>
@@ -192,7 +192,7 @@ export default function Setup() {
               Skip, I'll choose later
             </button>
             {!confidence && (
-              <p style={{ fontSize: 13, color: "var(--muted)", textAlign: "center", margin: "4px 0 0" }}>Pick a number from 1 to 5 first.</p>
+              <p style={{ fontSize: 13, color: "var(--text-muted)", textAlign: "center", margin: "4px 0 0" }}>Pick a number from 1 to 5 first.</p>
             )}
           </>
         )}

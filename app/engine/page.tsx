@@ -127,7 +127,7 @@ export default function Engine() {
 
   if (!unlocked) {
     return (
-      <main style={{ minHeight: "100dvh", background: "var(--cream)" }}>
+      <main style={{ minHeight: "100dvh", background: "var(--bg)" }}>
         <div style={{ maxWidth: 400, margin: "0 auto", padding: "64px 16px" }}>
           <h1 style={{ fontSize: 28 }}>Content engine</h1>
           <p className="why">For the Raise team only.</p>
@@ -140,7 +140,7 @@ export default function Engine() {
             placeholder="Passcode"
             autoComplete="off"
           />
-          {lockError && <p style={{ color: "#b4472f", margin: "-8px 0 12px" }}>{lockError}</p>}
+          {lockError && <p style={{ color: "var(--danger)", margin: "-8px 0 12px" }}>{lockError}</p>}
           <button className="btn-primary btn-block" onClick={unlock} disabled={!passcode}>
             Open
           </button>
@@ -153,7 +153,7 @@ export default function Engine() {
   const urlCount = links.split(/\s+/).filter(Boolean).length;
 
   return (
-    <main style={{ minHeight: "100dvh", background: "var(--cream)" }}>
+    <main style={{ minHeight: "100dvh", background: "var(--bg)" }}>
       <div style={{ width: "100%", maxWidth: 720, margin: "0 auto", padding: "24px 16px 48px" }}>
         <h1 style={{ fontSize: 30 }}>Content engine</h1>
         <p className="why">
@@ -163,7 +163,7 @@ export default function Engine() {
 
         {/* New claim */}
         <section className="notice">
-          <label htmlFor="claim" style={{ fontWeight: 700, color: "var(--ink)" }}>
+          <label htmlFor="claim" style={{ fontWeight: 700, color: "var(--text)" }}>
             The claim
           </label>
           <textarea
@@ -176,8 +176,8 @@ export default function Engine() {
             placeholder="e.g. AI 'nudify' apps are being used to make fake images of Indian students"
             style={{ marginTop: 6 }}
           />
-          <label htmlFor="links" style={{ fontWeight: 700, color: "var(--ink)" }}>
-            Source links <span style={{ fontWeight: 400, color: "var(--muted)" }}>(one per line, up to 5)</span>
+          <label htmlFor="links" style={{ fontWeight: 700, color: "var(--text)" }}>
+            Source links <span style={{ fontWeight: 400, color: "var(--text-muted)" }}>(one per line, up to 5)</span>
           </label>
           <textarea
             id="links"
@@ -188,7 +188,7 @@ export default function Engine() {
             placeholder={"https://…\nhttps://…"}
             style={{ marginTop: 6, fontSize: 15 }}
           />
-          {error && <p style={{ color: "#b4472f", margin: "-6px 0 12px" }}>{error}</p>}
+          {error && <p style={{ color: "var(--danger)", margin: "-6px 0 12px" }}>{error}</p>}
           <button className="btn-primary btn-block" onClick={run} disabled={running || claim.trim().length < 10 || urlCount === 0}>
             {running ? `The agent is reading ${urlCount} source${urlCount === 1 ? "" : "s"}…` : "Run the panic test"}
           </button>
@@ -249,8 +249,8 @@ function EntryCard({
     <article className="engine-entry">
       <button onClick={onToggle} className="engine-entry-head" aria-expanded={open}>
         <span style={{ flex: 1, textAlign: "left" }}>
-          <span style={{ display: "block", fontWeight: 700, color: "var(--ink)" }}>{entry.claim}</span>
-          <span style={{ display: "block", fontSize: 14, color: "var(--muted)", marginTop: 4 }}>
+          <span style={{ display: "block", fontWeight: 700, color: "var(--text)" }}>{entry.claim}</span>
+          <span style={{ display: "block", fontSize: 14, color: "var(--text-muted)", marginTop: 4 }}>
             {date(entry.checkedAt)} · {passed} of 4 checks passed · {topicName(r.topic)}
           </span>
         </span>
@@ -277,10 +277,10 @@ function EntryCard({
             {r.sources.map((s) => (
               <li key={s.url}>
                 <span aria-hidden="true">{s.opened ? "📖" : "⚠️"}</span>{" "}
-                <a href={s.url} target="_blank" rel="noreferrer" style={{ color: "var(--teal)", wordBreak: "break-all" }}>
+                <a href={s.url} target="_blank" rel="noreferrer" style={{ color: "var(--primary)", wordBreak: "break-all" }}>
                   {s.url}
                 </a>
-                <div style={{ color: "var(--muted)", marginTop: 2 }}>
+                <div style={{ color: "var(--text-muted)", marginTop: 2 }}>
                   {s.opened ? `${s.kind ? s.kind + " · " : ""}${s.note ?? ""}` : "Couldn't open this link, so it wasn't used as evidence."}
                 </div>
               </li>
@@ -288,7 +288,7 @@ function EntryCard({
           </ul>
 
           {r.notes.length > 0 && (
-            <ul style={{ margin: "12px 0 0", paddingLeft: 20, color: "#8a5a00", fontSize: 14 }}>
+            <ul style={{ margin: "12px 0 0", paddingLeft: 20, color: "var(--warning-text)", fontSize: 14 }}>
               {r.notes.map((n) => (
                 <li key={n}>{n}</li>
               ))}
@@ -315,7 +315,7 @@ function EntryCard({
             </div>
           )}
           {entry.status === "approved" && (
-            <p className="notice" style={{ marginTop: 16, background: "#e6f2f0" }}>
+            <p className="notice" style={{ marginTop: 16, background: "var(--surface-sage)" }}>
               ✅ Approved {entry.decidedAt ? date(entry.decidedAt) : ""}. Next: add the line to the {topicName(r.topic)} card in
               content/base-talk-cards.md and update its “Checked on” date. The advisor checks it before it goes live.
             </p>

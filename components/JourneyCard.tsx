@@ -30,14 +30,14 @@ export default function JourneyCard({ journey, whenLabel }: { journey: Journey; 
         </span>
         <span style={{ flex: 1, minWidth: 0 }}>
           <span style={{ display: "flex", justifyContent: "space-between", gap: 8, alignItems: "baseline" }}>
-            <span style={{ fontWeight: 700, color: "var(--ink)" }}>{t.short}</span>
+            <span style={{ fontWeight: 700, color: "var(--text)" }}>{t.short}</span>
             {journey.day && (
               <span className="journey-day">
                 Day {journey.day} of {JOURNEY_DAYS}
               </span>
             )}
           </span>
-          <span style={{ display: "block", fontSize: 14, color: "var(--muted)", marginTop: 2 }}>
+          <span style={{ display: "block", fontSize: 14, color: "var(--text-muted)", marginTop: 2 }}>
             Step {journey.step} of {STEP_NAMES.length} · {journey.stepName}
             {whenLabel ? ` · ${whenLabel}` : ""}
           </span>
@@ -46,7 +46,7 @@ export default function JourneyCard({ journey, whenLabel }: { journey: Journey; 
               <span key={s} className={s <= journey.step ? "done" : ""} />
             ))}
           </span>
-          <span style={{ display: "block", fontSize: 15, fontWeight: 700, color: "var(--teal)", marginTop: 8 }}>{journey.action} →</span>
+          <span style={{ display: "block", fontSize: 15, fontWeight: 700, color: "var(--primary)", marginTop: 8 }}>{journey.action} →</span>
         </span>
       </Link>
       {/* Talks don't always happen at the planned time: reflect whenever it did. */}

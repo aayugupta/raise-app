@@ -25,7 +25,7 @@ export default function Welcome() {
         <FamilyHills />
         <div className="welcome-action">
           <StartButton block />
-          <p style={{ fontSize: 14, margin: "12px 0 0", color: "var(--muted)", textAlign: "center" }}>No sign-up. Stays private on your phone.</p>
+          <p style={{ fontSize: 14, margin: "12px 0 0", color: "var(--text-muted)", textAlign: "center" }}>No sign-up. Stays private on your phone.</p>
         </div>
       </div>
     </main>

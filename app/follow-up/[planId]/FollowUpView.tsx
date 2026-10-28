@@ -26,7 +26,7 @@ export default function FollowUpView({ planId }: { planId: string }) {
     if (saved) setLanguage(saved);
   }, [planId]);
 
-  if (reflection === undefined) return <main style={{ minHeight: "100dvh", background: "var(--cream)" }} />;
+  if (reflection === undefined) return <main style={{ minHeight: "100dvh", background: "var(--bg)" }} />;
   if (reflection === null || !reflection.followUpDue) {
     return (
       <main style={{ padding: "56px 24px", maxWidth: 440, margin: "0 auto", textAlign: "center" }}>
@@ -62,7 +62,7 @@ export default function FollowUpView({ planId }: { planId: string }) {
   const finalAnswer = saidMore ?? reflection.followUpAnswer;
   if ((answered || reflection.followUpAt) && finalAnswer) {
     return (
-      <main style={{ minHeight: "100dvh", background: "var(--cream)" }}>
+      <main style={{ minHeight: "100dvh", background: "var(--bg)" }}>
         <div style={{ width: "100%", maxWidth: 480, margin: "0 auto", padding: "16px 16px 32px" }}>
           <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 12 }}>
             <HelpPill />
@@ -91,7 +91,7 @@ export default function FollowUpView({ planId }: { planId: string }) {
   }
 
   return (
-    <main style={{ minHeight: "100dvh", background: "var(--cream)" }}>
+    <main style={{ minHeight: "100dvh", background: "var(--bg)" }}>
       <div style={{ width: "100%", maxWidth: 480, margin: "0 auto", padding: "16px 16px 0" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <button onClick={() => router.push("/home")} className="icon-btn" aria-label="Back">

@@ -94,13 +94,13 @@ Aayushi's simplified wireframe (10 screens + Emergency help) replaces the 14-scr
 
 ## Visual design
 
-Aayushi's reference design (25 Oct 2026) is a warm, illustrated parenting app: a peach welcome screen with a big serif headline, a teal button and a flat illustration filling the bottom; a cream home screen with a greeting, rounded illustrated cards and serif section titles.
+**Design system (29 Oct 2026, Aayushi's brief; replaces the 25 Oct peach-and-teal reference look).** Warm, trustworthy, emotionally safe and practical: never childish, clinical or overly gamified. Rounded cards, subtle 1px borders, generous whitespace, restrained shadows, clear hierarchy, simple organic illustrations.
 
-**The reference is for look only: colours, fonts, illustration style and layout feel. All content, sections and screens come from Raise's docs and flows, never from the reference.**
-
-- **Colours** are tokens in `app/globals.css`: peach `#f9d898`, cream `#fbf4ea`, teal `#0e716d` (buttons), ink `#1f2340` (headlines), coral `#e8735a`, mustard `#e7b04a`, leaf `#4e8a5e`.
-- **Fonts:** DM Serif Display for headlines, Nunito for everything else (loaded in `app/layout.tsx`).
-- **Illustrations** are Raise's own flat SVGs in the same style (e.g. `components/WalkTogether.tsx`). Never copy the reference's artwork, and show parents with teens, not babies.
+- **Tokens live in `app/globals.css` (`:root`). Screens never hardcode colours**; only the illustrations keep their own palettes. Main tokens: `--primary` Deep Sage `#285C4D` (buttons, links, progress) · `--bg` Warm Ivory `#F7F3EA` · `--accent` Soft Terracotta `#E5B99D` (+ `--accent-soft` surfaces) · `--surface-sage` Pale Sage `#E4EBDD` (soft surfaces, selected states) · `--text` Charcoal `#292D2A` · `--text-muted` `#5C635D` · `--border` · `--danger` / `--danger-soft` for Help and "When to get help" (calm deep red). Plus type sizes (`--fs-*`), radii, `--shadow-sm/md` and `--tap` (48px minimum touch target).
+- **Fonts** (loaded in `app/layout.tsx`): **Lora** (`--font-display`) for emotional headlines and reflective lines (first line, safety promise, thank-yous); **DM Sans** (`--font-ui`) for body, buttons, labels, navigation and forms.
+- Every tappable thing shows a sage focus ring; buttons are at least 48px tall.
+- **Topic colours** (`lib/topics.ts`) are muted tones that sit with sage, ivory and terracotta.
+- **Illustrations** are Raise's own flat SVGs (e.g. `components/WalkTogether.tsx`), recoloured to the sage / ivory / terracotta palette. Never copy the reference's artwork, and show parents with teens, not babies.
 - **Flat illustrations only, no photos** (decided 25 Oct 2026). Families look Indian: skin tones, clothes, homes. Show fathers as well as mothers, and sons as well as daughters.
 - **Scene ideas from Aayushi's mood pictures** (drawn as our own, never copied):
 
@@ -111,7 +111,7 @@ Aayushi's reference design (25 Oct 2026) is a warm, illustrated parenting app: a
   | Pick a topic | Family sitting together, each topic in a thought bubble |
   | Recovery / repair | Parent's hand on the teen's shoulder, both smiling |
 
-- **Copy follows Raise's rules, not the reference.** No worry or fear hooks ("Are you worried…?").
+- **Copy follows Raise's rules.** No worry or fear hooks ("Are you worried…?"). Reduce guilt and effort; show progress without pressure; **never imply that opening the app proves a talk happened** (progress counts talks the parent *notes*).
 - Reference sections like "Your friends" or "Activities done / Incomplete" are not Raise content. Home shows Raise's own sections (e.g. next planned talk, open topics, follow-up due, Help).
 - Every screen must fit a 320 px-wide phone without sideways scrolling.
 

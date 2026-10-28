@@ -111,7 +111,7 @@ export default function PlannerView({
   if (saved && momentInfo) {
     const start = new Date(saved.when);
     return (
-      <main style={{ minHeight: "100dvh", background: "var(--cream)" }}>
+      <main style={{ minHeight: "100dvh", background: "var(--bg)" }}>
         <div style={{ width: "100%", maxWidth: 480, margin: "0 auto", padding: "16px 16px 32px" }}>
           <div style={{ display: "flex", justifyContent: "flex-end" }}>
             <HelpPill />
@@ -137,7 +137,7 @@ export default function PlannerView({
   }
 
   return (
-    <main style={{ minHeight: "100dvh", background: "var(--cream)" }}>
+    <main style={{ minHeight: "100dvh", background: "var(--bg)" }}>
       <div style={{ width: "100%", maxWidth: 480, margin: "0 auto", padding: "16px 16px 0" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <button onClick={() => router.back()} className="icon-btn" aria-label="Back">
@@ -155,7 +155,7 @@ export default function PlannerView({
         {suggested && (
           <section className="suggest-card">
             <div className="card-label">⭐ Raise suggests</div>
-            <div style={{ fontSize: 17, fontWeight: 700, color: "var(--ink)", margin: "6px 0 10px" }}>
+            <div style={{ fontSize: 17, fontWeight: 700, color: "var(--text)", margin: "6px 0 10px" }}>
               {MOMENTS.find((m) => m.id === suggested.moment)!.icon} {MOMENTS.find((m) => m.id === suggested.moment)!.label}, {dayPhrase(suggested.day)} at{" "}
               {timeText(dateFor(suggested.day, suggested.time))}
             </div>
@@ -198,12 +198,12 @@ export default function PlannerView({
               ))}
             </div>
 
-            <label htmlFor="plan-time" className="section-title" style={{ display: "block", fontFamily: "var(--font-serif), Georgia, serif", color: "var(--ink)" }}>
+            <label htmlFor="plan-time" className="section-title" style={{ display: "block", fontFamily: "var(--font-display)", color: "var(--text)" }}>
               What time?
             </label>
             <input id="plan-time" type="time" className="text-input" value={time} onChange={(e) => setTime(e.target.value)} style={{ maxWidth: 180 }} />
             {!isSoonEnough(when) && (
-              <p style={{ color: "#b4472f", fontSize: 15, margin: "-8px 0 12px" }}>That time is too soon. Pick a time at least 15 minutes from now.</p>
+              <p style={{ color: "var(--danger)", fontSize: 15, margin: "-8px 0 12px" }}>That time is too soon. Pick a time at least 15 minutes from now.</p>
             )}
 
             <h2 className="section-title">Reminder</h2>
@@ -214,7 +214,7 @@ export default function PlannerView({
                 <span className="match-tag" style={{ marginTop: 0 }}>{reminder ? "On" : "Off"}</span>
               </span>
             </button>
-            <p style={{ fontSize: 14, color: "var(--muted)", margin: "8px 0 0" }}>In Raise only. No notifications, and it never names the topic.</p>
+            <p style={{ fontSize: 14, color: "var(--text-muted)", margin: "8px 0 0" }}>In Raise only. No notifications, and it never names the topic.</p>
 
             <PlanSentence phrase={momentInfo.phrase} day={dayPhrase(day)} time={timeText(when)} firstLine={firstLine} />
           </>
@@ -235,7 +235,7 @@ function PlanSentence({ phrase, day, time, firstLine }: { phrase: string; day: s
   return (
     <div className="first-line" style={{ marginTop: 16 }}>
       <div className="card-label">Your plan</div>
-      <div style={{ fontSize: 17, color: "var(--ink)", margin: "8px 0 6px", lineHeight: 1.4 }}>
+      <div style={{ fontSize: 17, color: "var(--text)", margin: "8px 0 6px", lineHeight: 1.4 }}>
         {phrase} {day} at {time}, I'll start with:
       </div>
       <p style={{ fontSize: 20, margin: 0 }}>“{firstLine}”</p>

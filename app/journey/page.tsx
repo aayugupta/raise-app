@@ -48,7 +48,7 @@ export default function JourneyScreen() {
   const { before, now } = confidenceChange(confidence);
 
   return (
-    <main className="has-bottom-nav" style={{ minHeight: "100dvh", background: "var(--cream)" }}>
+    <main className="has-bottom-nav" style={{ minHeight: "100dvh", background: "var(--bg)" }}>
       <div style={{ width: "100%", maxWidth: 480, margin: "0 auto", padding: "16px 16px 24px" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <h1 style={{ fontSize: 30 }}>Your journey</h1>
@@ -63,20 +63,20 @@ export default function JourneyScreen() {
               <ProgressRing done={stats.completed} total={stats.started} />
               <div style={{ display: "grid", gap: 6 }}>
                 <div>
-                  <span className="legend-dot" style={{ background: "var(--teal)" }} /> {stats.completed} completed
+                  <span className="legend-dot" style={{ background: "var(--primary)" }} /> {stats.completed} {stats.completed === 1 ? "talk" : "talks"} noted
                 </div>
                 <div>
-                  <span className="legend-dot" style={{ background: "#9ccfc8" }} /> {stats.inProgress} in progress
+                  <span className="legend-dot" style={{ background: "var(--border-sage)" }} /> {stats.inProgress} in progress
                 </div>
                 {stats.notCompleted > 0 && (
                   <div>
-                    <span className="legend-dot" style={{ background: "#eadfcd" }} /> {stats.notCompleted} to try again
+                    <span className="legend-dot" style={{ background: "var(--border)" }} /> {stats.notCompleted} ready for another try
                   </div>
                 )}
               </div>
             </section>
-            <p style={{ fontSize: 14, color: "var(--muted)", margin: "8px 2px 0" }}>
-              A topic is completed when you note how your talk went within 14 days of starting it.
+            <p style={{ fontSize: 14, color: "var(--text-muted)", margin: "8px 2px 0" }}>
+              A topic counts here when you tell us a talk happened, within 14 days of starting it. How it went is yours to keep.
             </p>
 
             {/* The 14-day journeys running now */}
@@ -90,7 +90,7 @@ export default function JourneyScreen() {
             ) : (
               <section className="notice">
                 No journey running right now.{" "}
-                <Link href="/home" style={{ color: "var(--teal)", fontWeight: 700 }}>
+                <Link href="/home" style={{ color: "var(--primary)", fontWeight: 700 }}>
                   Pick a topic →
                 </Link>
               </section>
@@ -100,9 +100,9 @@ export default function JourneyScreen() {
             <h2 className="section-title">Your confidence</h2>
             {before === undefined ? (
               <section className="notice">
-                <div style={{ fontWeight: 700, color: "var(--ink)", marginBottom: 10 }}>{CONFIDENCE_QUESTION}</div>
+                <div style={{ fontWeight: 700, color: "var(--text)", marginBottom: 10 }}>{CONFIDENCE_QUESTION}</div>
                 <ConfidenceScale value={null} onChoose={rateBaseline} />
-                <p style={{ fontSize: 14, color: "var(--muted)", margin: "10px 0 0" }}>One tap. We'll ask again after your talks.</p>
+                <p style={{ fontSize: 14, color: "var(--text-muted)", margin: "10px 0 0" }}>One tap. We'll ask again after your talks.</p>
               </section>
             ) : (
               <section className="notice">
@@ -111,7 +111,7 @@ export default function JourneyScreen() {
                     <div className="card-label">Before</div>
                     <div className="confidence-value">{before}/5</div>
                   </div>
-                  <span aria-hidden="true" style={{ fontSize: 24, color: "var(--teal)" }}>
+                  <span aria-hidden="true" style={{ fontSize: 24, color: "var(--primary)" }}>
                     →
                   </span>
                   <div className="confidence-box now">
@@ -144,10 +144,10 @@ export default function JourneyScreen() {
                       </span>
                       <div style={{ flex: 1, minWidth: 0 }}>
                         <div style={{ display: "flex", justifyContent: "space-between", gap: 8 }}>
-                          <span style={{ fontWeight: 700, color: "var(--ink)" }}>{t.short}</span>
+                          <span style={{ fontWeight: 700, color: "var(--text)" }}>{t.short}</span>
                           {r.feeling && <span aria-label={r.feeling}>{FEELING_EMOJI[r.feeling]}</span>}
                         </div>
-                        <div style={{ fontSize: 14, color: "var(--muted)" }}>
+                        <div style={{ fontSize: 14, color: "var(--text-muted)" }}>
                           {new Date(r.createdAt).toLocaleDateString("en-IN", { day: "numeric", month: "short" })}
                           {r.happened === "partly" ? " · Partly" : ""}
                           {r.whoTalked === "teen" ? " · Your child spoke more 💛" : ""}
@@ -172,16 +172,16 @@ function ProgressRing({ done, total }: { done: number; total: number }) {
   const c = 2 * Math.PI * r;
   const share = total ? done / total : 0;
   return (
-    <div className="progress-ring" role="img" aria-label={`${done} of ${total} topics completed`}>
+    <div className="progress-ring" role="img" aria-label={`A talk noted on ${done} of ${total} topics started`}>
       <svg width="88" height="88" viewBox="0 0 88 88" aria-hidden="true">
-        <circle cx="44" cy="44" r={r} fill="none" stroke="#eadfcd" strokeWidth="8" />
+        <circle cx="44" cy="44" r={r} fill="none" stroke="var(--border)" strokeWidth="8" />
         {/* Nothing drawn at 0, or the rounded line end shows as a dot. */}
         {done > 0 && <circle
           cx="44"
           cy="44"
           r={r}
           fill="none"
-          stroke="var(--teal)"
+          stroke="var(--primary)"
           strokeWidth="8"
           strokeLinecap="round"
           strokeDasharray={`${c * share} ${c}`}

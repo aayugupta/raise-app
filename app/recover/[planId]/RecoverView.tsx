@@ -31,7 +31,7 @@ export default function RecoverView({ planId, why, picked }: { planId: string; w
     if (p && why === "not-yet" && pickedId) track("recovery_chosen", { topic: p.topic, plan_id: planId, reason: pickedId });
   }, [planId, why, picked]);
 
-  if (plan === undefined) return <main style={{ minHeight: "100dvh", background: "var(--cream)" }} />;
+  if (plan === undefined) return <main style={{ minHeight: "100dvh", background: "var(--bg)" }} />;
   if (plan === null) {
     return (
       <main style={{ padding: "56px 24px", maxWidth: 440, margin: "0 auto", textAlign: "center" }}>
@@ -67,7 +67,7 @@ export default function RecoverView({ planId, why, picked }: { planId: string; w
   const planAgainHref = `/plan/${plan.topic}${chosen?.suggestMoment ? `?moment=${chosen.suggestMoment}` : ""}`;
 
   return (
-    <main style={{ minHeight: "100dvh", background: "var(--cream)" }}>
+    <main style={{ minHeight: "100dvh", background: "var(--bg)" }}>
       <div style={{ width: "100%", maxWidth: 480, margin: "0 auto", padding: "16px 16px 32px" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <button onClick={() => router.push("/home")} className="icon-btn" aria-label="Back">
