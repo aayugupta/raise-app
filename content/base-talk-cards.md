@@ -1,6 +1,6 @@
 # Raise — Base Talk Cards (DRAFT for Aayushi to edit)
 
-Status: **first draft by Claude, 25 Oct 2026.** Not yet reviewed by Aayushi or an expert advisor.
+Status: **first draft by Claude, 25 Oct 2026; questions, Say / Don't say and reactions rewritten in a warmer parent's voice on 29 Oct 2026.** Not yet reviewed by Aayushi or an expert advisor.
 
 ## How to edit this file
 
@@ -47,31 +47,31 @@ The AI only rewords. It never adds new facts, numbers, advice or help numbers. T
 - English: "Do any of your friends like someone these days? How do people figure it out?"
 
 **Gentle questions to ask (10):**
-1. "What do you think makes someone good for you?"
-2. "A lot of what we see in shows and online isn't how real relationships work. What feels fake to you?"
-3. "Is there a show or song about love that you think gets it right?"
-4. "How do people your age usually let someone know they like them?"
-5. "What makes a friendship or relationship feel safe?"
-6. "How can you tell when someone is being nice just to get something?"
-7. "What would you want me to understand about how people your age think about relationships?"
-8. "If a friend's relationship didn't seem okay, how would you know?"
-9. "What do you wish parents understood about crushes?"
-10. "If you ever had a question about this, how would you like to ask me: face to face, on a walk, or by text?"
+1. "Who's someone you just feel good around? What makes them like that?"
+2. "Shows make love look so dramatic. What do you think they get totally wrong?"
+3. "Okay, honest question: is there any song or show that actually gets crushes right?"
+4. "How do people in your class even tell someone they like them these days?"
+5. "What makes a friendship feel safe to you?"
+6. "Ever had someone be super sweet… and then you realised they wanted something?"
+7. "What do you wish I understood about how your generation sees relationships?"
+8. "If a friend's relationship seemed off, what would make you notice?"
+9. "What's one thing parents always get wrong about crushes?"
+10. "If you ever want to ask me something about this, what's easiest: a walk, a late-night chat, or a text?"
 
 **Say:**
 1. "You won't be in trouble for telling me." (the safety promise)
-2. "It's normal to like someone. I liked people at your age too."
-3. "Real relationships aren't like what's shown in films or online. You can always ask me what's real."
+2. "Honestly? I had crushes at your age too. Totally normal."
+3. "Real life isn't like the films. If you ever wonder what's real, just ask me. No lecture, promise."
 
 **Avoid:**
-1. "You're too young for this."
-2. "Who is it? Tell me their name."
-3. Jokes or teasing about crushes, even kind ones.
+1. "You're too young for this." (It shuts the door, and next time they won't tell you.)
+2. "Who is it? Tell me their name." (It turns a chat into questioning.)
+3. Teasing about crushes, even lovingly. (Teens remember the joke, not the love.)
 
 **If they react:**
-- **Go quiet:** "No rush. We can talk another time. I'm here whenever."
-- **Get upset:** "I'm not checking up on you. I just want you to be able to come to me."
-- **Disagree:** "That's fair. Tell me how it looks from your side."
+- **Go quiet:** "No rush at all. We can talk whenever. I'm around."
+- **Get upset:** "Hey, I'm not here to question you. I just want you to know you can come to me."
+- **Disagree:** "Fair. Tell me how it looks from your side, I'm listening."
 - **Don't want to talk:** "That's okay, we don't have to talk about it now. I won't push. Whenever you want, even by text, I'll listen without judging."
 
 **When to get help:** if your teen mentions being pressured, threatened, hurt, or asked for photos → see the help screen (Childline 1098, Cybercrime 1930).
@@ -97,31 +97,31 @@ The AI only rewords. It never adds new facts, numbers, advice or help numbers. T
 - English: "What's taking up most of your headspace these days? I just want to listen, not fix anything."
 
 **Gentle questions to ask (10):**
-1. "What helps you feel a bit better when it gets heavy?"
-2. "Is there anything I do that makes it harder?"
-3. "What's one thing that went okay this week?"
-4. "How do you know when stress is starting to build up?"
-5. "Who do you talk to when something is bothering you?"
-6. "What's something you wish you had more time for?"
-7. "When you tell me something, do you want me to just listen, or help you think it through?"
-8. "What's the hardest part of your day right now?"
-9. "Is there something you've been holding back because you thought I'd be upset?"
-10. "What could we do together that would feel relaxing?"
+1. "When things feel heavy, what actually helps, even a little?"
+2. "Be honest: is there something I do that makes it worse?"
+3. "What's one thing that went okay this week? Even a small one."
+4. "How do you know when stress is starting to pile up?"
+5. "Who do you talk to when something's bugging you?"
+6. "If you had a free afternoon, what would you do with it?"
+7. "When you tell me stuff, do you want me to just listen, or help you think it through?"
+8. "What's the toughest part of your day right now?"
+9. "Is there something you haven't told me because you thought I'd get upset?"
+10. "Want to do something together this week, just to switch off? You pick."
 
 **Say:**
 1. "You won't be in trouble for telling me." (the safety promise)
-2. "That sounds really hard. Thank you for telling me."
-3. "You don't have to handle this alone."
+2. "That sounds really hard. I'm glad you told me."
+3. "You don't have to carry this alone. I'm right here."
 
 **Avoid:**
-1. "Just don't think about it" or "cheer up".
-2. Comparing them with siblings, cousins or other kids.
-3. Jumping straight to advice or solutions.
+1. "Just don't think about it" or "Cheer up!" (It tells them their feelings don't count.)
+2. Comparing them with siblings, cousins or other kids. (It adds pressure, not comfort.)
+3. Jumping straight to advice. (Most teens want to be heard first.)
 
 **If they react:**
-- **Go quiet:** "That's okay. We can just sit for a bit."
-- **Get upset:** "I'm sorry. I'm not trying to push. I'm on your side."
-- **Disagree:** "You know your life better than I do. Help me understand."
+- **Go quiet:** "That's okay. We can just sit here for a bit."
+- **Get upset:** "I'm sorry, I'm not trying to push. I'm on your side, always."
+- **Disagree:** "You know your life better than I do. Help me understand it."
 - **Don't want to talk:** "That's okay, you don't have to talk. I'm right here. If you like, we can just sit together, or go for a walk later."
 
 **When to get help:** if for weeks your teen isn't eating or sleeping properly, pulls away from everyone, or says life feels pointless → Tele-MANAS 14416 (free, 24×7). If they talk about hurting themselves → 112 now, and stay with them.
@@ -145,30 +145,30 @@ The AI only rewords. It never adds new facts, numbers, advice or help numbers. T
 - English: "What's everyone in your group into these days? What's the big thing right now?"
 
 **Gentle questions to ask (10):**
-1. "Has anyone in your group ever been pushed into something they didn't want to do?"
-2. "What do you think makes someone a good friend?"
+1. "Has anyone in your group ever been pushed into something they didn't really want to do?"
+2. "What makes someone a really good friend, for you?"
 3. "Who in your group makes you laugh the most?"
-4. "What do you and your friends enjoy doing together these days?"
-5. "Have you seen a friend stand up for someone? What happened?"
-6. "How does your group decide what to do when people want different things?"
+4. "What do you all love doing together these days?"
+5. "Have you ever seen a friend stand up for someone? What happened?"
+6. "When everyone wants different things, how does your group decide?"
 7. "What's a way to say no that still works with your friends?"
 8. "Is there a friend you miss, or someone you've drifted away from?"
-9. "What do you think people your age feel the most pressure about?"
-10. "If you ever need a way out of something, would it help to say 'my parents won't allow it'?"
+9. "What do people your age feel the most pressure about, honestly?"
+10. "If you ever need a way out of something, would it help to just blame me?"
 
 **Say:**
 1. "You won't be in trouble for telling me." (the safety promise)
-2. "Saying no to a friend is hard. Even adults find it hard."
-3. "If you ever need a way out, you can blame me. Say 'my parents won't allow it'."
+2. "Saying no to friends is hard. Honestly, adults struggle with it too."
+3. "Need an excuse to leave? Blame me. Just say 'my parents won't allow it'."
 
 **Avoid:**
-1. "Those friends are a bad influence."
-2. Questions that sound like an interrogation (who, where, how late).
-3. "When I was your age…" lectures.
+1. "Those friends are a bad influence." (They'll defend their friends, and stop telling you about them.)
+2. Rapid-fire questions: who, where, how late. (It feels like checking up, not caring.)
+3. "When I was your age…" lectures. (They tune out after the first line.)
 
 **If they react:**
 - **Go quiet:** "No pressure. I was just curious about your world."
-- **Get upset:** "I'm not judging your friends. I just want to know what your days are like."
+- **Get upset:** "I'm not judging your friends. I just like knowing what your days are like."
 - **Disagree:** "Fair enough. What am I missing?"
 - **Don't want to talk:** "Fair enough, I won't push. And if you ever need help saying no to someone, you can always use me as your excuse."
 
@@ -194,29 +194,29 @@ The AI only rewords. It never adds new facts, numbers, advice or help numbers. T
 
 **Gentle questions to ask (10):**
 1. "Have you heard of anyone getting a weird message or a photo threat? What did they do?"
-2. "If something like that happened to a friend, what would you tell them?"
-3. "Which apps or games do you and your friends enjoy most right now?"
-4. "What's something funny or interesting you came across online this week?"
-5. "How can you tell if an account is fake?"
-6. "What do people your age do when someone they don't know sends a request?"
-7. "What would you do if someone online got angry or rude with you?"
+2. "If that happened to a friend, what would you tell them?"
+3. "Which apps or games are you all into right now?"
+4. "Seen anything funny online this week? Show me!"
+5. "How do you spot a fake account? I genuinely don't know."
+6. "What do you do when a stranger sends you a request?"
+7. "What would you do if someone online got really rude with you?"
 8. "Has anything online ever made you or a friend feel uncomfortable?"
-9. "What do you think parents get wrong about the internet?"
-10. "Is there a game, creator or app you could teach me about?"
+9. "What do parents get totally wrong about the internet?"
+10. "Is there a game or creator you could teach me about? I'm so behind!"
 
 **Say:**
 1. "If anyone ever threatens you with a photo, come straight to me. You won't be in trouble." (the safety promise)
-2. "It's never the fault of the person being threatened."
-3. "Even a fake photo can be reported and taken down. There's help for this."
+2. "If someone threatens you, it's never your fault. Never."
+3. "Even a fake photo can be reported and taken down. There's real help for this."
 
 **Avoid:**
 1. "Just don't post photos, then nothing will happen." (Fake images can be made from any normal photo.)
-2. Threatening to take the phone away. Teens hide problems when they fear losing it.
-3. Checking their phone secretly.
+2. Threatening to take the phone away. (Teens hide problems when they're scared of losing it.)
+3. Checking their phone secretly. (If they find out, trust is hard to win back.)
 
 **If they react:**
-- **Go quiet:** "That's okay. I just want you to know the door's open."
-- **Get upset:** "I'm not accusing you of anything. I trust you. I just don't trust some people online."
+- **Go quiet:** "That's okay. I just want you to know my door's always open."
+- **Get upset:** "I'm not accusing you of anything. I trust you. It's some people online I don't trust."
 - **Disagree:** "You probably know more about this than me. Tell me what I've got wrong."
 - **Don't want to talk:** "That's okay, we can leave it for now. Just remember: whatever happens online, you can come to me, and you won't be in trouble."
 
@@ -241,31 +241,31 @@ Most people who harm children are known to them: about 97% of offenders in India
 - English: "Has a friend ever not wanted to do something but couldn't say no? Why do you think people go along with it?"
 
 **Gentle questions to ask (10):**
-1. "How can you tell when someone really means yes, and when they just feel they have to say it?"
-2. "Who are the adults you'd feel okay going to if something felt wrong?"
+1. "How can you tell when someone really means yes, and when they just feel they have to?"
+2. "If something ever felt wrong, which adults would you feel okay going to?"
 3. "What does it look like when someone respects your 'no'?"
 4. "Is it okay to say no to a hug, even from a relative? What do you think?"
-5. "How do you usually let a friend know you're not comfortable with something?"
-6. "Have you ever seen someone keep pushing after a no? What happened?"
-7. "What makes a secret okay to keep, and what makes a secret not okay?"
-8. "If you ever needed to leave somewhere quickly, would a code word between us help?"
-9. "What could you do if a friend shared something private about someone else?"
+5. "How do you let a friend know you're not comfortable with something?"
+6. "Ever seen someone keep pushing after a no? What happened?"
+7. "What makes a secret okay to keep, and what makes it not okay?"
+8. "Should we have a secret code word, in case you ever need to leave somewhere fast?"
+9. "What would you do if a friend shared something private about someone else?"
 10. "How can I make sure you always feel safe saying no to me too?"
 
 **Say:**
 1. "You won't be in trouble for telling me, whoever it's about." (the safety promise)
-2. "You can say no to anyone, even family, teachers or friends, if something feels wrong."
-3. "Other people's no counts too. Asking first is always right."
+2. "You can say no to anyone, even family, teachers or friends, if something feels wrong. I'll back you."
+3. "Other people's no matters too. Asking first is always right."
 
 **Avoid:**
 1. "Strangers are the danger." (Most harm comes from people a child knows.)
-2. Blaming questions like "Why were you there?" or "What were you wearing?"
-3. "Respect your elders, do what they say", without exceptions for safety.
+2. Blaming questions like "Why were you there?" or "What were you wearing?" (Blame makes children stop telling.)
+3. "Respect your elders, do what they say", with no exceptions for safety. (Children need to know they can say no to anyone.)
 
 **If they react:**
-- **Go quiet:** "That's okay. I just want you to know you can always say no, and always tell me."
+- **Go quiet:** "That's okay. Just know you can always say no, and always tell me."
 - **Get upset:** "I'm not worried about anything you did. I just want you to feel safe."
-- **Disagree:** "Tell me more. How do people your age think about it?"
+- **Disagree:** "Tell me more. How do people your age see it?"
 - **Don't want to talk:** "That's okay, no pressure at all. If anyone ever makes you uncomfortable, you can tell me any time, and you won't be in trouble."
 
 **When to get help:** if your teen tells you someone touched them, hurt them or made them feel unsafe → stay calm, believe them, and call Childline 1098, or 112 if they're in danger now. Don't confront the person yourself.
@@ -290,30 +290,30 @@ Puberty questions are often left to school or friends. In a 2026 Bengaluru study
 
 **Gentle questions to ask (10):**
 1. "What do people your age wonder about but feel too awkward to ask?"
-2. "Where do your friends usually look up stuff like this?"
-3. "Is there anything about growing up that people joke about but don't really understand?"
-4. "How do you feel about the changes people go through at your age?"
-5. "What do you think shows and ads get wrong about how bodies look?"
+2. "Where do your friends usually look this stuff up?"
+3. "Is there anything about growing up that people joke about but don't really get?"
+4. "How do you feel about all the changes at your age? Honestly."
+5. "What do ads and shows get wrong about how bodies look?"
 6. "What would make it easier to ask me something awkward?"
-7. "Are your sleep, food and energy feeling okay these days?"
+7. "How are your sleep, food and energy these days?"
 8. "Would you rather talk about this with me, or with someone else in the family?"
-9. "Is there something you'd rather ask a doctor than me? That's okay too."
+9. "Is there something you'd rather ask a doctor? That's completely okay."
 10. "If you saw something online about bodies that confused you, would you tell me?"
 
 **Say:**
 1. "You won't be in trouble for asking me anything." (the safety promise)
-2. "Everyone's body changes at a different pace. There's no 'right' time."
-3. "If I don't know the answer, we'll look it up together, or ask a doctor."
+2. "Everyone grows at their own pace. There's no 'right' time."
+3. "If I don't know the answer, we'll find out together, or ask a doctor."
 
 **Avoid:**
-1. Comments on their weight, skin or looks.
-2. "We don't talk about these things."
-3. Giving medical advice yourself. For symptoms or worries, see a doctor.
+1. Comments on their weight, skin or looks. (Even small comments stay with them for years.)
+2. "We don't talk about these things." (They'll go to the internet instead.)
+3. Giving medical advice yourself. (For symptoms or worries, see a doctor.)
 
 **If they react:**
-- **Go quiet:** "It's a bit awkward for me too. We can keep it short."
-- **Get upset:** "I'm sorry. I didn't mean to embarrass you. I just want you to have real answers."
-- **Disagree:** "Okay, tell me what you've heard. Let's figure out what's true."
+- **Go quiet:** "Honestly, it's a bit awkward for me too. We can keep it short."
+- **Get upset:** "I'm sorry, I didn't mean to embarrass you. I just want you to have real answers."
+- **Disagree:** "Okay, tell me what you've heard. Let's work out what's true together."
 - **Don't want to talk:** "No problem, it can feel awkward. You can ask me later, write it down for me, or text me, whatever feels easier."
 
 **When to get help:** for any medical worry (pain, very irregular periods, anything that doesn't seem right) → a doctor. If your teen seems very unhappy with their body or stops eating properly → Tele-MANAS 14416.

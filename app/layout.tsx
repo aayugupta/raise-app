@@ -1,11 +1,13 @@
 import type { Metadata, Viewport } from "next";
-import { DM_Sans, Lora } from "next/font/google";
+import { Caveat, DM_Sans, Lora } from "next/font/google";
 import "./globals.css";
 
 // Raise design system (29 Oct 2026): Lora for emotional headlines and reflective lines,
 // DM Sans for everything functional (body, buttons, labels, navigation, forms).
 const display = Lora({ subsets: ["latin"], weight: ["500", "600"], style: ["normal", "italic"], variable: "--font-lora" });
 const ui = DM_Sans({ subsets: ["latin"], weight: ["400", "500", "600", "700"], variable: "--font-dmsans" });
+// Caveat: the handwritten-style notes on the flashcards (29 Oct 2026).
+const hand = Caveat({ subsets: ["latin"], weight: ["500", "600"], variable: "--font-caveat" });
 
 export const metadata: Metadata = {
   title: "Raise",
@@ -20,7 +22,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${display.variable} ${ui.variable}`}>
+    <html lang="en" className={`${display.variable} ${ui.variable} ${hand.variable}`}>
       <body>{children}</body>
     </html>
   );

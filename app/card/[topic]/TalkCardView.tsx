@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { baseTalkCard, cardCacheKey, getBaseCard, SAFETY_PROMISE, type Language, type TalkCard } from "@/lib/cards";
+import FlashArt, { type FlashArtKind } from "@/components/FlashArt";
 import HelpPill from "@/components/HelpPill";
 import type { Family } from "@/lib/cardPrompt";
 import { track } from "@/lib/events";
@@ -20,6 +21,34 @@ const REACTIONS: { key: "quiet" | "upset" | "disagree" | "noTalk"; label: string
 ];
 
 const LANGUAGE_NAMES: Record<Language, string> = { hinglish: "Hinglish", hindi: "हिन्दी", english: "English" };
+
+// A short handwritten-style note on each flashcard, in the parent's language (Aayushi, 29 Oct 2026).
+const NOTES: Record<Language, [string, string, string, string]> = {
+  english: [
+    "It's okay to feel nervous. Saying one line is already the hard part.",
+    "Pick just one. Then let the quiet do the work.",
+    "You won't get every word right. Kind and calm is enough.",
+    "If it goes sideways, you can always try again tomorrow.",
+  ],
+  hinglish: [
+    "Thoda nervous lagna normal hai. Ek line bol di, toh mushkil kaam ho gaya.",
+    "Bas ek sawaal chuniye. Phir thoda chup rehkar suniye.",
+    "Har shabd perfect nahi hoga. Pyaar aur shaanti kaafi hai.",
+    "Agar baat bigad jaaye, toh kal phir koshish kar sakte hain.",
+  ],
+  hindi: [
+    "थोड़ा घबराना ठीक है। एक लाइन बोल दी, तो मुश्किल काम हो गया।",
+    "बस एक सवाल चुनिए। फिर थोड़ा चुप रहकर सुनिए।",
+    "हर शब्द सही नहीं होगा। प्यार और शांति काफ़ी है।",
+    "अगर बात बिगड़ जाए, तो कल फिर कोशिश कर सकते हैं।",
+  ],
+};
+
+// "Don't say" lines end with a short reason in brackets: shown as a softer second line.
+function splitReason(line: string): [string, string | null] {
+  const m = line.match(/^(.*?)\s*\(([^()]+)\)\s*$/);
+  return m ? [m[1], m[2]] : [line, null];
+}
 
 const CLIENT_TIMEOUT_MS = 9000;
 
@@ -150,30 +179,37 @@ export default function TalkCardView({ topic }: { topic: TopicId }) {
 
   const langProps = { className: language === "hindi" ? "devanagari" : undefined, lang: language === "hindi" ? "hi" : language === "hinglish" ? "hi-Latn" : "en" };
 
-  // The 4 flashcards (Aayushi's simplified flow, 28 Oct 2026). The safety promise sits on every one.
-  const cards: { title: string; body: ReactNode }[] = [
+  // The 4 flashcards (Aayushi's simplified flow, 28 Oct 2026). The safety promise sits on every one:
+  // inline on card 1 as the assuring line, as a strip at the bottom of cards 2–4.
+  const cards: { title: string; art: FlashArtKind; body: ReactNode }[] = [
     {
+      // Card 1 in Aayushi's order (29 Oct 2026): why this topic matters, then the first line, then the assuring line.
       title: "How to begin",
+      art: "begin",
       body: (
         <>
-          {/* The first line comes first: it's the heart of the card */}
-          <section className="first-line" style={{ marginTop: 0 }}>
+          <h3 className="flash-sub">Why this matters</h3>
+          <p style={{ fontSize: 15, lineHeight: 1.5, margin: 0 }}>{card.whyNow}</p>
+          {base.whySource && <p style={{ fontSize: 13, color: "var(--text-muted)", margin: "4px 0 0" }}>{base.whySource}</p>}
+
+          <section className="first-line">
             <div className="card-label">
               Your first line · {LANGUAGE_NAMES[language]} · {source === "ai" ? "written for you" : "standard card"}
             </div>
             <p {...langProps}>{card.firstLine}</p>
             <div style={{ fontSize: 14, color: "var(--text)" }}>Try saying it out loud once, in your own voice.</div>
           </section>
-          <h3 className="flash-sub" style={{ marginTop: 14 }}>
-            Why now
-          </h3>
-          <p style={{ fontSize: 15, lineHeight: 1.5, margin: 0 }}>{card.whyNow}</p>
-          {base.whySource && <p style={{ fontSize: 13, color: "var(--text-muted)", margin: "4px 0 0" }}>{base.whySource}</p>}
+
+          <div className="assuring-line">
+            <span className="card-label">Then add, so they feel safe</span>
+            <span>“{SAFETY_PROMISE}”</span>
+          </div>
         </>
       ),
     },
     {
       title: "Gentle questions to ask",
+      art: "questions",
       body: (
         <>
           <p style={{ fontSize: 15, color: "var(--text-muted)", margin: "0 0 10px" }}>After your first line, pick one that feels natural. Then listen.</p>
@@ -195,6 +231,7 @@ export default function TalkCardView({ topic }: { topic: TopicId }) {
     },
     {
       title: "What to say, what not to say",
+      art: "say",
       body: (
         <>
           <h3 className="flash-sub" style={{ color: "var(--primary)" }}>
@@ -209,15 +246,22 @@ export default function TalkCardView({ topic }: { topic: TopicId }) {
             ✕ Don't say
           </h3>
           <ul className="card-list">
-            {card.avoid.map((x) => (
-              <li key={x}>{x}</li>
-            ))}
+            {card.avoid.map((x) => {
+              const [line, reason] = splitReason(x);
+              return (
+                <li key={x}>
+                  {line}
+                  {reason && <span className="avoid-reason">{reason}</span>}
+                </li>
+              );
+            })}
           </ul>
         </>
       ),
     },
     {
       title: "If your child reacts",
+      art: "react",
       body: (
         <div style={{ display: "grid", gap: 8 }}>
           {REACTIONS.map((r) => (
@@ -277,16 +321,27 @@ export default function TalkCardView({ topic }: { topic: TopicId }) {
               aria-label={`${i + 1} of ${cards.length}: ${c.title}`}
               style={{ borderTopColor: meta.color }}
             >
-              <div className="flash-count">
-                {i + 1} / {cards.length}
+              <div className="flash-head">
+                <div>
+                  <div className="flash-count">
+                    {i + 1} / {cards.length}
+                  </div>
+                  <h2 className="flash-title">{c.title}</h2>
+                </div>
+                <FlashArt kind={c.art} />
               </div>
-              <h2 className="flash-title">{c.title}</h2>
               <div style={{ flex: 1 }}>{c.body}</div>
-              {/* Fixed on every card, whatever the AI writes */}
-              <div className="flash-promise">
-                <span className="card-label">Always say this</span>
-                <span>“{SAFETY_PROMISE}”</span>
-              </div>
+              {/* A handwritten-style note from Raise, in the parent's language */}
+              <p className={`flash-note${language === "hindi" ? " devanagari" : ""}`} lang={language === "hindi" ? "hi" : language === "hinglish" ? "hi-Latn" : "en"}>
+                {NOTES[language][i]}
+              </p>
+              {/* Fixed on every card, whatever the AI writes (card 1 has it inline as the assuring line) */}
+              {i > 0 && (
+                <div className="flash-promise">
+                  <span className="card-label">Always say this</span>
+                  <span>“{SAFETY_PROMISE}”</span>
+                </div>
+              )}
             </section>
           ))}
         </div>

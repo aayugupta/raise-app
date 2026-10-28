@@ -38,6 +38,7 @@
   /* Type */
   --font-display: var(--font-lora), Georgia, serif;
   --font-ui: var(--font-dmsans), system-ui, -apple-system, sans-serif;
+  --font-hand: var(--font-caveat), "Segoe Print", cursive; /* flashcard notes only */
   --fs-xs: 12px;
   --fs-sm: 14px;
   --fs-base: 16px;
@@ -1735,4 +1736,65 @@ a {
   margin: 6px 0 14px;
   font-size: var(--fs-sm);
   color: var(--text-muted);
+}
+
+/* Flashcards: a warmer, more human feel (29 Oct 2026) */
+.flash-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.flash-art {
+  flex-shrink: 0;
+}
+
+.assuring-line {
+  display: grid;
+  gap: 4px;
+  margin-top: 12px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: var(--surface-sage);
+  border: 1px solid var(--border-sage);
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: var(--fs-md);
+  line-height: 1.4;
+  color: var(--text);
+}
+
+.assuring-line .card-label {
+  font-family: var(--font-ui);
+  color: var(--primary);
+}
+
+.avoid-reason {
+  display: block;
+  margin-top: 2px;
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+}
+
+.flash-note {
+  margin: 16px 0 0;
+  padding: 8px 12px;
+  border-left: 3px solid var(--accent);
+  background: var(--accent-soft);
+  border-radius: 0 12px 12px 0;
+  font-family: var(--font-hand);
+  font-weight: 600;
+  font-size: 21px;
+  line-height: 1.25;
+  color: var(--accent-text);
+  transform: rotate(-0.6deg);
+}
+
+/* The handwriting font has no Devanagari letters: Hindi notes use the body font, in italics. */
+.flash-note.devanagari {
+  font-family: var(--font-ui);
+  font-size: var(--fs-base);
+  font-style: italic;
+  font-weight: 500;
 }
