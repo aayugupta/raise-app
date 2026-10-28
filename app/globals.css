@@ -2182,3 +2182,29 @@ a {
   background: var(--primary);
   border: 2px solid var(--bg);
 }
+
+/* Coach practice: the suggested first line, or your own */
+.firstline-choice {
+  display: grid;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.firstline-choice .option {
+  padding: 12px 14px;
+}
+
+.firstline-choice-title {
+  display: block;
+  font-weight: 600;
+  font-size: var(--fs-base);
+  color: var(--text);
+}
+
+.firstline-choice-line {
+  display: block;
+  margin-top: 3px;
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  line-height: 1.4;
+}

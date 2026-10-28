@@ -46,6 +46,21 @@ export default function Coach() {
   // Topics started but not planned yet (journey steps 1–3): where "Plan a moment" can lead after the chat ends.
   const [toPlan, setToPlan] = useState<TopicId[]>([]);
   const endRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
+  // The message box's hint changes when the parent chooses to write their own first line.
+  const [hint, setHint] = useState("Type your question…");
+
+  // Puts text in the message box and moves the cursor to its end, ready to edit or send.
+  function startDraft(text: string, newHint: string) {
+    setDraft(text);
+    setHint(newHint);
+    requestAnimationFrame(() => {
+      const box = inputRef.current;
+      if (!box) return;
+      box.focus();
+      box.setSelectionRange(text.length, text.length);
+    });
+  }
 
   useEffect(() => {
     const p = loadProfile();
@@ -83,6 +98,7 @@ export default function Coach() {
     const message = text.trim();
     if (!message || waiting || !profile) return;
     setDraft("");
+    setHint("Type your question…");
     // Role-play turns are kept apart, so the normal chat never mixes with the practice.
     const tag = roleplay && topic ? { roleplay: true, topic } : {};
 
@@ -201,11 +217,29 @@ export default function Coach() {
           </section>
         )}
 
-        {topicMeta && roleplay && visible.length === 0 && (
-          <div style={{ display: "grid", gap: 8, marginTop: 16 }}>
-            <div className="card-label">Start the role-play</div>
-            <button className="option" style={{ fontSize: 16, padding: "12px 14px" }} onClick={() => setDraft(currentFirstLine(topicMeta.id, profile))}>
-              Try your first line
+        {/* Your first line: the suggested one, or your own words (Aayushi, 29 Oct 2026) */}
+        {topicMeta && roleplay && (
+          <div className="firstline-choice">
+            <div className="card-label">Start with your first line</div>
+            <button
+              className="option"
+              onClick={() => startDraft(currentFirstLine(topicMeta.id, profile), "Edit it if you like, then send")}
+            >
+              <span className="firstline-choice-title">Use the suggested first line</span>
+              <span className="firstline-choice-line">“{currentFirstLine(topicMeta.id, profile)}”</span>
+            </button>
+            <button className="option" onClick={() => startDraft("", "Type your first line, in your own words…")}>
+              <span className="firstline-choice-title">✏️ Write my own first line</span>
+              <span className="firstline-choice-line">Say it the way you would at home. Your child (the AI) will react.</span>
+            </button>
+          </div>
+        )}
+
+        {topicMeta && !roleplay && (
+          <div className="firstline-choice">
+            <button className="option" onClick={() => startDraft("Here's how I'd like to start: \"", "Write your first line, then send for feedback…")}>
+              <span className="firstline-choice-title">✏️ Check my own first line</span>
+              <span className="firstline-choice-line">Write it your way and the coach will tell you what works.</span>
             </button>
           </div>
         )}
@@ -333,6 +367,7 @@ export default function Coach() {
           }}
         >
           <textarea
+            ref={inputRef}
             className="text-input"
             value={draft}
             onChange={(ev) => setDraft(ev.target.value)}
@@ -342,7 +377,7 @@ export default function Coach() {
                 send(draft);
               }
             }}
-            placeholder="Type your question…"
+            placeholder={hint}
             maxLength={COACH_MAX_CHARS}
             rows={2}
             aria-label="Your message to the coach"
