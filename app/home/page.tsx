@@ -7,6 +7,8 @@ import BottomNav from "@/components/BottomNav";
 import FamilySofa from "@/components/FamilySofa";
 import { currentFirstLine } from "@/lib/cards";
 import JourneyCard, { whenText } from "@/components/JourneyCard";
+import JourneyMapMini from "@/components/JourneyMapMini";
+import { mapPosition } from "@/lib/journeyMap";
 import type { Journey } from "@/lib/journey";
 import TopicCarousel from "@/components/TopicCarousel";
 import { activeJourneys } from "@/lib/journey";
@@ -55,7 +57,8 @@ export default function Home() {
 
   const nowPlans = [...plans].sort((a, b) => a.when.localeCompare(b.when)).filter((p) => planStage(p, now) === "now" && p.reminder !== false);
   // The "It's time" banner already covers plans happening now, so they're not repeated below.
-  const journeys = activeJourneys(plans, openTopics, now, starts, openJourneySteps()).filter((j) => !nowPlans.some((p) => p.id === j.planId));
+  const allJourneys = activeJourneys(plans, openTopics, now, starts, openJourneySteps());
+  const journeys = allJourneys.filter((j) => !nowPlans.some((p) => p.id === j.planId));
   const activeTopics = new Set(journeys.map((j) => j.topic));
   // Carousel: topics not already in a journey first, so there's always something new to start.
   // The topic picked in setup gets its own "Your chosen topic" card until its journey starts (Aayushi, 29 Oct 2026);
@@ -73,6 +76,9 @@ export default function Home() {
         {/* Greeting */}
         <h1 style={{ fontSize: 30, lineHeight: 1.15 }}>Hello {greetName(profile)}</h1>
         <div style={{ fontSize: 15, color: "var(--text-muted)", marginTop: 4 }}>One small conversation at a time.</div>
+
+        {/* The small journey map: where you are in Raise's five steps (tap for the full map) */}
+        <JourneyMapMini {...mapPosition(allJourneys, pick?.id)} />
 
         {/* The topic picked in setup, on its own so it's clearly "mine" */}
         {pick && (

@@ -1941,3 +1941,102 @@ a {
   font-size: 15px;
   color: var(--text);
 }
+
+/* Home: the small journey map */
+.mini-map {
+  display: block;
+  margin-top: 16px;
+  padding: 12px 12px 10px;
+  border-radius: var(--radius);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  text-decoration: none;
+  color: var(--text);
+}
+
+.mini-map-row {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.mini-map-row li {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+/* The line joining the dots */
+.mini-map-row li:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 13px;
+  left: calc(50% + 15px);
+  right: calc(-50% + 15px);
+  border-top: 2px dashed var(--border-sage);
+}
+
+.mini-map-row li.done:not(:last-child)::after {
+  border-top: 2px solid var(--primary);
+}
+
+.mini-map-dot {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  color: var(--text-muted);
+  background: var(--surface-sage-light);
+  border: 1px solid var(--border-sage);
+}
+
+.mini-map-row li.done .mini-map-dot {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--on-primary);
+}
+
+.mini-map-row li.here .mini-map-dot {
+  background: var(--accent-soft);
+  border: 2px solid var(--accent);
+  color: var(--text);
+  box-shadow: 0 0 0 4px var(--accent-soft);
+}
+
+.mini-map-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.mini-map-row li.here .mini-map-label {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.mini-map-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+  font-size: var(--fs-sm);
+}
+
+.mini-map-link {
+  color: var(--primary);
+  font-weight: 600;
+  white-space: nowrap;
+}

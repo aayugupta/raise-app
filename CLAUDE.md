@@ -81,7 +81,7 @@ Aayushi's simplified wireframe (10 screens + Emergency help) replaces the 14-scr
 | Question | Decision |
 | --- | --- |
 | Navigation | **Bottom tab bar: Topics · AI Coach · Journey · Help · Profile.** The Topics tab opens Home (carousel + "Choose topic from library"); the Help tab is labelled "Help" (read aloud as "Emergency help"). Journey opens `/journey`: active journeys, completed vs started, confidence, past talks (`/progress` redirects there) |
-| Journey map | **"Here's how it works"** (`app/how-it-works`), shown **once, right after setup** (Aayushi, 29 Oct 2026): 5 stops (Pick a topic → Learn → Practise (optional) → Plan a moment → Talk, then tell us how it went) with "You are here" from the setup answer, then "Let's begin" → Home |
+| Journey map | **"Here's how it works"** (`app/how-it-works`), shown **once, right after setup** (Aayushi, 29 Oct 2026): 5 stops (Pick a topic → Learn → Practise (optional) → Plan a moment → Talk, then tell us how it went) with "You are here" from the setup answer, then "Let's begin" → Home. **A small version sits on Home** under the greeting (five dots, "You are here" from the open topic furthest along; tap → full map with "Back to Home"). Position logic in `lib/journeyMap.ts` |
 | Home extras | **"I had a talk" and the 3-day follow-up are removed from Home** (Aayushi, 28 Oct 2026). The in-app "It's time" reminder stays |
 | Age bands | **12–14 / 15–16 / 17–19** |
 | Topics | **Back to the docs' 6** (relationships, stress, friends, online safety, consent, body). Study & future and Screen time come out |

@@ -3,24 +3,20 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { activeJourneys } from "@/lib/journey";
+import { loadJourneyRecords, openJourneyStarts, openJourneySteps } from "@/lib/journeyLog";
+import { MAP_STOPS, mapPosition } from "@/lib/journeyMap";
 import { loadProfile } from "@/lib/profile";
-import { TOPICS } from "@/lib/topics";
+import { loadOpenTopics, loadPlans } from "@/lib/talks";
 
 // "How Raise works": a small journey map, shown once right after setup (Aayushi, 29 Oct 2026).
-// Five stops on a path, with "You are here" from the setup answer: a picked topic starts at Learn,
-// no pick starts at Pick a topic.
-
-const STOPS = [
-  { icon: "📚", title: "Pick a topic", text: "Choose what you'd like to talk about with your child." },
-  { icon: "🃏", title: "Learn", text: "Flashcards give you a first line, gentle questions, and what to say." },
-  { icon: "💬", title: "Practise (optional)", text: "Ask the AI Coach your doubts, or role-play with it playing your child." },
-  { icon: "🗓️", title: "Plan a moment", text: "A walk or a quiet evening. Raise reminds you inside the app." },
-  { icon: "💛", title: "Talk, then tell us how it went", text: "Two taps. Your Super Parent bar fills, and a new topic opens up." },
-];
+// Five stops on a path, with "You are here": the open topic furthest along, else the setup pick (at Learn),
+// else Pick a topic. Also opened from the small map on Home (?from=home).
 
 export default function HowItWorks() {
   const router = useRouter();
   const [here, setHere] = useState<{ index: number; label: string } | null>(null);
+  const [fromHome, setFromHome] = useState(false);
 
   useEffect(() => {
     const p = loadProfile();
@@ -28,8 +24,11 @@ export default function HowItWorks() {
       router.replace("/");
       return;
     }
-    const topic = TOPICS.find((t) => t.id === p.suggestedTopic);
-    setHere(topic ? { index: 1, label: `Learn about ${topic.short}` } : { index: 0, label: "Pick a topic" });
+    const journeys = activeJourneys(loadPlans(), loadOpenTopics(), Date.now(), openJourneyStarts(), openJourneySteps());
+    const started = new Set(loadJourneyRecords().map((r) => r.topic));
+    const pick = p.suggestedTopic && !started.has(p.suggestedTopic) ? p.suggestedTopic : undefined;
+    setHere(mapPosition(journeys, pick));
+    setFromHome(new URLSearchParams(window.location.search).get("from") === "home");
   }, [router]);
 
   if (!here) return <main style={{ minHeight: "100dvh", background: "var(--bg)" }} />;
@@ -44,7 +43,7 @@ export default function HowItWorks() {
         </p>
 
         <ol className="journey-map" aria-label="The five steps">
-          {STOPS.map((s, i) => {
+          {MAP_STOPS.map((s, i) => {
             const state = i < here.index ? "done" : i === here.index ? "here" : "next";
             return (
               <li key={s.title} className={`map-stop ${state}`} aria-current={state === "here" ? "step" : undefined}>
@@ -66,7 +65,7 @@ export default function HowItWorks() {
         <p className="map-note">Take your time. Your topic stays open until you tell us about your talk.</p>
 
         <Link href="/home" className="btn-primary btn-block" style={{ textDecoration: "none", marginTop: 20 }}>
-          Let&apos;s begin
+          {fromHome ? "Back to Home" : "Let's begin"}
         </Link>
       </div>
     </main>
