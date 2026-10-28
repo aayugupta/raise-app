@@ -160,7 +160,18 @@ export default function ReflectView({ planId }: { planId: string }) {
     );
   }
 
-  if (celebrate) return <Celebration topic={plan.topic} onContinue={() => { const go = celebrate; setCelebrate(null); go(); }} />;
+  if (celebrate)
+    return (
+      <Celebration
+        topic={plan.topic}
+        hard={feeling === "hard"}
+        onContinue={() => {
+          const go = celebrate;
+          setCelebrate(null);
+          go();
+        }}
+      />
+    );
   if (saved) return <Saved reflection={saved} />;
 
   return (
