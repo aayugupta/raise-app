@@ -16,6 +16,12 @@ import { TOPICS, type TopicId } from "@/lib/topics";
 // Language and "how openly you talk" are no longer asked: Hinglish and gentle by default, changeable in Profile.
 
 const ROLE = PROFILE_CHOICES.find((c) => c.key === "role")!;
+// Asked first again (Aayushi, 28 Oct 2026): flashcards, questions and the Coach are written in this language.
+const LANGUAGES: { value: Profile["language"]; label: string }[] = [
+  { value: "english", label: "English" },
+  { value: "hindi", label: "हिन्दी" },
+  { value: "hinglish", label: "Hinglish" },
+];
 const AGE = PROFILE_CHOICES.find((c) => c.key === "ageBand")!;
 const GENDER = PROFILE_CHOICES.find((c) => c.key === "teenGender")!;
 const STEPS = 3;
@@ -23,6 +29,7 @@ const STEPS = 3;
 export default function Setup() {
   const router = useRouter();
   const [step, setStep] = useState(0);
+  const [language, setLanguage] = useState<Profile["language"]>("hinglish");
   const [role, setRole] = useState<Profile["role"] | null>(null);
   const [ageBand, setAgeBand] = useState<Profile["ageBand"] | null>(null);
   const [teenGender, setTeenGender] = useState<Profile["teenGender"] | null>(null);
@@ -40,7 +47,7 @@ export default function Setup() {
       role: role ?? "guardian",
       ageBand: ageBand ?? "15-16",
       teenGender: teenGender ?? "unsaid",
-      language: "hinglish",
+      language,
       comfort: "gentle",
       wish: "",
       suggestedTopic: firstTopic ?? undefined,
@@ -80,6 +87,23 @@ export default function Setup() {
             </div>
             <h1 style={{ fontSize: 30, lineHeight: 1.15 }}>Hey there!</h1>
             <p className="why">You're not just a username. We want to get to know you!</p>
+            <h2 className="setup-question">Which language do you speak at home?</h2>
+            <div className="option-row" role="radiogroup" aria-label="Language">
+              {LANGUAGES.map((l) => (
+                <button
+                  key={l.value}
+                  role="radio"
+                  aria-checked={language === l.value}
+                  className={`option${language === l.value ? " selected" : ""}`}
+                  onClick={() => setLanguage(l.value)}
+                  lang={l.value === "hindi" ? "hi" : "en"}
+                >
+                  {l.label}
+                </button>
+              ))}
+            </div>
+            <p style={{ fontSize: 13, color: "var(--muted)", margin: "6px 0 0" }}>Your first lines, questions and the AI Coach will use it.</p>
+
             <h2 className="setup-question">You are your child's…</h2>
             <div style={{ display: "grid", gap: 10 }}>
               {ROLE.options.map((o) => (

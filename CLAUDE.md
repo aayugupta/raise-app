@@ -85,7 +85,7 @@ Aayushi's simplified wireframe (10 screens + Emergency help) replaces the 14-scr
 | Age bands | **12–14 / 15–16 / 17–19** |
 | Topics | **Back to the docs' 6** (relationships, stress, friends, online safety, consent, body). Study & future and Screen time come out |
 | Reminders | **In-app only.** No push notifications, no "Add to calendar" |
-| Language / comfort | Not asked in setup. Hinglish by default; both changeable in Profile |
+| Language / comfort | **Language is asked on setup screen 1** (English / हिन्दी / Hinglish, Hinglish preselected; Aayushi, 28 Oct 2026). Comfort is not asked (gentle by default). Both changeable in Profile |
 | Streak | Shown as **"Day 5 of 14"**, never a streak counter (no-streaks rule stands) |
 | AI Coach privacy | What the parent types in AI Coach **is sent to Google's Gemini** to write a reply. Coach and the Privacy screen say so plainly: "What you type here goes to Google's Gemini AI to write a reply. Don't use names." Reflections still never leave the phone. Coach messages are never sent to Supabase |
 | AI Coach history | **Kept on this phone only**; "Clear my data" deletes it. If a message shows a crisis, the chat keeps only that help was shown, not the details |
