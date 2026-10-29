@@ -2618,12 +2618,12 @@ a {
   flex-direction: column;
 }
 
-/* Phones: "Your next step" comes before the Super Parent goal */
-.home-side-next {
+/* Becoming a Super Parent above Your next step, on every screen (Aayushi, 29 Oct 2026) */
+.home-side-goal {
   order: 1;
 }
 
-.home-side-goal {
+.home-side-next {
   order: 2;
 }
 
@@ -2645,12 +2645,4 @@ a {
     padding-top: 4px;
   }
 
-  /* Wider screens: Super Parent on top, then Your next step */
-  .home-side-goal {
-    order: 1;
-  }
-
-  .home-side-next {
-    order: 2;
-  }
 }
