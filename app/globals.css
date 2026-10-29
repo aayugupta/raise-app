@@ -2413,3 +2413,28 @@ a {
     transform: none;
   }
 }
+
+/* Welcome on short phones (e.g. 320 x 568, 360 x 640): tighter spacing and a smaller hill picture,
+   so the whole screen fits without scrolling (29 Oct 2026). */
+@media (max-height: 700px) {
+  .welcome-body {
+    padding-top: clamp(12px, 4vh, 40px);
+  }
+  .welcome .logo {
+    font-size: 56px !important;
+  }
+  .welcome-tagline {
+    font-size: 20px;
+    margin-top: 10px;
+  }
+  .welcome-support {
+    font-size: 15px;
+    margin-top: 8px;
+  }
+  .welcome-bottom svg {
+    height: clamp(110px, 24vh, 180px);
+  }
+  .welcome-action {
+    padding-bottom: calc(16px + env(safe-area-inset-bottom));
+  }
+}
