@@ -44,6 +44,7 @@ export default function RecoverView({ planId, why, picked }: { planId: string; w
 
   const topic = TOPICS.find((t) => t.id === plan.topic)!;
   const chosen = BLOCKERS.find((b) => b.id === blocker);
+  const askedBefore = BLOCKERS.some((b) => b.id === picked);
 
   function choose(id: BlockerId) {
     setBlocker(id);
@@ -85,15 +86,22 @@ export default function RecoverView({ planId, why, picked }: { planId: string; w
         {why === "not-yet" ? (
           <>
             <h1 style={{ fontSize: 28, lineHeight: 1.15, margin: "6px 0 0", textWrap: "balance" }}>That's okay. Let's find an easier way in.</h1>
-            <p className="why">Most talks take more than one try. What got in the way?</p>
+            {/* Already answered on the reflection screen: not asked again, just the tip for it (Aayushi, 29 Oct 2026) */}
+            {askedBefore ? (
+              <p className="why">Most talks take more than one try.</p>
+            ) : (
+              <>
+                <p className="why">Most talks take more than one try. What got in the way?</p>
 
-            <div style={{ display: "grid", gap: 8 }}>
-              {BLOCKERS.map((b) => (
-                <button key={b.id} className={`option${blocker === b.id ? " selected" : ""}`} onClick={() => choose(b.id)}>
-                  {b.label}
-                </button>
-              ))}
-            </div>
+                <div style={{ display: "grid", gap: 8 }}>
+                  {BLOCKERS.map((b) => (
+                    <button key={b.id} className={`option${blocker === b.id ? " selected" : ""}`} onClick={() => choose(b.id)}>
+                      {b.label}
+                    </button>
+                  ))}
+                </div>
+              </>
+            )}
 
             {chosen && (
               <p className="notice" style={{ marginTop: 16 }} aria-live="polite">
