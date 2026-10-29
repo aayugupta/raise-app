@@ -310,10 +310,10 @@ a {
 .logo-sprout {
   position: absolute;
   left: 50%;
-  bottom: 0.66em;
-  width: 0.5em;
-  height: 0.37em;
-  transform: translateX(-46%);
+  bottom: 0.7em;
+  width: 0.52em;
+  height: 0.22em;
+  transform: translateX(-47%);
   overflow: visible;
 }
 
@@ -2326,12 +2326,6 @@ a {
   overflow: visible;
 }
 
-.logo-animated .logo-stem {
-  stroke-dasharray: 26;
-  stroke-dashoffset: 26;
-  animation: stem-grow 0.6s 0.35s ease-out forwards;
-}
-
 .logo-animated .logo-leaf {
   transform-box: fill-box;
   opacity: 0;
@@ -2360,12 +2354,6 @@ a {
   to {
     opacity: 1;
     transform: none;
-  }
-}
-
-@keyframes stem-grow {
-  to {
-    stroke-dashoffset: 0;
   }
 }
 
@@ -2417,7 +2405,6 @@ a {
 
 @media (prefers-reduced-motion: reduce) {
   .logo-animated .logo-word,
-  .logo-animated .logo-stem,
   .logo-animated .logo-leaf,
   .welcome-fade {
     animation: none;
