@@ -360,9 +360,66 @@ Puberty questions are often left to school or friends. In a 2026 Bengaluru study
 
 ---
 
+## Card 7 — Gender and identity
+
+**Topic ID:** `gender`
+
+**The teen's question:** "Is it okay to be different from what people expect?"
+
+**Why now:**
+Teens hear a lot about gender roles and identity, at school, from friends and online, but rarely from home. Since 2018, India's Supreme Court has recognised that who a person loves is part of their dignity, and transgender people have had legal recognition since 2014. Many teens still hear slurs and jokes at school. A calm word at home tells them they are safe, whoever they are. *(Supreme Court of India, Navtej Singh Johar v. Union of India, 2018 · NALSA v. Union of India, 2014)*
+
+**First line:**
+- Hinglish: "Aaj kal school mein 'ladkon jaisa' ya 'ladkiyon jaisa' hone ke baare mein log kya bolte hain?"
+- Hindi: "आजकल स्कूल में 'लड़कों जैसा' या 'लड़कियों जैसा' होने के बारे में लोग क्या बोलते हैं?"
+- English: "What do people at school say these days about acting 'like a boy' or 'like a girl'?"
+
+**Gentle questions to ask (10):**
+1. "Do you think boys and girls are expected to behave differently? Is that fair?"
+2. "Have you heard anyone being teased for not being 'manly' or 'girly' enough?"
+3. "What do your friends think about people who are gay, or trans?"
+4. "Is there anything about this you've wondered about but felt odd asking?"
+5. "What did you think when you saw something about this online or in a show?"
+6. "If a friend told you something big about who they are, what would you say?"
+7. "Do you ever feel boxed in by what people expect from you?"
+8. "Which jokes at school go too far, in your opinion?"
+9. "Is there anything we say at home that makes this harder to talk about?"
+10. "What would you want me to understand about people your age and this topic?"
+
+**Say:**
+1. "Whatever you tell me, you won't be in trouble for telling me." (the safety promise)
+2. "Nothing you could tell me about yourself would make me love you less."
+3. "I'm still learning about this myself. You can teach me too."
+4. "Everyone deserves respect, whoever they are and whoever they love."
+5. "You don't have to have everything figured out. Take your time."
+6. "If anyone ever teases or troubles you, come to me. I'll be on your side."
+
+**Avoid:**
+1. Jokes or slurs about gay or trans people, even casually. (Your child hears them and learns what's safe to share with you.)
+2. "It's just a phase." (It tells them you won't take them seriously.)
+3. "What will people say?" ("Log kya kahenge?") (They hear that the family's image matters more than they do.)
+4. "Boys should be strong, girls should adjust." (It boxes them in, and they stop sharing how they really feel.)
+5. Asking "Are you gay?" out of the blue, or checking their phone to find out. (It feels like an interrogation and breaks trust.)
+6. Taking them to a doctor or baba to "fix" them. (Being gay or trans is not an illness; it hurts and breaks trust.)
+
+**If they react:**
+- **Go quiet:** "That's okay. I just wanted you to know you can talk to me about anything, any time."
+- **Get upset:** "I'm sorry, I didn't mean to make it uncomfortable. I asked because I care, not to judge."
+- **Disagree:** "Fair enough. Tell me how you see it. I'd really like to understand."
+- **Don't want to talk:** "No problem, I won't push. If you ever want to talk, whenever or however, even by text, I'm here."
+
+**When to get help:** if your teen is being bullied or harassed for who they are → talk to their school, and call Childline 1098. If they seem very low, withdrawn, or talk about hurting themselves → Tele-MANAS 14416, or 112 in an emergency.
+
+**Sources and check date:** Supreme Court of India, Navtej Singh Johar v. Union of India, 2018 · Supreme Court of India, NALSA v. Union of India, 2014 · Checked on 29 Oct 2026
+
+[Aayushi: this card has no Indian survey number yet, so "Why this matters" shows no picture. If you'd like one (for example, how many LGBTQ+ students in India face bullying at school), add a claim and its sources through the content engine first.]
+
+---
+
 ## Questions for you
 
 1. **Hindi lines:** please read the Hindi (Devanagari) first lines aloud. Do they sound natural, or too formal?
 2. **Card 1:** do you want the extra, more direct adult-content follow-up for 17–19 only? (See the note on Card 1.)
 3. **Card 6:** separate examples for sons, or keep it general? (See the note on Card 6.)
 4. **Facts:** every number comes from your Step 1 docs. Check that each one is the version you want to show parents.
+5. **Card 7 (new, 29 Oct 2026):** please read the whole Gender and identity card, ideally with someone from the LGBTQ+ community or an expert, before it goes live.

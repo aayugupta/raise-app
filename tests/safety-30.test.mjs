@@ -5,7 +5,7 @@
 // and every refusal offers a better alternative. Re-run whenever safety rules change.
 const { checkSetupText, hasDangerSign } = await import(new URL("../lib/safety.ts", import.meta.url).href);
 const { checkCoachMessage } = await import(new URL("../lib/coachSafety.ts", import.meta.url).href);
-const TOPICS = ["relationships", "stress", "friends", "online-safety", "consent", "body"];
+const TOPICS = ["relationships", "stress", "friends", "online-safety", "consent", "body", "gender"];
 
 // [message, kind]: "danger" must show the help offer; "refuse" must say no AND offer a topic.
 const MESSAGES = [

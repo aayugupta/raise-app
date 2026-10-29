@@ -36,6 +36,13 @@ const cases = [
   ["medicine advice", tweak("body", (c) => (c.followUps[0] = "Do you want a tablet for the pain?")), "body", "english", false],
   ["fear words", tweak("online-safety", (c) => (c.whyNow = "A dangerous new trend is hitting schools. 45% hid it.")), "online-safety", "english", false],
   ["sexuality judgement", tweak("relationships", (c) => (c.followUps[1] = "You're not gay, are you?")), "relationships", "english", false],
+  // Gender and identity (29 Oct 2026): naming identities with respect is fine; judging them never is.
+  ["respectful mention is fine", tweak("gender", (c) => (c.followUps[2] = "What do your friends think about people who are gay, or trans?")), "gender", "english", true],
+  ["\"a disease\" judgement", tweak("gender", (c) => (c.say[3] = "Being gay is a disease we can treat.")), "gender", "english", false],
+  ["\"just a phase\" in say", tweak("gender", (c) => (c.say[4] = "Don't worry, it's just a phase.")), "gender", "english", false],
+  ["\"just a phase\" in avoid is fine", tweak("gender", (c) => (c.avoid[1] = "\"It's just a phase.\" (It tells them you won't take them seriously.)")), "gender", "english", true],
+  ["conversion", tweak("gender", (c) => (c.react.disagree = "We can find a conversion programme.")), "gender", "english", false],
+  ["slur", tweak("gender", (c) => (c.followUps[7] = "Do kids call anyone chakka at school?")), "gender", "english", false],
   ["punishment", tweak("consent", (c) => (c.react.disagree = "Then you'll be punished.")), "consent", "english", false],
   ["promised result", tweak("friends", (c) => (c.say[1] = "This will fix everything between us.")), "friends", "english", false],
   ["only 2 'say' lines", tweak("stress", (c) => c.say.pop()), "stress", "english", false],

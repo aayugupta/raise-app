@@ -95,11 +95,11 @@ const REFUSALS: { patterns: RegExp[]; message: string; offer: TopicId; offerText
   {
     patterns: [
       /(find\s*out|pata|know|check|change|fix|cure|stop|normal)\w*.*\b(gay|lesbian|bisexual|trans\w*|lgbt\w*|sexuality)\b/,
-      /\b(gay|lesbian|bisexual|trans\w*|lgbt\w*|sexuality)\b.*(change|fix|cure|stop|normal)/,
+      /\b(gay|lesbian|bisexual|trans\w*|lgbt\w*|sexuality)\b.*(change|fix|cure|stop|normal|check|find out|pata|test)/,
     ],
     message: "Raise can't help with finding out or changing who your teen is.",
-    offer: "stress",
-    offerText: "What helps most is listening. The Stress and feelings card is about exactly that.",
+    offer: "gender",
+    offerText: "What helps most is a home where they feel safe to talk. The Gender and identity card is about exactly that.",
   },
 ];
 
@@ -111,6 +111,7 @@ const TOPIC_WORDS: { id: TopicId; pattern: RegExp }[] = [
   { id: "online-safety", pattern: /online|instagram|\binsta\b|social media|internet|scam|cyber/g },
   { id: "consent", pattern: /consent|\btouch|personal safety|say no|stranger|\bsafe/g },
   { id: "body", pattern: /period|puberty|\bbody\b|growing up|pimple|height|weight|shave/g },
+  { id: "gender", pattern: /gender|\bgay\b|lesbian|bisexual|\btrans\w*|lgbt\w*|queer|identity|sexuality/g },
 ];
 
 export function checkSetupText(text: string): TextCheck {

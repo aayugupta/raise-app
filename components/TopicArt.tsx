@@ -1,6 +1,6 @@
 import { TOPICS, type TopicId } from "@/lib/topics";
 
-// Raise's own small flat drawings for the 6 topics (29 Oct 2026), in place of emoji on topic cards.
+// Raise's own small flat drawings for each topic (29 Oct 2026), in place of emoji on topic cards.
 // Each sits on a soft circle tinted with the topic's colour. Decorative: the topic name is always next to it.
 export default function TopicArt({ id, size = 44 }: { id: TopicId; size?: number }) {
   const c = TOPICS.find((t) => t.id === id)!.color;
@@ -56,6 +56,15 @@ export default function TopicArt({ id, size = 44 }: { id: TopicId; size?: number
           <path d="M24 24c-1-5.5-5.5-9-11-8.6.6 5.6 5 9 11 8.6Z" fill={c} />
           <path d="M24 21c1-5.8 5.6-9.5 11.4-9-.6 5.9-5.3 9.5-11.4 9Z" fill="#e5b99d" />
           <ellipse cx="24" cy="38.5" rx="8" ry="2.2" fill={c} opacity="0.35" />
+        </>
+      )}
+      {id === "gender" && (
+        <>
+          {/* A soft rainbow arc over a small heart */}
+          <path d="M9 31a15 15 0 0 1 30 0" stroke={c} strokeWidth="3.4" fill="none" strokeLinecap="round" />
+          <path d="M13.5 31a10.5 10.5 0 0 1 21 0" stroke="#e5b99d" strokeWidth="3.4" fill="none" strokeLinecap="round" />
+          <path d="M18 31a6 6 0 0 1 12 0" stroke="#7fa08a" strokeWidth="3.4" fill="none" strokeLinecap="round" />
+          <path d="M24 39.5c-3.2-2.3-5-4.2-5-6.3 0-1.5 1.1-2.7 2.5-2.7 1 0 1.9.6 2.5 1.4.6-.8 1.5-1.4 2.5-1.4 1.4 0 2.5 1.2 2.5 2.7 0 2.1-1.8 4-5 6.3Z" fill={c} />
         </>
       )}
     </svg>

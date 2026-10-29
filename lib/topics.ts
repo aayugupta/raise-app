@@ -1,6 +1,6 @@
-// The 6 v1 topics. Full card content lives in content/base-talk-cards.md.
+// The 6 v1 topics, plus Gender and identity (Aayushi, 29 Oct 2026). Full card content lives in content/base-talk-cards.md.
 // Topic accent colours follow the design system (29 Oct 2026): muted tones that sit with sage, ivory and terracotta.
-export type TopicId = "relationships" | "stress" | "friends" | "online-safety" | "consent" | "body";
+export type TopicId = "relationships" | "stress" | "friends" | "online-safety" | "consent" | "body" | "gender";
 
 // Order matters: the first three are what teens most want to talk about
 // (relationships 10 of 12, feelings and friends 7 of 12 each), so they are suggested first.
@@ -11,6 +11,7 @@ export const TOPICS: { id: TopicId; name: string; short: string; icon: string; t
   { id: "online-safety", name: "Online safety", short: "Online safety", icon: "🛡️", teenQuestion: "What would you do if someone online asked for a photo?", color: "#285c4d" },
   { id: "consent", name: "Consent and personal safety", short: "Consent & safety", icon: "✋", teenQuestion: "Is it okay to say no, even to someone you know?", color: "#5f8a6e" },
   { id: "body", name: "Body and growing up", short: "Growing up", icon: "🌱", teenQuestion: "Is what's happening to my body normal?", color: "#a87a8a" },
+  { id: "gender", name: "Gender and identity", short: "Gender & identity", icon: "🌈", teenQuestion: "Is it okay to be different from what people expect?", color: "#857aa3" },
 ];
 
 export function isTopicId(value: string): value is TopicId {

@@ -294,6 +294,55 @@
       "getHelp": "for any medical worry (pain, very irregular periods, anything that doesn't seem right) → a doctor. If your teen seems very unhappy with their body or stops eating properly → Tele-MANAS 14416.",
       "sources": "Rashmi et al., parent-adolescent communication on SRH, Bengaluru, IJCMPH 2026 · Likith, factors influencing parent-adolescent SRH communication, 2024",
       "checkedOn": "25 Oct 2026"
+    },
+    {
+      "id": "gender",
+      "name": "Gender and identity",
+      "teenQuestion": "Is it okay to be different from what people expect?",
+      "whyNow": "Teens hear a lot about gender roles and identity, at school, from friends and online, but rarely from home. Since 2018, India's Supreme Court has recognised that who a person loves is part of their dignity, and transgender people have had legal recognition since 2014. Many teens still hear slurs and jokes at school. A calm word at home tells them they are safe, whoever they are.",
+      "whySource": "Supreme Court of India, Navtej Singh Johar v. Union of India, 2018 · NALSA v. Union of India, 2014",
+      "firstLine": {
+        "hinglish": "Aaj kal school mein 'ladkon jaisa' ya 'ladkiyon jaisa' hone ke baare mein log kya bolte hain?",
+        "hindi": "आजकल स्कूल में 'लड़कों जैसा' या 'लड़कियों जैसा' होने के बारे में लोग क्या बोलते हैं?",
+        "english": "What do people at school say these days about acting 'like a boy' or 'like a girl'?"
+      },
+      "followUps": [
+        "Do you think boys and girls are expected to behave differently? Is that fair?",
+        "Have you heard anyone being teased for not being 'manly' or 'girly' enough?",
+        "What do your friends think about people who are gay, or trans?",
+        "Is there anything about this you've wondered about but felt odd asking?",
+        "What did you think when you saw something about this online or in a show?",
+        "If a friend told you something big about who they are, what would you say?",
+        "Do you ever feel boxed in by what people expect from you?",
+        "Which jokes at school go too far, in your opinion?",
+        "Is there anything we say at home that makes this harder to talk about?",
+        "What would you want me to understand about people your age and this topic?"
+      ],
+      "say": [
+        "Whatever you tell me, you won't be in trouble for telling me.",
+        "Nothing you could tell me about yourself would make me love you less.",
+        "I'm still learning about this myself. You can teach me too.",
+        "Everyone deserves respect, whoever they are and whoever they love.",
+        "You don't have to have everything figured out. Take your time.",
+        "If anyone ever teases or troubles you, come to me. I'll be on your side."
+      ],
+      "avoid": [
+        "Jokes or slurs about gay or trans people, even casually. (Your child hears them and learns what's safe to share with you.)",
+        "It's just a phase. (It tells them you won't take them seriously.)",
+        "What will people say? (\"Log kya kahenge?\") (They hear that the family's image matters more than they do.)",
+        "Boys should be strong, girls should adjust. (It boxes them in, and they stop sharing how they really feel.)",
+        "Asking \"Are you gay?\" out of the blue, or checking their phone to find out. (It feels like an interrogation and breaks trust.)",
+        "Taking them to a doctor or baba to \"fix\" them. (Being gay or trans is not an illness; it hurts and breaks trust.)"
+      ],
+      "react": {
+        "quiet": "That's okay. I just wanted you to know you can talk to me about anything, any time.",
+        "upset": "I'm sorry, I didn't mean to make it uncomfortable. I asked because I care, not to judge.",
+        "disagree": "Fair enough. Tell me how you see it. I'd really like to understand.",
+        "noTalk": "No problem, I won't push. If you ever want to talk, whenever or however, even by text, I'm here."
+      },
+      "getHelp": "if your teen is being bullied or harassed for who they are → talk to their school, and call Childline 1098. If they seem very low, withdrawn, or talk about hurting themselves → Tele-MANAS 14416, or 112 in an emergency.",
+      "sources": "Supreme Court of India, Navtej Singh Johar v. Union of India, 2018 · Supreme Court of India, NALSA v. Union of India, 2014",
+      "checkedOn": "29 Oct 2026"
     }
   ]
 }

@@ -8,7 +8,12 @@ const NEVER: { rule: string; pattern: RegExp }[] = [
   { rule: "promised results", pattern: /guarantee|this will fix|will definitely|100% safe|never fails/i },
   { rule: "diagnosis", pattern: /\b(depression|depressed|adhd|autis\w*|bipolar|ocd|disorder|diagnos\w*)\b/i },
   { rule: "medical advice", pattern: /\b(medicine|medication|tablets?|pills?|dose|dosage|dawai|davai)\b|दवा/i },
-  { rule: "sexuality or gender judgement", pattern: /\b(gay|lesbian|bisexual|transgender|homosexual|conversion)\b/i },
+  // Naming identities respectfully is fine (the Gender and identity card, 29 Oct 2026); judging or "fixing" them never is.
+  {
+    rule: "sexuality or gender judgement",
+    pattern:
+      /conversion|unnatural|abnormal|\b(cure[ds]?|curable)\b|(fix|change|cure|correct|treat)\w*\s+(her|his|their|your|my)?\s*(sexuality|orientation|gender identity)|(being\s+)?(gay|lesbian|bisexual|trans\w*|homosexual\w*)\s+(is\s+)?(wrong|a sin|sinful|a disease|an illness|a disorder|a mental illness)\b|\b(chakka|meetha|homo)\b/i,
+  },
   { rule: "graphic sexual detail", pattern: /\b(intercourse|orgasm|genitals?|naked|nudes?|porn\w*)\b/i },
 ];
 
@@ -17,6 +22,10 @@ const NOT_OUTSIDE_AVOID: { rule: string; pattern: RegExp }[] = [
   {
     rule: "spying",
     pattern: /\b(spy|spying|track(ing)?|monitor(ing)?|secretly)\b|(read|check|go through)\w*\s+(her|his|their|your)\s+(phone|messages|chats|whatsapp)|jasoosi|जासूसी/i,
+  },
+  {
+    rule: "sexuality or gender judgement",
+    pattern: /are you (gay|lesbian|bi\w*|trans\w*)|you'?re not (gay|lesbian|bi\w*|trans\w*)|just a phase|grow out of (it|this)/i,
   },
   {
     rule: "phone threats or punishment",
