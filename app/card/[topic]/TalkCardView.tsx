@@ -81,6 +81,9 @@ export default function TalkCardView({ topic }: { topic: TopicId }) {
   const meta = TOPICS.find((t) => t.id === topic)!;
   const [loaded, setLoaded] = useState<Loaded | null>(null);
   const [index, setIndex] = useState(0);
+  // The card the deck has come to rest on: its height is only changed after a swipe ends, never mid-swipe.
+  const [settled, setSettled] = useState(0);
+  const settleTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const [allQuestions, setAllQuestions] = useState(false);
   const deckRef = useRef<HTMLDivElement>(null);
 
@@ -149,14 +152,14 @@ export default function TalkCardView({ topic }: { topic: TopicId }) {
   // on show, so a short card never gets a blank gap. Re-measured when a card grows ("Show 5 more").
   useEffect(() => {
     const deck = deckRef.current;
-    const card = deck?.children[index] as HTMLElement | undefined;
+    const card = deck?.children[settled] as HTMLElement | undefined;
     if (!deck || !card) return;
     const fit = () => (deck.style.height = `${card.offsetHeight + 12}px`);
     fit();
     const watch = new ResizeObserver(fit);
     watch.observe(card);
     return () => watch.disconnect();
-  }, [index, shownSource]);
+  }, [settled, shownSource]);
 
   if (!loaded) {
     return (
@@ -302,7 +305,10 @@ export default function TalkCardView({ topic }: { topic: TopicId }) {
     if (!deck) return;
     const first = deck.children[0] as HTMLElement;
     const step = first.offsetWidth + 12;
-    setIndex(Math.min(cards.length - 1, Math.max(0, Math.round(deck.scrollLeft / step))));
+    const i = Math.min(cards.length - 1, Math.max(0, Math.round(deck.scrollLeft / step)));
+    setIndex(i);
+    clearTimeout(settleTimer.current);
+    settleTimer.current = setTimeout(() => setSettled(i), 140);
   }
 
   return (

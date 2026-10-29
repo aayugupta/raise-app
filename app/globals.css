@@ -1087,8 +1087,12 @@ a {
   padding: 4px 16px 8px;
   scroll-padding: 0 16px;
   scrollbar-width: none;
-  /* Cards keep their own height; the deck takes the height of the card on show (set in TalkCardView) */
+  /* Cards keep their own height; the deck takes the height of the card on show (set in TalkCardView).
+     overflow-y hidden: a taller neighbour must never turn the deck into its own up-down scroller,
+     which trapped the finger and made page scrolling jumpy (29 Oct 2026). */
   align-items: flex-start;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
   transition: height 0.25s ease;
 }
 
