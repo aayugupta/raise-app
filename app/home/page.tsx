@@ -113,7 +113,7 @@ export default function Home() {
       <div className="home-layout">
         <div className="home-top">
           {/* Greeting */}
-          {/* All italic: "Hello" in warm terracotta, the name in Deep Sage, and a small emoji for the role (Aayushi, 29 Oct 2026) */}
+          {/* All italic: "Hello" and the name both in Deep Sage, and a small emoji for the role (Aayushi, 29 Oct 2026) */}
           <h1 className="home-greeting">
             <span className="home-greeting-hello">Hello</span> <em>{greetName(profile)}</em>{" "}
             <span aria-hidden="true">{profile.role === "mother" ? "👩🏽" : profile.role === "father" ? "👨🏽" : "🧑🏽"}</span>

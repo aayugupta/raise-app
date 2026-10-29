@@ -2879,7 +2879,7 @@ a {
 .home-greeting-hello {
   font-style: italic;
   font-weight: 500;
-  color: var(--accent-text);
+  color: var(--primary);
 }
 
 .home-greeting em {
