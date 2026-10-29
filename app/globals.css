@@ -731,6 +731,10 @@ a {
   background: var(--primary);
 }
 
+.journey-steps span.current {
+  background: var(--accent);
+}
+
 .journey-day {
   font-size: 13px;
   font-weight: 700;

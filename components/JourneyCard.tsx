@@ -43,7 +43,8 @@ export default function JourneyCard({ journey, whenLabel }: { journey: Journey; 
           </span>
           <span className="journey-steps" aria-hidden="true">
             {STEP_NAMES.map((_, i) => i + 1).map((s) => (
-              <span key={s} className={s <= journey.step ? "done" : ""} />
+              // Green = steps finished; terracotta = the step pending now (never all green until it's done).
+              <span key={s} className={s < journey.step ? "done" : s === journey.step ? "current" : ""} />
             ))}
           </span>
           <span style={{ display: "block", fontSize: 15, fontWeight: 700, color: "var(--primary)", marginTop: 8 }}>{journey.action} →</span>
