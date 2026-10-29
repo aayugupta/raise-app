@@ -32,7 +32,10 @@
       "avoid": [
         "You're too young for this. (It shuts the door, and next time they won't tell you.)",
         "Who is it? Tell me their name. (It turns a chat into questioning.)",
-        "Teasing about crushes, even lovingly. (Teens remember the joke, not the love.)"
+        "Teasing about crushes, even lovingly. (Teens remember the joke, not the love.)",
+        "What will people say? (\"Log kya kahenge?\") (They hear that the family's image matters more than they do.)",
+        "Focus on your studies, all this can wait. (It tells them their feelings are a distraction, so they hide them.)",
+        "Telling relatives or other parents what your child shared. (One leak, and they won't confide in you again.)"
       ],
       "react": {
         "quiet": "No rush at all. We can talk whenever. I'm around.",
@@ -75,7 +78,10 @@
       "avoid": [
         "Just don't think about it or \"Cheer up!\" (It tells them their feelings don't count.)",
         "Comparing them with siblings, cousins or other kids. (It adds pressure, not comfort.)",
-        "Jumping straight to advice. (Most teens want to be heard first.)"
+        "Jumping straight to advice. (Most teens want to be heard first.)",
+        "We never had all this stress in our time. (It brushes off what they're feeling today.)",
+        "After all the money we've spent on your coaching… (Guilt adds pressure, not motivation.)",
+        "Only your marks matter right now. (They start to believe their worth is a number.)"
       ],
       "react": {
         "quiet": "That's okay. We can just sit here for a bit.",
@@ -118,7 +124,10 @@
       "avoid": [
         "Those friends are a bad influence. (They'll defend their friends, and stop telling you about them.)",
         "Rapid-fire questions: who, where, how late. (It feels like checking up, not caring.)",
-        "When I was your age… lectures. (They tune out after the first line.)"
+        "When I was your age… lectures. (They tune out after the first line.)",
+        "Why can't you make friends with the toppers? (It judges their friends by marks, and they stop telling you about them.)",
+        "Calling their friends' parents behind their back. (If they find out, they'll stop trusting you, and so might their friends.)",
+        "Girls and boys shouldn't be friends. (It makes normal friendships feel shameful, so they hide them.)"
       ],
       "react": {
         "quiet": "No pressure. I was just curious about your world.",
@@ -161,7 +170,10 @@
       "avoid": [
         "Just don't post photos, then nothing will happen. (Fake images can be made from any normal photo.)",
         "Threatening to take the phone away. (Teens hide problems when they're scared of losing it.)",
-        "Checking their phone secretly. (If they find out, trust is hard to win back.)"
+        "Checking their phone secretly. (If they find out, trust is hard to win back.)",
+        "This phone has spoiled you. (Blaming the phone shuts down the talk about what's actually happening on it.)",
+        "Delete everything and don't tell anyone. (Deleting removes proof, and silence leaves them alone with it.)",
+        "What will people think if this gets out? (Fear of shame stops children from asking for help.)"
       ],
       "react": {
         "quiet": "That's okay. I just want you to know my door's always open.",
@@ -204,7 +216,10 @@
       "avoid": [
         "Strangers are the danger. (Most harm comes from people a child knows.)",
         "Blaming questions like \"Why were you there?\" or \"What were you wearing?\" (Blame makes children stop telling.)",
-        "Respect your elders, do what they say, with no exceptions for safety. (Children need to know they can say no to anyone.)"
+        "Respect your elders, do what they say, with no exceptions for safety. (Children need to know they can say no to anyone.)",
+        "Insisting they hug or sit close to a relative when they don't want to. (It teaches them their \"no\" doesn't count with family.)",
+        "Don't make a big deal, he's family. (Children stay quiet about harm when the family's name comes first.)",
+        "Girls have to adjust. (It teaches them that their comfort doesn't matter.)"
       ],
       "react": {
         "quiet": "That's okay. Just know you can always say no, and always tell me.",
@@ -247,7 +262,10 @@
       "avoid": [
         "Comments on their weight, skin or looks. (Even small comments stay with them for years.)",
         "We don't talk about these things. (They'll go to the internet instead.)",
-        "Giving medical advice yourself. (For symptoms or worries, see a doctor.)"
+        "Giving medical advice yourself. (For symptoms or worries, see a doctor.)",
+        "Treating periods as something to hide or be ashamed of. (It adds shame to something completely normal.)",
+        "Boys don't cry, be a man. (It teaches sons to hide what they feel about their bodies and changes.)",
+        "Ask your mother about this, not me. (Passing them on tells them the topic is too awkward to talk about.)"
       ],
       "react": {
         "quiet": "Honestly, it's a bit awkward for me too. We can keep it short.",

@@ -67,6 +67,9 @@ The AI only rewords. It never adds new facts, numbers, advice or help numbers. T
 1. "You're too young for this." (It shuts the door, and next time they won't tell you.)
 2. "Who is it? Tell me their name." (It turns a chat into questioning.)
 3. Teasing about crushes, even lovingly. (Teens remember the joke, not the love.)
+4. "What will people say?" ("Log kya kahenge?") (They hear that the family's image matters more than they do.)
+5. "Focus on your studies, all this can wait." (It tells them their feelings are a distraction, so they hide them.)
+6. Telling relatives or other parents what your child shared. (One leak, and they won't confide in you again.)
 
 **If they react:**
 - **Go quiet:** "No rush at all. We can talk whenever. I'm around."
@@ -117,6 +120,9 @@ The AI only rewords. It never adds new facts, numbers, advice or help numbers. T
 1. "Just don't think about it" or "Cheer up!" (It tells them their feelings don't count.)
 2. Comparing them with siblings, cousins or other kids. (It adds pressure, not comfort.)
 3. Jumping straight to advice. (Most teens want to be heard first.)
+4. "We never had all this stress in our time." (It brushes off what they're feeling today.)
+5. "After all the money we've spent on your coaching…" (Guilt adds pressure, not motivation.)
+6. "Only your marks matter right now." (They start to believe their worth is a number.)
 
 **If they react:**
 - **Go quiet:** "That's okay. We can just sit here for a bit."
@@ -165,6 +171,9 @@ The AI only rewords. It never adds new facts, numbers, advice or help numbers. T
 1. "Those friends are a bad influence." (They'll defend their friends, and stop telling you about them.)
 2. Rapid-fire questions: who, where, how late. (It feels like checking up, not caring.)
 3. "When I was your age…" lectures. (They tune out after the first line.)
+4. "Why can't you make friends with the toppers?" (It judges their friends by marks, and they stop telling you about them.)
+5. Calling their friends' parents behind their back. (If they find out, they'll stop trusting you, and so might their friends.)
+6. "Girls and boys shouldn't be friends." (It makes normal friendships feel shameful, so they hide them.)
 
 **If they react:**
 - **Go quiet:** "No pressure. I was just curious about your world."
@@ -213,6 +222,9 @@ The AI only rewords. It never adds new facts, numbers, advice or help numbers. T
 1. "Just don't post photos, then nothing will happen." (Fake images can be made from any normal photo.)
 2. Threatening to take the phone away. (Teens hide problems when they're scared of losing it.)
 3. Checking their phone secretly. (If they find out, trust is hard to win back.)
+4. "This phone has spoiled you." (Blaming the phone shuts down the talk about what's actually happening on it.)
+5. "Delete everything and don't tell anyone." (Deleting removes proof, and silence leaves them alone with it.)
+6. "What will people think if this gets out?" (Fear of shame stops children from asking for help.)
 
 **If they react:**
 - **Go quiet:** "That's okay. I just want you to know my door's always open."
@@ -261,6 +273,9 @@ Most people who harm children are known to them: about 97% of offenders in India
 1. "Strangers are the danger." (Most harm comes from people a child knows.)
 2. Blaming questions like "Why were you there?" or "What were you wearing?" (Blame makes children stop telling.)
 3. "Respect your elders, do what they say", with no exceptions for safety. (Children need to know they can say no to anyone.)
+4. Insisting they hug or sit close to a relative when they don't want to. (It teaches them their "no" doesn't count with family.)
+5. "Don't make a big deal, he's family." (Children stay quiet about harm when the family's name comes first.)
+6. "Girls have to adjust." (It teaches them that their comfort doesn't matter.)
 
 **If they react:**
 - **Go quiet:** "That's okay. Just know you can always say no, and always tell me."
@@ -309,6 +324,9 @@ Puberty questions are often left to school or friends. In a 2026 Bengaluru study
 1. Comments on their weight, skin or looks. (Even small comments stay with them for years.)
 2. "We don't talk about these things." (They'll go to the internet instead.)
 3. Giving medical advice yourself. (For symptoms or worries, see a doctor.)
+4. Treating periods as something to hide or be ashamed of. (It adds shame to something completely normal.)
+5. "Boys don't cry, be a man." (It teaches sons to hide what they feel about their bodies and changes.)
+6. "Ask your mother about this, not me." (Passing them on tells them the topic is too awkward to talk about.)
 
 **If they react:**
 - **Go quiet:** "Honestly, it's a bit awkward for me too. We can keep it short."

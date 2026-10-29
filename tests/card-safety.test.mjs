@@ -39,6 +39,7 @@ const cases = [
   ["punishment", tweak("consent", (c) => (c.react.disagree = "Then you'll be punished.")), "consent", "english", false],
   ["promised result", tweak("friends", (c) => (c.say[1] = "This will fix everything between us.")), "friends", "english", false],
   ["only 2 'say' lines", tweak("stress", (c) => c.say.pop()), "stress", "english", false],
+  ["only 3 'avoid' lines (old card shape)", tweak("stress", (c) => (c.avoid = c.avoid.slice(0, 3))), "stress", "english", false],
   ["only 2 gentle questions (old card shape)", tweak("friends", (c) => (c.followUps = c.followUps.slice(0, 2))), "friends", "english", false],
   ["spying hidden in question 9", tweak("online-safety", (c) => (c.followUps[8] = "Can I read your chats to make sure you're safe?")), "online-safety", "english", false],
   ["fear words in question 10", tweak("stress", (c) => (c.followUps[9] = "Every parent must ask this: are you hiding something dangerous?")), "stress", "english", false],

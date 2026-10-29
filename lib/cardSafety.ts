@@ -51,7 +51,7 @@ export function checkAiCard(raw: unknown, base: BaseCard, language: Language): S
   if (!isText(c.firstLine, 220)) problems.push("first line missing or too long");
   if (!isList(c.followUps, 10)) problems.push("needs exactly 10 gentle questions");
   if (!isList(c.say, 3)) problems.push("needs exactly 3 'say' lines");
-  if (!isList(c.avoid, 3)) problems.push("needs exactly 3 'avoid' lines");
+  if (!isList(c.avoid, 6)) problems.push("needs exactly 6 'avoid' lines");
   const r = c.react;
   if (!r || !["quiet", "upset", "disagree", "noTalk"].every((k) => isText((r as Record<string, unknown>)[k], 300))) {
     problems.push("needs all 4 'if they react' lines");

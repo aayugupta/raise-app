@@ -68,7 +68,7 @@ const cards = blocks.map((block) => {
   const avoid = listItems(need("Avoid:"));
   if (followUps.length !== 10) problems.push(`${name}: needs exactly 10 gentle questions (found ${followUps.length})`);
   if (say.length !== 3) problems.push(`${name}: needs exactly 3 "Say" lines (found ${say.length})`);
-  if (avoid.length !== 3) problems.push(`${name}: needs exactly 3 "Avoid" lines (found ${avoid.length})`);
+  if (avoid.length !== 6) problems.push(`${name}: needs exactly 6 "Avoid" lines (found ${avoid.length})`);
 
   const reactText = need("If they react:");
   const react = {};
