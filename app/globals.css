@@ -2918,3 +2918,117 @@ a {
 .coach-page.has-bottom-nav {
   padding-bottom: calc(66px + env(safe-area-inset-bottom));
 }
+
+/* Home: the bell in the top right corner, with a drop-down list of reminders (29 Oct 2026) */
+.home-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.bell {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.bell-btn {
+  position: relative;
+  width: var(--tap);
+  height: var(--tap);
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+}
+
+.bell-dot {
+  position: absolute;
+  top: 10px;
+  right: 11px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent-text);
+  border: 2px solid var(--surface);
+}
+
+.bell-panel {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 30;
+  width: min(330px, calc(100vw - 32px));
+  max-height: 60vh;
+  overflow-y: auto;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: 12px;
+}
+
+.bell-panel-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--fs-lg);
+  color: var(--text);
+  margin: 2px 4px 8px;
+}
+
+.bell-empty {
+  margin: 4px 4px 8px;
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+}
+
+.bell-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+}
+
+.bell-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: var(--tap);
+  padding: 10px;
+  border-radius: 12px;
+  background: var(--bg);
+  text-decoration: none;
+  color: var(--text);
+}
+
+.bell-item:hover {
+  background: var(--surface-sage);
+}
+
+.bell-item-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.bell-item-title {
+  display: block;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.bell-item-detail {
+  display: block;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.bell-item-arrow {
+  color: var(--primary);
+  font-weight: 700;
+}

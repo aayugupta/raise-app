@@ -8,6 +8,7 @@ import FamilySofa from "@/components/FamilySofa";
 import { currentFirstLine } from "@/lib/cards";
 import JourneyCard, { whenText } from "@/components/JourneyCard";
 import JourneyMapMini from "@/components/JourneyMapMini";
+import NotificationBell, { type BellItem } from "@/components/NotificationBell";
 import Sprout from "@/components/Sprout";
 import TopicArt from "@/components/TopicArt";
 import { mapPosition } from "@/lib/journeyMap";
@@ -106,6 +107,29 @@ export default function Home() {
   const rank = (id: TopicId) => (done.has(id) ? 2 : activeTopics.has(id) ? 1 : 0);
   const carousel = [...TOPICS].sort((a, b) => rank(a.id) - rank(b.id));
   // Up next: the first topic (in the library's order) not done, not in progress and not the setup pick.
+  // The bell (Aayushi, 29 Oct 2026): every pending step in one list. Planned moments first (by time), named by
+  // the moment, never the topic; then each open topic's next step; then the setup pick if not started yet.
+  const bellItems: BellItem[] = [];
+  for (const p of [...plans].sort((a, b) => a.when.localeCompare(b.when))) {
+    const stage = planStage(p, now);
+    const m = momentOf(p);
+    const moment = m.calendarTitle.replace(/^Your /, "").toLowerCase();
+    if (stage === "check-in" || (stage === "now" && now > Date.parse(p.when) + REFLECT_AFTER_MS)) {
+      bellItems.push({ id: `r-${p.id}`, icon: m.icon, title: `How did your ${moment} go?`, detail: `${whenText(p.when)} · Tell us in two taps`, href: `/reflect/${p.id}`, waiting: true });
+    } else if (stage === "now") {
+      bellItems.push({ id: `n-${p.id}`, icon: m.icon, title: `It's time for your ${moment}`, detail: whenText(p.when), href: `/talk/${p.id}`, waiting: true });
+    } else if (stage === "upcoming") {
+      bellItems.push({ id: `u-${p.id}`, icon: m.icon, title: `Coming up: your ${moment}`, detail: whenText(p.when), href: "/journey", waiting: false });
+    }
+  }
+  for (const j of allJourneys.filter((j) => j.step < 4)) {
+    const t = TOPICS.find((x) => x.id === j.topic)!;
+    bellItems.push({ id: `j-${j.topic}`, icon: t.icon, title: t.short, detail: `Next: ${j.action}`, href: j.href, waiting: true });
+  }
+  if (pick) {
+    bellItems.push({ id: `p-${pick.id}`, icon: pick.icon, title: `Your chosen topic: ${pick.short}`, detail: "Next: Open the flashcards", href: `/card/${pick.id}`, waiting: true });
+  }
+
   const upNext = TOPICS.find((t) => !done.has(t.id) && !activeTopics.has(t.id) && t.id !== pick?.id);
 
   return (
@@ -114,10 +138,13 @@ export default function Home() {
         <div className="home-top">
           {/* Greeting */}
           {/* All italic: "Hello" and the name both in Deep Sage, and a small emoji for the role (Aayushi, 29 Oct 2026) */}
-          <h1 className="home-greeting">
-            <span className="home-greeting-hello">Hello</span> <em>{greetName(profile)}</em>{" "}
-            <span aria-hidden="true">{profile.role === "mother" ? "👩🏽" : profile.role === "father" ? "👨🏽" : "🧑🏽"}</span>
-          </h1>
+          <div className="home-header">
+            <h1 className="home-greeting">
+              <span className="home-greeting-hello">Hello</span> <em>{greetName(profile)}</em>{" "}
+              <span aria-hidden="true">{profile.role === "mother" ? "👩🏽" : profile.role === "father" ? "👨🏽" : "🧑🏽"}</span>
+            </h1>
+            <NotificationBell items={bellItems} />
+          </div>
           <div style={{ fontSize: 15, color: "var(--text-muted)", marginTop: 4 }}>One small conversation at a time.</div>
 
           {duePlan && <ReflectReminder plan={duePlan} onLater={() => remindTomorrow(duePlan.id)} />}
