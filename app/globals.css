@@ -2697,3 +2697,82 @@ a {
 .mini-map-link {
   font-style: normal;
 }
+
+/* AI Coach: speak instead of type (29 Oct 2026) */
+.coach-composer {
+  position: relative;
+}
+
+.voice-btn {
+  width: 52px;
+  height: 52px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface-sage);
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.voice-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.voice-btn.listening {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--text);
+  animation: voice-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes voice-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 var(--accent-soft); }
+  50% { box-shadow: 0 0 0 8px var(--accent-soft); }
+}
+
+.voice-panel {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(100% + 4px);
+  background: var(--surface, #fff);
+  border: 1px solid var(--border);
+  border-radius: var(--radius, 14px);
+  box-shadow: var(--shadow-md);
+  padding: 12px 14px;
+  font-size: var(--fs-sm, 14px);
+  color: var(--text);
+  z-index: 5;
+}
+
+.voice-ok {
+  min-height: 40px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 999px;
+  background: var(--primary);
+  color: #fff;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.voice-dot {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--danger);
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .voice-btn.listening {
+    animation: none;
+  }
+}

@@ -14,6 +14,7 @@ import { loadOpenTopics, loadPlans } from "@/lib/talks";
 import { loadProfile, type Profile } from "@/lib/profile";
 import { HELP_LINES } from "@/lib/safety";
 import { TOPICS, type TopicId } from "@/lib/topics";
+import VoiceInput from "@/components/VoiceInput";
 
 // Screen 7: AI Coach (Aayushi's simplified flow, 28 Oct 2026). Parents share how a talk went,
 // ask doubts, or bring any topic the flashcards don't cover. Every message is checked before it
@@ -360,6 +361,8 @@ export default function Coach() {
               rows={2}
               aria-label="Your message to the coach"
             />
+            {/* Speak instead of type: the words land in the box to check before sending */}
+            <VoiceInput language={profile.language} draft={draft} onDraft={setDraft} disabled={waiting} maxLength={COACH_MAX_CHARS} />
             <button className="btn-primary" type="submit" disabled={!draft.trim() || waiting} aria-label="Send">
               ➤
             </button>

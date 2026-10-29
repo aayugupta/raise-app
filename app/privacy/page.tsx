@@ -27,7 +27,7 @@ const PROMISES: { title: string; detail: string }[] = [
   {
     title: "The AI sees only what it needs",
     detail:
-      "Talk Cards use only your taps (like “father, 15–16, Hinglish”). In AI Coach, what you type goes to Google's Gemini AI to write a reply, so please don't use names. Your reflections are never sent.",
+      "Talk Cards use only your taps (like “father, 15–16, Hinglish”). In AI Coach, what you type goes to Google's Gemini AI to write a reply, so please don't use names. If you use the mic, your phone's speech service (Google or Apple) turns your voice into text; Raise never records or stores your voice. Your reflections are never sent.",
   },
   {
     title: "We count taps, not people",
