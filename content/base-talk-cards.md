@@ -62,6 +62,9 @@ The AI only rewords. It never adds new facts, numbers, advice or help numbers. T
 1. "You won't be in trouble for telling me." (the safety promise)
 2. "Honestly? I had crushes at your age too. Totally normal."
 3. "Real life isn't like the films. If you ever wonder what's real, just ask me. No lecture, promise."
+4. "Whoever you like, you can tell me first. I'd rather hear it from you than from anyone else."
+5. "Liking someone doesn't make you a bad child. It just means you're growing up."
+6. "If anyone ever makes you feel uncomfortable, you can always come home and tell me."
 
 **Avoid:**
 1. "You're too young for this." (It shuts the door, and next time they won't tell you.)
@@ -115,6 +118,9 @@ The AI only rewords. It never adds new facts, numbers, advice or help numbers. T
 1. "You won't be in trouble for telling me." (the safety promise)
 2. "That sounds really hard. I'm glad you told me."
 3. "You don't have to carry this alone. I'm right here."
+4. "Your marks don't decide how much we love you."
+5. "It's okay to take a break. Come, let's go for a walk."
+6. "I felt like this too at your age. You're not alone in this."
 
 **Avoid:**
 1. "Just don't think about it" or "Cheer up!" (It tells them their feelings don't count.)
@@ -166,6 +172,9 @@ The AI only rewords. It never adds new facts, numbers, advice or help numbers. T
 1. "You won't be in trouble for telling me." (the safety promise)
 2. "Saying no to friends is hard. Honestly, adults struggle with it too."
 3. "Need an excuse to leave? Blame me. Just say 'my parents won't allow it'."
+4. "I trust you to choose good friends. I just like hearing about them."
+5. "Your friends are always welcome at home."
+6. "If a friend ever pushes you into something, call me. I'll come, no questions asked."
 
 **Avoid:**
 1. "Those friends are a bad influence." (They'll defend their friends, and stop telling you about them.)
@@ -217,6 +226,9 @@ The AI only rewords. It never adds new facts, numbers, advice or help numbers. T
 1. "If anyone ever threatens you with a photo, come straight to me. You won't be in trouble." (the safety promise)
 2. "If someone threatens you, it's never your fault. Never."
 3. "Even a fake photo can be reported and taken down. There's real help for this."
+4. "You can show me anything that worries you online. I'll stay calm, I promise."
+5. "Everyone makes mistakes online, adults too. What matters is telling someone."
+6. "If someone online ever scares you, we'll handle it together."
 
 **Avoid:**
 1. "Just don't post photos, then nothing will happen." (Fake images can be made from any normal photo.)
@@ -268,6 +280,9 @@ Most people who harm children are known to them: about 97% of offenders in India
 1. "You won't be in trouble for telling me, whoever it's about." (the safety promise)
 2. "You can say no to anyone, even family, teachers or friends, if something feels wrong. I'll back you."
 3. "Other people's no matters too. Asking first is always right."
+4. "Your body belongs to you. You decide who can hug or touch you."
+5. "If something feels wrong, trust that feeling and come to me."
+6. "I'll always believe you, whoever it is about."
 
 **Avoid:**
 1. "Strangers are the danger." (Most harm comes from people a child knows.)
@@ -319,6 +334,9 @@ Puberty questions are often left to school or friends. In a 2026 Bengaluru study
 1. "You won't be in trouble for asking me anything." (the safety promise)
 2. "Everyone grows at their own pace. There's no 'right' time."
 3. "If I don't know the answer, we'll find out together, or ask a doctor."
+4. "No question about growing up is too embarrassing to ask me."
+5. "Changes like periods, a cracking voice or new hair are just part of growing up. Nothing to hide."
+6. "You can talk to me, or to anyone in the family you feel easier with."
 
 **Avoid:**
 1. Comments on their weight, skin or looks. (Even small comments stay with them for years.)

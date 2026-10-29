@@ -27,7 +27,10 @@
       "say": [
         "You won't be in trouble for telling me.",
         "Honestly? I had crushes at your age too. Totally normal.",
-        "Real life isn't like the films. If you ever wonder what's real, just ask me. No lecture, promise."
+        "Real life isn't like the films. If you ever wonder what's real, just ask me. No lecture, promise.",
+        "Whoever you like, you can tell me first. I'd rather hear it from you than from anyone else.",
+        "Liking someone doesn't make you a bad child. It just means you're growing up.",
+        "If anyone ever makes you feel uncomfortable, you can always come home and tell me."
       ],
       "avoid": [
         "You're too young for this. (It shuts the door, and next time they won't tell you.)",
@@ -73,7 +76,10 @@
       "say": [
         "You won't be in trouble for telling me.",
         "That sounds really hard. I'm glad you told me.",
-        "You don't have to carry this alone. I'm right here."
+        "You don't have to carry this alone. I'm right here.",
+        "Your marks don't decide how much we love you.",
+        "It's okay to take a break. Come, let's go for a walk.",
+        "I felt like this too at your age. You're not alone in this."
       ],
       "avoid": [
         "Just don't think about it or \"Cheer up!\" (It tells them their feelings don't count.)",
@@ -119,7 +125,10 @@
       "say": [
         "You won't be in trouble for telling me.",
         "Saying no to friends is hard. Honestly, adults struggle with it too.",
-        "Need an excuse to leave? Blame me. Just say 'my parents won't allow it'."
+        "Need an excuse to leave? Blame me. Just say 'my parents won't allow it'.",
+        "I trust you to choose good friends. I just like hearing about them.",
+        "Your friends are always welcome at home.",
+        "If a friend ever pushes you into something, call me. I'll come, no questions asked."
       ],
       "avoid": [
         "Those friends are a bad influence. (They'll defend their friends, and stop telling you about them.)",
@@ -165,7 +174,10 @@
       "say": [
         "If anyone ever threatens you with a photo, come straight to me. You won't be in trouble.",
         "If someone threatens you, it's never your fault. Never.",
-        "Even a fake photo can be reported and taken down. There's real help for this."
+        "Even a fake photo can be reported and taken down. There's real help for this.",
+        "You can show me anything that worries you online. I'll stay calm, I promise.",
+        "Everyone makes mistakes online, adults too. What matters is telling someone.",
+        "If someone online ever scares you, we'll handle it together."
       ],
       "avoid": [
         "Just don't post photos, then nothing will happen. (Fake images can be made from any normal photo.)",
@@ -211,7 +223,10 @@
       "say": [
         "You won't be in trouble for telling me, whoever it's about.",
         "You can say no to anyone, even family, teachers or friends, if something feels wrong. I'll back you.",
-        "Other people's no matters too. Asking first is always right."
+        "Other people's no matters too. Asking first is always right.",
+        "Your body belongs to you. You decide who can hug or touch you.",
+        "If something feels wrong, trust that feeling and come to me.",
+        "I'll always believe you, whoever it is about."
       ],
       "avoid": [
         "Strangers are the danger. (Most harm comes from people a child knows.)",
@@ -257,7 +272,10 @@
       "say": [
         "You won't be in trouble for asking me anything.",
         "Everyone grows at their own pace. There's no 'right' time.",
-        "If I don't know the answer, we'll find out together, or ask a doctor."
+        "If I don't know the answer, we'll find out together, or ask a doctor.",
+        "No question about growing up is too embarrassing to ask me.",
+        "Changes like periods, a cracking voice or new hair are just part of growing up. Nothing to hide.",
+        "You can talk to me, or to anyone in the family you feel easier with."
       ],
       "avoid": [
         "Comments on their weight, skin or looks. (Even small comments stay with them for years.)",

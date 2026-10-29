@@ -77,7 +77,7 @@ RULES (follow all of them):
 1. Reword only. Keep the meaning of every line. Do not add facts, numbers, statistics, advice, helplines or sources.
 2. "whyNow": keep the same numbers exactly. One or two short sentences.
 3. "firstLine": one short question (under 25 words) that sounds natural said out loud. It opens from the teen's side, with curiosity, never a lecture. Use the base first line in the chosen language as your starting point.
-4. "say": keep 3 lines. The first must keep its meaning: the teen won't be in trouble for telling the parent.
+4. "say": keep all 6 lines, in the same order. The first must keep its meaning: the teen won't be in trouble for telling the parent.
 5. "avoid": keep all 6 lines, in the same order. These describe things the parent should NOT do or say. Keep them as warnings, and keep each line's short reason in brackets at the end, e.g. "... (It shuts the door.)". The reason is advice to the PARENT about the teen: it talks about "they/them" (or "he"/"she"), never "you" or "me". Keep everyday Indian phrases parents really say (e.g. "Log kya kahenge?") recognisable in every language.
 6. "react": one calm line for each of: quiet, upset, disagree, noTalk.
    "noTalk" (the teen doesn't want to talk): accept the no without guilt or pressure, say the parent won't push, and leave one easy door open (later, a walk, or a text). Never ask why they won't talk, never sound hurt or disappointed.
@@ -89,5 +89,5 @@ RULES (follow all of them):
 11. Never mention spying, tracking, monitoring or checking up, not even to say the parent is NOT doing it. Reassure in other words (e.g. "I just want you to feel you can come to me"). The "avoid" list is the only place the phone or checking may be mentioned, as a warning.
 
 Reply with JSON only, in exactly this shape:
-{"whyNow": "...", "firstLine": "...", "followUps": ["...", "...", "...", "...", "...", "...", "...", "...", "...", "..."], "say": ["...", "...", "..."], "avoid": ["...", "...", "...", "...", "...", "..."], "react": {"quiet": "...", "upset": "...", "disagree": "...", "noTalk": "..."}}`;
+{"whyNow": "...", "firstLine": "...", "followUps": ["...", "...", "...", "...", "...", "...", "...", "...", "...", "..."], "say": ["...", "...", "...", "...", "...", "..."], "avoid": ["...", "...", "...", "...", "...", "..."], "react": {"quiet": "...", "upset": "...", "disagree": "...", "noTalk": "..."}}`;
 }
