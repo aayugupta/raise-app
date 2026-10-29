@@ -92,6 +92,8 @@ export default function Home() {
           <div style={{ fontSize: 15, color: "var(--text-muted)", marginTop: 4 }}>One small conversation at a time.</div>
 
           {/* The small journey map: where you are in Raise's five steps (tap for the full map) */}
+          {/* Becoming a Super Parent first, then the journey map right below it (Aayushi, 29 Oct 2026) */}
+          <SuperParentGoal done={talkedAbout} total={TOPICS.length} />
           <JourneyMapMini {...mapPosition(allJourneys, pick?.id)} />
 
           {/* The topic picked in setup, on its own so it's clearly "mine" */}
@@ -138,9 +140,6 @@ export default function Home() {
 
         {/* Right column on wider screens; under the carousel on phones (next step first there) */}
         <aside className="home-side">
-          <div className="home-side-goal">
-            <SuperParentGoal done={talkedAbout} total={TOPICS.length} />
-          </div>
           <div className="home-side-next">
             {/* The gentle nudge: have the talk, then tell Raise how it went, and a new topic can follow. */}
             {journeys.length > 0 && nowPlans.length === 0 && <TalkPrompt journey={journeys[0]} />}
@@ -216,22 +215,22 @@ function SuperParentGoal({ done, total }: { done: number; total: number }) {
   const reached = done >= total;
   const message =
     done === 0
-      ? "Every conversation starts somewhere. Pick a topic when you feel ready."
+      ? "Every conversation starts somewhere."
       : reached
-        ? `You've noted a talk on all ${total} topics. Keep the conversations going.`
-        : "You're on your way. Each talk you note grows a new leaf, at your own pace.";
+        ? "Keep the conversations going."
+        : "Each talk you note grows a leaf.";
   return (
     <section className="goal-card goal-sprout" aria-label={`Becoming a Super Parent: ${done} of ${total} topics talked about`}>
       {/* One leaf grows for each topic talked about (29 Oct 2026) */}
-      <Sprout done={done} total={total} size={70} />
+      <Sprout done={done} total={total} size={48} />
       <div style={{ flex: 1, minWidth: 0 }}>
-        <span className="goal-title">{reached ? "Super Parent ⭐" : "Becoming a Super Parent"}</span>
-        <div className="goal-count">
-          {Math.min(done, total)} of {total} topics · {Math.min(done, total)} {Math.min(done, total) === 1 ? "leaf" : "leaves"} grown
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 8, flexWrap: "wrap" }}>
+          <span className="goal-title">{reached ? "Super Parent ⭐" : "Becoming a Super Parent"}</span>
+          <span className="goal-count">
+            {Math.min(done, total)} of {total} topics
+          </span>
         </div>
-        <p className="goal-message" style={{ marginTop: 6 }}>
-          {message}
-        </p>
+        <p className="goal-message goal-italic">{message}</p>
       </div>
     </section>
   );

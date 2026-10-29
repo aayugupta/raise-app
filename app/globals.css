@@ -2618,14 +2618,6 @@ a {
   flex-direction: column;
 }
 
-/* Becoming a Super Parent above Your next step, on every screen (Aayushi, 29 Oct 2026) */
-.home-side-goal {
-  order: 1;
-}
-
-.home-side-next {
-  order: 2;
-}
 
 @media (min-width: 820px) {
   .home-layout {
@@ -2645,4 +2637,63 @@ a {
     padding-top: 4px;
   }
 
+}
+
+/* Super Parent at the top of Home: concise (29 Oct 2026) */
+.goal-sprout {
+  padding: 10px 14px;
+}
+
+.goal-italic {
+  margin: 2px 0 0;
+  font-style: italic;
+  color: var(--text-muted);
+}
+
+/* The journey map under it: compact, no box, dotted lines, italic labels */
+.mini-map {
+  margin-top: 10px;
+  padding: 4px 2px 0;
+  background: none;
+  border: none;
+  box-shadow: none;
+}
+
+.mini-map-dot {
+  width: 22px;
+  height: 22px;
+  font-size: 11px;
+}
+
+.mini-map-row li:not(:last-child)::after {
+  top: 10px;
+  left: calc(50% + 13px);
+  right: calc(-50% + 13px);
+  border-top: 2px dotted var(--border-strong);
+}
+
+.mini-map-row li.done:not(:last-child)::after {
+  border-top: 2px dotted var(--primary);
+}
+
+.mini-map-label {
+  font-style: italic;
+}
+
+.mini-map-foot {
+  margin-top: 6px;
+  padding-top: 0;
+  border-top: none;
+  font-style: italic;
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+}
+
+.mini-map-foot strong {
+  font-style: normal;
+  color: var(--text);
+}
+
+.mini-map-link {
+  font-style: normal;
 }
