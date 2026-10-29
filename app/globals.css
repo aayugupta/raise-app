@@ -1390,9 +1390,15 @@ a {
 }
 
 /* The message box stays above the tab bar while the chat scrolls. */
-.coach-composer {
+/* The message box and the row under it stay together above the tab bar. */
+.coach-dock {
   position: sticky;
   bottom: calc(76px + env(safe-area-inset-bottom));
+  z-index: 2;
+  background: var(--bg);
+}
+
+.coach-composer {
   display: flex;
   gap: 8px;
   align-items: flex-end;
@@ -2441,15 +2447,11 @@ a {
 
 /* Coach: one row just above the message box (clear chat left, Move to Step 3 right), staying in place */
 .coach-actions {
-  position: sticky;
-  bottom: calc(76px + 68px + env(safe-area-inset-bottom));
-  z-index: 2;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 8px;
-  margin-top: 8px;
-  padding: 6px 0;
+  padding: 0 0 6px;
   background: var(--bg);
 }
 

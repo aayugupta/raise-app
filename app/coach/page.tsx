@@ -335,66 +335,69 @@ export default function Coach() {
           <div ref={endRef} style={{ scrollMarginBottom: 190 }} />
         </div>
 
-        {/* One row just above the message box: clear on the left, the way on to step 3 on the right */}
-        {(chat.length > 0 || topicMeta) && (
-          <div className="coach-actions">
-            {chat.length > 0 &&
-              (!confirmClear ? (
-                <button className="coach-clear" onClick={() => setConfirmClear(true)}>
-                  Clear this chat
-                </button>
-              ) : (
-                <span className="coach-clear-confirm">
-                  Delete this chat?{" "}
-                  <button className="coach-clear" style={{ color: "var(--danger)" }} onClick={clearChat}>
-                    Yes, clear
-                  </button>{" "}
-                  ·{" "}
-                  <button className="coach-clear" onClick={() => setConfirmClear(false)}>
-                    Keep
-                  </button>
-                </span>
-              ))}
-            {topicMeta && (
-              <Link
-                href={`/plan/${topicMeta.id}${practised ? "" : "?skipPractice=1"}`}
-                onClick={() => markPractised(topicMeta.id, !practised)}
-                className={`step3-pill${practised ? " ready" : ""}`}
-                aria-label="Move to Step 3: plan a moment"
-              >
-                Move to Step 3 →
-              </Link>
-            )}
-          </div>
-        )}
-
-        <form
-          className="coach-composer"
-          onSubmit={(ev) => {
-            ev.preventDefault();
-            send(draft);
-          }}
-        >
-          <textarea
-            ref={inputRef}
-            className="text-input"
-            value={draft}
-            onChange={(ev) => setDraft(ev.target.value)}
-            onKeyDown={(ev) => {
-              if (ev.key === "Enter" && !ev.shiftKey) {
-                ev.preventDefault();
-                send(draft);
-              }
+        {/* The message box with its row underneath, staying in place above the tab bar */}
+        <div className="coach-dock">
+          <form
+            className="coach-composer"
+            onSubmit={(ev) => {
+              ev.preventDefault();
+              send(draft);
             }}
-            placeholder={hint}
-            maxLength={COACH_MAX_CHARS}
-            rows={2}
-            aria-label="Your message to the coach"
-          />
-          <button className="btn-primary" type="submit" disabled={!draft.trim() || waiting} aria-label="Send">
-            ➤
-          </button>
-        </form>
+          >
+            <textarea
+              ref={inputRef}
+              className="text-input"
+              value={draft}
+              onChange={(ev) => setDraft(ev.target.value)}
+              onKeyDown={(ev) => {
+                if (ev.key === "Enter" && !ev.shiftKey) {
+                  ev.preventDefault();
+                  send(draft);
+                }
+              }}
+              placeholder={hint}
+              maxLength={COACH_MAX_CHARS}
+              rows={2}
+              aria-label="Your message to the coach"
+            />
+            <button className="btn-primary" type="submit" disabled={!draft.trim() || waiting} aria-label="Send">
+              ➤
+            </button>
+          </form>
+
+          {/* Just below the message box: clear on the left, the way on to step 3 on the right */}
+          {(chat.length > 0 || topicMeta) && (
+            <div className="coach-actions">
+              {chat.length > 0 &&
+                (!confirmClear ? (
+                  <button className="coach-clear" onClick={() => setConfirmClear(true)}>
+                    Clear this chat
+                  </button>
+                ) : (
+                  <span className="coach-clear-confirm">
+                    Delete this chat?{" "}
+                    <button className="coach-clear" style={{ color: "var(--danger)" }} onClick={clearChat}>
+                      Yes, clear
+                    </button>{" "}
+                    ·{" "}
+                    <button className="coach-clear" onClick={() => setConfirmClear(false)}>
+                      Keep
+                    </button>
+                  </span>
+                ))}
+              {topicMeta && (
+                <Link
+                  href={`/plan/${topicMeta.id}${practised ? "" : "?skipPractice=1"}`}
+                  onClick={() => markPractised(topicMeta.id, !practised)}
+                  className={`step3-pill${practised ? " ready" : ""}`}
+                  aria-label="Move to Step 3: plan a moment"
+                >
+                  Move to Step 3 →
+                </Link>
+              )}
+            </div>
+          )}
+        </div>
         <p style={{ fontSize: 12, color: "var(--text-muted)", textAlign: "center", margin: "6px 0 0" }}>
           The coach is AI and can get things wrong. It isn't counselling or medical advice.
         </p>
