@@ -101,7 +101,8 @@ export default function Coach() {
     setDraft("");
     setHint("Type your question…");
     // Role-play turns are kept apart, so the normal chat never mixes with the practice.
-    const tag = roleplay && topic ? { roleplay: true, topic } : {};
+    // Every message remembers its topic, so the chat still knows it after the parent comes back via the tab bar.
+    const tag = topic ? { topic, ...(roleplay ? { roleplay: true } : {}) } : {};
 
     // Checked on the phone first: a danger sign or a refused request never leaves the phone.
     const check = checkCoachMessage(message);
@@ -293,7 +294,10 @@ export default function Coach() {
             const before = visible[visible.length - 2];
             const ended = last?.role === "coach" && "text" in last && !last.fallback && before?.role === "parent" && "text" in before && before.text === CHECKIN_READY;
             if (!ended) return null;
-            const planTopics = topicMeta ? [topicMeta] : TOPICS.filter((t) => toPlan.includes(t.id)).slice(0, 3);
+            // The topic this chat was about: from the link, else from the "I'm ready" message itself. Only a chat with
+            // no topic at all lists every open topic.
+            const chatTopic = topicMeta ?? TOPICS.find((t) => "topic" in before && t.id === before.topic);
+            const planTopics = chatTopic ? [chatTopic] : TOPICS.filter((t) => toPlan.includes(t.id)).slice(0, 3);
             return (
               <section className="coach-next" aria-label="Your next step">
                 <div className="card-label">Next · Step 3 of 4</div>
