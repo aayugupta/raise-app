@@ -63,14 +63,14 @@ export default function JourneyScreen() {
 
         {ready && stats && (
           <>
-            {/* Two rings (Aayushi, 29 Oct 2026): left = talks noted, counting only finished journeys (topics still in
-                progress stay out of the ring and show under "Active now");
+            {/* Two rings (Aayushi, 29 Oct 2026): left = talks noted out of journeys started (the metric, as counts);
                 right = different topics talked about out of all topics (same count as Super Parent on Home) */}
             <section className="notice progress-summary">
               <div className="progress-col">
-                <ProgressRing done={stats.completed} total={stats.completed + stats.notCompleted} unit="talks" colour="var(--primary)" label={`${stats.completed} talks noted`} />
+                <ProgressRing done={stats.completed} total={stats.started} unit="talks" colour="var(--primary)" label={`${stats.completed} of ${stats.started} talks noted`} />
                 <div className="progress-caption">
                   <strong>Talks noted</strong>
+                  <span>{stats.inProgress} in progress</span>
                   {stats.notCompleted > 0 && <span>{stats.notCompleted} ready for another try</span>}
                 </div>
               </div>
