@@ -145,6 +145,19 @@ export default function TalkCardView({ topic }: { topic: TopicId }) {
     addOpenTopic(topic);
   }, [shownSource, topic]);
 
+  // Each flashcard is only as tall as its own content (Aayushi, 29 Oct 2026): the deck follows the card
+  // on show, so a short card never gets a blank gap. Re-measured when a card grows ("Show 5 more").
+  useEffect(() => {
+    const deck = deckRef.current;
+    const card = deck?.children[index] as HTMLElement | undefined;
+    if (!deck || !card) return;
+    const fit = () => (deck.style.height = `${card.offsetHeight + 12}px`);
+    fit();
+    const watch = new ResizeObserver(fit);
+    watch.observe(card);
+    return () => watch.disconnect();
+  }, [index, shownSource]);
+
   if (!loaded) {
     return (
       <main style={{ minHeight: "100dvh", background: "var(--bg)" }}>

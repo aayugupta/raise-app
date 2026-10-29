@@ -1087,6 +1087,9 @@ a {
   padding: 4px 16px 8px;
   scroll-padding: 0 16px;
   scrollbar-width: none;
+  /* Cards keep their own height; the deck takes the height of the card on show (set in TalkCardView) */
+  align-items: flex-start;
+  transition: height 0.25s ease;
 }
 
 .flash-deck::-webkit-scrollbar {
