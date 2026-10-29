@@ -1403,7 +1403,8 @@ a {
 /* The message box and the row under it stay together above the tab bar. */
 .coach-dock {
   position: sticky;
-  bottom: calc(76px + env(safe-area-inset-bottom));
+  /* Rests right on top of the tab bar (66px tall), with no gap (29 Oct 2026) */
+  bottom: calc(66px + env(safe-area-inset-bottom));
   z-index: 2;
   background: var(--bg);
 }
@@ -2911,4 +2912,9 @@ a {
   min-height: 36px;
   display: inline-flex;
   align-items: center;
+}
+
+/* AI Coach: the page ends where the message box meets the tab bar, so the box sits low */
+.coach-page.has-bottom-nav {
+  padding-bottom: calc(66px + env(safe-area-inset-bottom));
 }

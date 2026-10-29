@@ -183,7 +183,7 @@ export default function Coach() {
   if (!profile) return <main style={{ minHeight: "100dvh", background: "var(--bg)" }} />;
 
   return (
-    <main className="has-bottom-nav" style={{ minHeight: "100dvh", background: "var(--bg)" }}>
+    <main className="has-bottom-nav coach-page" style={{ minHeight: "100dvh", background: "var(--bg)" }}>
       <div style={{ width: "100%", maxWidth: 480, margin: "0 auto", padding: "16px 16px 0" }}>
         <h1 style={{ fontSize: 30 }}>AI Coach</h1>
         <p className="why" style={{ marginBottom: 10 }}>
@@ -191,6 +191,8 @@ export default function Coach() {
         </p>
         <p className="coach-privacy">
           🔒 What you type here goes to Google's Gemini AI to write a reply. Please don't use names. Your chat stays on this phone.
+          {/* Moved up from under the message box, so the box can sit right above the tab bar (29 Oct 2026) */}
+          <span style={{ display: "block", marginTop: 4 }}>The coach is AI and can get things wrong. It isn't counselling or medical advice.</span>
         </p>
 
         {/* Step 2 of a topic's journey: practise it */}
@@ -405,9 +407,6 @@ export default function Coach() {
             </div>
           )}
         </div>
-        <p style={{ fontSize: 12, color: "var(--text-muted)", textAlign: "center", margin: "6px 0 0" }}>
-          The coach is AI and can get things wrong. It isn't counselling or medical advice.
-        </p>
       </div>
       <BottomNav />
     </main>
