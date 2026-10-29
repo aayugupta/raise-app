@@ -73,7 +73,7 @@ Aayushi's simplified wireframe (10 screens + Emergency help) replaces the 14-scr
 | 5 | Home | "Hello Mumma/Papa", topic carousel, active 14-day journey card, "Choose topic from library" |
 | 6 | Topic flashcards | The Talk Card split into **4 swipeable flashcards**: (1) opening lines, (2) gentle questions the parent can ask their teen, (3) what to say / what not to say, (4) how to respond when your child reacts (quiet, upset, disagrees, doesn't want to talk). Safety promise on every card |
 | 7 | AI Coach | Where parents **share how a talk went, ask their doubts, and bring any topic not in the flashcards**. Calm guidance from real Gemini, safety checks on every message in and out. **Serious concerns get a dismissible "Would you like help from a professional?" option** leading to Emergency help; the parent decides |
-| 8 | Plan the talk | When, time, setting, reminder, app's suggested best time |
+| 8 | Plan the talk | When, time, setting, reminder. (The "Raise suggests" best-time card was removed, 29 Oct 2026, Aayushi) |
 | 9 | Reflection | What did you say · what did your child say · who spoke more · if it didn't go well, what got in the way → Save. Stays on the phone |
 | 10 | Progress | Topics started vs completed, 14-day journey, confidence over time. Lives under the Journey tab |
 | + | Emergency help | Its own tab. Public helplines + when to talk to a professional (no counsellor network) |

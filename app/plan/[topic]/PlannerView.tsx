@@ -48,17 +48,6 @@ function isSoonEnough(date: Date): boolean {
   return date.getTime() - Date.now() >= MIN_LEAD_MIN * 60_000;
 }
 
-// Raise's suggestion: the next walk or quiet late evening that's still ahead (teens' top two moments).
-function suggestion(): { moment: MomentId; day: number; time: string } {
-  for (const day of [0, 1]) {
-    for (const id of ["walk", "evening"] as const) {
-      const time = MOMENTS.find((m) => m.id === id)!.defaultTime;
-      if (isSoonEnough(dateFor(day, time))) return { moment: id, day, time };
-    }
-  }
-  return { moment: "walk", day: 1, time: "18:30" };
-}
-
 export default function PlannerView({
   topic,
   suggestedMoment,
@@ -75,7 +64,6 @@ export default function PlannerView({
   const [time, setTime] = useState("18:30");
   const [reminder, setReminder] = useState(true);
   const [saved, setSaved] = useState<Plan | null>(null);
-  const [suggested, setSuggested] = useState<ReturnType<typeof suggestion> | null>(null);
 
   function chooseMoment(id: MomentId) {
     const m = MOMENTS.find((x) => x.id === id)!;
@@ -89,7 +77,6 @@ export default function PlannerView({
   // and the moment Recovery suggested, if any.
   useEffect(() => {
     setFirstLine(currentFirstLine(topic, loadProfile()));
-    setSuggested(suggestion());
     if (suggestedMoment) chooseMoment(suggestedMoment);
     // "Plan a moment" without practising: step 2 is passed over, never required.
     if (skippedPractice) markPractised(topic, true);
@@ -150,27 +137,6 @@ export default function PlannerView({
 
         <h1 style={{ fontSize: 28, lineHeight: 1.15, margin: "18px 0 0", textWrap: "balance" }}>Plan your talk</h1>
         <p className="why">Teens open up most side by side: on walks and late in the evening.</p>
-
-        {/* Raise's suggested time to talk */}
-        {suggested && (
-          <section className="suggest-card">
-            <div className="card-label">⭐ Raise suggests</div>
-            <div style={{ fontSize: 17, fontWeight: 700, color: "var(--text)", margin: "6px 0 10px" }}>
-              {MOMENTS.find((m) => m.id === suggested.moment)!.icon} {MOMENTS.find((m) => m.id === suggested.moment)!.label}, {dayPhrase(suggested.day)} at{" "}
-              {timeText(dateFor(suggested.day, suggested.time))}
-            </div>
-            <button
-              className="btn-secondary btn-block"
-              onClick={() => {
-                setMoment(suggested.moment);
-                setDay(suggested.day);
-                setTime(suggested.time);
-              }}
-            >
-              Use this time
-            </button>
-          </section>
-        )}
 
         <h2 className="section-title">Where will you talk?</h2>
         <div style={{ display: "grid", gap: 8 }}>

@@ -1317,14 +1317,6 @@ a {
   color: var(--text-muted);
 }
 
-/* Planner: Raise's suggested time to talk */
-.suggest-card {
-  background: var(--surface-sage);
-  border: 1px solid var(--border-sage);
-  border-radius: var(--radius);
-  padding: 14px;
-}
-
 /* AI Coach */
 .coach-privacy {
   font-size: 13px;
