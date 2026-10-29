@@ -38,8 +38,9 @@ export default function JourneyCard({ journey, whenLabel }: { journey: Journey; 
             {journey.stillOpen && <span className="journey-day">Still open</span>}
           </span>
           <span style={{ display: "block", fontSize: 14, color: "var(--text-muted)", marginTop: 2 }}>
-            Step {journey.step} of {STEP_NAMES.length} · {journey.stepName}
-            {whenLabel ? ` · ${whenLabel}` : ""}
+            {/* Says what is done and what is next, so "step 4 of 4" never reads as finished (Aayushi, 29 Oct 2026) */}
+            {journey.step > 1 ? `${journey.step - 1} of ${STEP_NAMES.length} steps done · ` : ""}Next: {journey.stepName}
+            {whenLabel ? ` · Your talk: ${whenLabel}` : ""}
           </span>
           <span className="journey-steps" aria-hidden="true">
             {STEP_NAMES.map((_, i) => i + 1).map((s) => (
