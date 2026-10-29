@@ -105,12 +105,13 @@ const REFUSALS: { patterns: RegExp[]; message: string; offer: TopicId; offerText
 
 // Words that point to a topic, used to suggest where to start.
 const TOPIC_WORDS: { id: TopicId; pattern: RegExp }[] = [
-  { id: "relationships", pattern: /crush|dating|\bdate\b|boyfriend|girlfriend|\bbf\b|\bgf\b|relationship|\blove\b|pyaar|porn|adult content|\bsex/g },
+  { id: "relationships", pattern: /crush|dating|\bdate\b|boyfriend|girlfriend|\bbf\b|\bgf\b|relationship|\blove\b|pyaar|\bsex/g },
   { id: "friends", pattern: /friend|peer|dost|\bgroup\b|bully/g },
   { id: "stress", pattern: /stress|exam|anxi|\bsad\b|feeling|mood|udaas|tension|marks|result|cry/g },
   { id: "online-safety", pattern: /online|instagram|\binsta\b|social media|internet|scam|cyber/g },
   { id: "consent", pattern: /consent|\btouch|personal safety|say no|stranger|\bsafe/g },
   { id: "body", pattern: /period|puberty|\bbody\b|growing up|pimple|height|weight|shave/g },
+  { id: "adult", pattern: /porn|adult content|adult video|18\+|web ?series|\bott\b|netflix|explicit|obscene/g },
   { id: "gender", pattern: /gender|\bgay\b|lesbian|bisexual|\btrans\w*|lgbt\w*|queer|identity|sexuality/g },
 ];
 

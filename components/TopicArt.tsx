@@ -58,6 +58,14 @@ export default function TopicArt({ id, size = 44 }: { id: TopicId; size?: number
           <ellipse cx="24" cy="38.5" rx="8" ry="2.2" fill={c} opacity="0.35" />
         </>
       )}
+      {id === "adult" && (
+        <>
+          {/* A small screen with a play button */}
+          <rect x="9" y="13" width="30" height="20" rx="3.5" fill={c} />
+          <path d="M21.5 18.5v9l7.5-4.5Z" fill="#fff" />
+          <path d="M19 37h10M24 33v4" stroke={c} strokeWidth="2.4" strokeLinecap="round" />
+        </>
+      )}
       {id === "gender" && (
         <>
           {/* A soft rainbow arc over a small heart */}

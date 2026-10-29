@@ -343,6 +343,55 @@
       "getHelp": "if your teen is being bullied or harassed for who they are → talk to their school, and call Childline 1098. If they seem very low, withdrawn, or talk about hurting themselves → Tele-MANAS 14416, or 112 in an emergency.",
       "sources": "Supreme Court of India, Navtej Singh Johar v. Union of India, 2018 · Supreme Court of India, NALSA v. Union of India, 2014",
       "checkedOn": "29 Oct 2026"
+    },
+    {
+      "id": "adult",
+      "name": "Adult content and 18+ shows",
+      "teenQuestion": "Is what they show in films and web series real?",
+      "whyNow": "5 of 12 teens in our survey named web series and films as a main place they learn about growing up and relationships; only 1 of 12 named parents. In a large US study, 73% of teens had already seen adult content online, over half by age 13. A calm talk at home helps them tell what's real from what's shown.",
+      "whySource": "Raise teen survey, Oct 2026 · Common Sense Media, 2023",
+      "firstLine": {
+        "hinglish": "Aaj kal ki web series mein relationships jaise dikhate hain, kya tumhe lagta hai real life mein bhi aisa hota hai?",
+        "hindi": "आजकल की वेब सीरीज़ में रिश्ते जैसे दिखाते हैं, क्या तुम्हें लगता है असल ज़िंदगी में भी ऐसा होता है?",
+        "english": "The way web series show relationships these days, do you think real life is like that?"
+      },
+      "followUps": [
+        "Which shows are people in your class watching these days?",
+        "What do shows get wrong about how people treat each other?",
+        "Have you ever seen something on a screen that felt weird or uncomfortable?",
+        "Do friends ever share videos or clips that you didn't want to see?",
+        "What do you do when something like that pops up?",
+        "Do you think boys and girls learn different things from these shows?",
+        "What does respect in a relationship look like to you, outside of films?",
+        "If something you saw made you worried or confused, who would you ask?",
+        "Is there anything you've seen that you'd like to ask me about, even if it feels awkward?",
+        "How would you want me to react if you told me you'd seen something 18+?"
+      ],
+      "say": [
+        "Whatever you tell me, you won't be in trouble for telling me.",
+        "Being curious is normal. Everyone your age wonders about these things.",
+        "A lot of what's shown on screen is acting, not how real relationships work.",
+        "In real life, both people have to want it, and either one can say no at any time.",
+        "If you ever see something that upsets you, you can tell me. I won't be angry.",
+        "It's a bit awkward for me too, but I'd rather you hear it from me than from a random video."
+      ],
+      "avoid": [
+        "Chhi, how could you watch such things? (Shame teaches them to hide, not to stop.)",
+        "Taking away their phone as a punishment. (They learn never to tell you again.)",
+        "Checking their history or chats without telling them. (It breaks trust, and they'll just hide it better.)",
+        "Good children don't think about all this. (Curiosity is normal; this makes them feel like something is wrong with them.)",
+        "Wait till you're married, then you'll understand. (They'll look for answers elsewhere, often in worse places.)",
+        "A long lecture the first time it comes up. (Keep it short and calm, so they'll come back to you.)"
+      ],
+      "react": {
+        "quiet": "It's okay, you don't have to say anything. I just want you to know you can ask me anything.",
+        "upset": "I'm not angry, and you're not in trouble. I brought it up because I care about you.",
+        "disagree": "Fair enough. Tell me what you think. I'd like to hear your side.",
+        "noTalk": "Okay, I won't push. If something ever bothers you, tell me later, or text me, whatever feels easier."
+      },
+      "getHelp": "if someone is sending your teen sexual content, asking them for photos, or threatening them → Cybercrime 1930 or cybercrime.gov.in. If they seem unable to stop watching, or it is affecting sleep, studies or mood → NIMHANS SHUT clinic or Tele-MANAS 14416.",
+      "sources": "Raise teen survey, 12 teens, Oct 2026 · Common Sense Media, teens and online adult content, US, 2023",
+      "checkedOn": "29 Oct 2026"
     }
   ]
 }

@@ -94,7 +94,7 @@ const cards = blocks.map((block) => {
 
 const safetyPromise = unquote((md.match(/^\*\*Safety promise:\*\*\s*(.+)$/m) ?? [])[1] ?? "");
 if (!safetyPromise) problems.push(`missing the fixed "Safety promise" line`);
-if (cards.length !== 7) problems.push(`expected 7 cards, found ${cards.length}`);
+if (cards.length !== 8) problems.push(`expected 8 cards, found ${cards.length}`);
 
 if (problems.length) {
   console.error("\nBase Talk Cards have problems. Fix content/base-talk-cards.md:\n");

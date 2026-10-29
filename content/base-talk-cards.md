@@ -416,6 +416,62 @@ Teens hear a lot about gender roles and identity, at school, from friends and on
 
 ---
 
+## Card 8 — Adult content and 18+ shows
+
+**Topic ID:** `adult`
+
+**The teen's question:** "Is what they show in films and web series real?"
+
+**Why now:**
+5 of 12 teens in our survey named web series and films as a main place they learn about growing up and relationships; only 1 of 12 named parents. In a large US study, 73% of teens had already seen adult content online, over half by age 13. A calm talk at home helps them tell what's real from what's shown. *(Raise teen survey, Oct 2026 · Common Sense Media, 2023)*
+
+**First line:**
+- Hinglish: "Aaj kal ki web series mein relationships jaise dikhate hain, kya tumhe lagta hai real life mein bhi aisa hota hai?"
+- Hindi: "आजकल की वेब सीरीज़ में रिश्ते जैसे दिखाते हैं, क्या तुम्हें लगता है असल ज़िंदगी में भी ऐसा होता है?"
+- English: "The way web series show relationships these days, do you think real life is like that?"
+
+**Gentle questions to ask (10):**
+1. "Which shows are people in your class watching these days?"
+2. "What do shows get wrong about how people treat each other?"
+3. "Have you ever seen something on a screen that felt weird or uncomfortable?"
+4. "Do friends ever share videos or clips that you didn't want to see?"
+5. "What do you do when something like that pops up?"
+6. "Do you think boys and girls learn different things from these shows?"
+7. "What does respect in a relationship look like to you, outside of films?"
+8. "If something you saw made you worried or confused, who would you ask?"
+9. "Is there anything you've seen that you'd like to ask me about, even if it feels awkward?"
+10. "How would you want me to react if you told me you'd seen something 18+?"
+
+**Say:**
+1. "Whatever you tell me, you won't be in trouble for telling me." (the safety promise)
+2. "Being curious is normal. Everyone your age wonders about these things."
+3. "A lot of what's shown on screen is acting, not how real relationships work."
+4. "In real life, both people have to want it, and either one can say no at any time."
+5. "If you ever see something that upsets you, you can tell me. I won't be angry."
+6. "It's a bit awkward for me too, but I'd rather you hear it from me than from a random video."
+
+**Avoid:**
+1. "Chhi, how could you watch such things?" (Shame teaches them to hide, not to stop.)
+2. Taking away their phone as a punishment. (They learn never to tell you again.)
+3. Checking their history or chats without telling them. (It breaks trust, and they'll just hide it better.)
+4. "Good children don't think about all this." (Curiosity is normal; this makes them feel like something is wrong with them.)
+5. "Wait till you're married, then you'll understand." (They'll look for answers elsewhere, often in worse places.)
+6. A long lecture the first time it comes up. (Keep it short and calm, so they'll come back to you.)
+
+**If they react:**
+- **Go quiet:** "It's okay, you don't have to say anything. I just want you to know you can ask me anything."
+- **Get upset:** "I'm not angry, and you're not in trouble. I brought it up because I care about you."
+- **Disagree:** "Fair enough. Tell me what you think. I'd like to hear your side."
+- **Don't want to talk:** "Okay, I won't push. If something ever bothers you, tell me later, or text me, whatever feels easier."
+
+**When to get help:** if someone is sending your teen sexual content, asking them for photos, or threatening them → Cybercrime 1930 or cybercrime.gov.in. If they seem unable to stop watching, or it is affecting sleep, studies or mood → NIMHANS SHUT clinic or Tele-MANAS 14416.
+
+**Sources and check date:** Raise teen survey, 12 teens, Oct 2026 · Common Sense Media, teens and online adult content, US, 2023 · Checked on 29 Oct 2026
+
+[Aayushi: the 73% figure is from the US (Common Sense Media). There's no Indian number for this yet. Keep it, or replace it with an Indian source checked through the content engine?]
+
+---
+
 ## Questions for you
 
 1. **Hindi lines:** please read the Hindi (Devanagari) first lines aloud. Do they sound natural, or too formal?
@@ -423,3 +479,4 @@ Teens hear a lot about gender roles and identity, at school, from friends and on
 3. **Card 6:** separate examples for sons, or keep it general? (See the note on Card 6.)
 4. **Facts:** every number comes from your Step 1 docs. Check that each one is the version you want to show parents.
 5. **Card 7 (new, 29 Oct 2026):** please read the whole Gender and identity card, ideally with someone from the LGBTQ+ community or an expert, before it goes live.
+6. **Card 8 (new, 29 Oct 2026):** please read the Adult content and 18+ shows card, and decide on the US 73% figure (see the note on Card 8).
