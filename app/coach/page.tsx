@@ -335,37 +335,37 @@ export default function Coach() {
           <div ref={endRef} style={{ scrollMarginBottom: 190 }} />
         </div>
 
-        {chat.length > 0 && (
-          <div style={{ textAlign: "center", margin: "4px 0 8px" }}>
-            {!confirmClear ? (
-              <button className="btn-link" style={{ fontSize: 14 }} onClick={() => setConfirmClear(true)}>
-                Clear this chat
-              </button>
-            ) : (
-              <span style={{ fontSize: 14 }}>
-                Delete this chat from your phone?{" "}
-                <button className="btn-link" style={{ display: "inline", width: "auto", fontSize: 14, color: "var(--danger)" }} onClick={clearChat}>
-                  Yes, clear
-                </button>{" "}
-                ·{" "}
-                <button className="btn-link" style={{ display: "inline", width: "auto", fontSize: 14 }} onClick={() => setConfirmClear(false)}>
-                  Keep
+        {/* One row just above the message box: clear on the left, the way on to step 3 on the right */}
+        {(chat.length > 0 || topicMeta) && (
+          <div className="coach-actions">
+            {chat.length > 0 &&
+              (!confirmClear ? (
+                <button className="coach-clear" onClick={() => setConfirmClear(true)}>
+                  Clear this chat
                 </button>
-              </span>
+              ) : (
+                <span className="coach-clear-confirm">
+                  Delete this chat?{" "}
+                  <button className="coach-clear" style={{ color: "var(--danger)" }} onClick={clearChat}>
+                    Yes, clear
+                  </button>{" "}
+                  ·{" "}
+                  <button className="coach-clear" onClick={() => setConfirmClear(false)}>
+                    Keep
+                  </button>
+                </span>
+              ))}
+            {topicMeta && (
+              <Link
+                href={`/plan/${topicMeta.id}${practised ? "" : "?skipPractice=1"}`}
+                onClick={() => markPractised(topicMeta.id, !practised)}
+                className={`step3-pill${practised ? " ready" : ""}`}
+                aria-label="Move to Step 3: plan a moment"
+              >
+                Move to Step 3 →
+              </Link>
             )}
           </div>
-        )}
-
-        {/* When the parent has practised enough: the way on to step 3, right where they're typing */}
-        {topicMeta && (
-          <Link
-            href={`/plan/${topicMeta.id}${practised ? "" : "?skipPractice=1"}`}
-            onClick={() => markPractised(topicMeta.id, !practised)}
-            className={`step3-bar${practised ? " ready" : ""}`}
-          >
-            <span>{practised ? "Practised enough?" : "Done practising?"}</span>
-            <strong>Move to Step 3: Plan a moment →</strong>
-          </Link>
         )}
 
         <form

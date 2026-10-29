@@ -2439,38 +2439,57 @@ a {
   }
 }
 
-/* Coach practice: "Move to Step 3: Plan a moment", sticky just above the message box */
-.step3-bar {
+/* Coach: one row just above the message box (clear chat left, Move to Step 3 right), staying in place */
+.coach-actions {
   position: sticky;
-  bottom: calc(76px + 76px + env(safe-area-inset-bottom));
+  bottom: calc(76px + 68px + env(safe-area-inset-bottom));
   z-index: 2;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 8px;
-  flex-wrap: wrap;
-  margin: 8px 0 0;
-  padding: 10px 14px;
-  border-radius: 14px;
+  margin-top: 8px;
+  padding: 6px 0;
+  background: var(--bg);
+}
+
+.coach-clear {
+  background: none;
+  border: none;
+  padding: 8px 2px;
+  min-height: 40px;
+  font-family: var(--font-ui);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text-muted);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.coach-clear-confirm {
+  font-size: var(--fs-sm);
+  color: var(--text);
+}
+
+.step3-pill {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 8px 14px;
+  border-radius: var(--radius-pill);
   background: var(--surface-sage);
   border: 1px solid var(--border-sage);
-  color: var(--text);
-  font-size: var(--fs-sm);
-  text-decoration: none;
-  box-shadow: var(--shadow-sm);
-}
-
-.step3-bar strong {
   color: var(--primary);
+  font-size: var(--fs-sm);
   font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
 }
 
-.step3-bar.ready {
+.step3-pill.ready {
   background: var(--primary);
   border-color: var(--primary);
-  color: var(--on-primary);
-}
-
-.step3-bar.ready strong {
   color: var(--on-primary);
 }
