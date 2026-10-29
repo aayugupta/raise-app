@@ -401,7 +401,7 @@ export default function TalkCardView({ topic }: { topic: TopicId }) {
         </details>
 
         {/* Step 1 done: next is practising with the AI Coach (step 2), or skip to planning. Never a save button. */}
-        <div className="sticky-action">
+        <div className="sticky-action card-actions-bar">
           <Link href={`/coach?topic=${topic}`} className="btn-primary btn-block">
             Next: practise with AI Coach
           </Link>

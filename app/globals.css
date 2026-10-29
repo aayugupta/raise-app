@@ -2895,3 +2895,20 @@ a {
   font-weight: 500;
   color: var(--primary);
 }
+
+/* Flashcards: the bottom bar sits lower and tighter, closer to the screen edge (Aayushi, 29 Oct 2026) */
+.card-actions-bar {
+  padding: 6px 0 max(4px, env(safe-area-inset-bottom));
+}
+
+.card-actions-bar .card-next-links {
+  margin-top: 0;
+}
+
+.card-actions-bar .card-next-links a,
+.card-actions-bar .card-next-links .btn-link {
+  padding: 2px 2px;
+  min-height: 36px;
+  display: inline-flex;
+  align-items: center;
+}
