@@ -2584,3 +2584,73 @@ a {
   font-size: var(--fs-base);
   text-align: center;
 }
+
+/* Home layout (29 Oct 2026): one column on phones, two columns on wider screens */
+.home-layout {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 20px 16px 24px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    "top"
+    "carousel"
+    "side"
+    "journey";
+}
+
+.home-top {
+  grid-area: top;
+}
+
+.home-carousel {
+  grid-area: carousel;
+}
+
+.home-journey {
+  grid-area: journey;
+}
+
+.home-side {
+  grid-area: side;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Phones: "Your next step" comes before the Super Parent goal */
+.home-side-next {
+  order: 1;
+}
+
+.home-side-goal {
+  order: 2;
+}
+
+@media (min-width: 820px) {
+  .home-layout {
+    max-width: 980px;
+    column-gap: 28px;
+    grid-template-columns: minmax(0, 1fr) 340px;
+    grid-template-areas:
+      "top side"
+      "carousel side"
+      "journey side";
+    align-items: start;
+  }
+
+  .home-side {
+    position: sticky;
+    top: 20px;
+    padding-top: 4px;
+  }
+
+  /* Wider screens: Super Parent on top, then Your next step */
+  .home-side-goal {
+    order: 1;
+  }
+
+  .home-side-next {
+    order: 2;
+  }
+}
