@@ -12,7 +12,7 @@ const hand = Caveat({ subsets: ["latin"], weight: ["500", "600"], variable: "--f
 
 export const metadata: Metadata = {
   title: "Raise",
-  description: "Better conversations. Brighter tomorrows. Guiding parents to build stronger bonds, one conversation at a time.",
+  description: "Better conversations. Brighter tomorrows. For the talks that matter most with your child, we help you find the first words.",
 };
 
 export const viewport: Viewport = {

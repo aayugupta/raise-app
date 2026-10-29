@@ -66,7 +66,7 @@ Aayushi's simplified wireframe (10 screens + Emergency help) replaces the 14-scr
 
 | # | Screen | Decision |
 | --- | --- | --- |
-| 1 | Welcome | Logo, tagline **"Better conversations. Brighter tomorrows."**, line "Guiding parents to build stronger bonds, one conversation at a time", parent-and-teen illustration (mother/father with daughter/son) |
+| 1 | Welcome | Logo, tagline **"Better conversations. Brighter tomorrows."**, line "For the talks that matter most with your child, we help you find the first words." (29 Oct 2026; was "Guiding parents to build stronger bonds, one conversation at a time"), parent-and-teen illustration (mother/father with daughter/son) |
 | 2 | About you | "Hey there! You're not just a username, we want to get to know you!" · Mother / Father / Guardian. **No nickname step**: Home greets "Hello Mumma" / "Hello Papa" from the role |
 | 3 | About your teen | Age band + gender (Girl / Boy / Prefer not to say) on **one screen** |
 | 4 | Confidence + topic | Confidence 1–5, then pick a topic or "Skip, I'll choose later". **The free-text "what do you want to talk about" box is removed** |

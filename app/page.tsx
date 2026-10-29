@@ -18,7 +18,7 @@ export default function Welcome() {
           Better conversations.
           <br />Brighter tomorrows.
         </p>
-        <p className="welcome-support welcome-fade" style={{ animationDelay: "1s" }}>Guiding parents to build stronger bonds, one conversation at a time.</p>
+        <p className="welcome-support welcome-fade" style={{ animationDelay: "1s" }}>For the talks that matter most with your child, we help you find the first words.</p>
       </div>
 
       <div className="welcome-bottom">
