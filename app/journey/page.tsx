@@ -11,7 +11,7 @@ import { CONFIDENCE_QUESTION, confidenceChange, loadConfidence, recordConfidence
 import JourneyCard, { whenText } from "@/components/JourneyCard";
 import { activeJourneys, type Journey } from "@/lib/journey";
 import { loadJourneyRecords, openJourneyStarts, openJourneySteps } from "@/lib/journeyLog";
-import { journeyStats, type JourneyStats } from "@/lib/metric";
+import { journeyStats, topicsTalkedAbout, type JourneyStats } from "@/lib/metric";
 import { loadReflections, type Reflection } from "@/lib/reflections";
 import { loadOpenTopics, loadPlans } from "@/lib/talks";
 import { TOPICS } from "@/lib/topics";
@@ -28,6 +28,7 @@ export default function JourneyScreen() {
   const [stats, setStats] = useState<JourneyStats | null>(null);
   const [active, setActive] = useState<Journey[]>([]);
   const [confidence, setConfidence] = useState<ConfidenceEntry[]>([]);
+  const [topicsDone, setTopicsDone] = useState(0);
 
   useEffect(() => {
     // Talks that happened (fully or partly), newest first.
@@ -36,7 +37,9 @@ export default function JourneyScreen() {
         .filter((r) => r.happened !== "not-yet")
         .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
     );
-    setStats(journeyStats(loadJourneyRecords()));
+    const records = loadJourneyRecords();
+    setStats(journeyStats(records));
+    setTopicsDone(topicsTalkedAbout(records));
     setActive(activeJourneys(loadPlans(), loadOpenTopics(), Date.now(), openJourneyStarts(), openJourneySteps()));
     setConfidence(loadConfidence());
     setReady(true);
@@ -60,25 +63,27 @@ export default function JourneyScreen() {
 
         {ready && stats && (
           <>
-            {/* Topics completed vs started: a completed talk = a reflection saved within 14 days */}
+            {/* Two rings (Aayushi, 29 Oct 2026): left = talks noted out of journeys started (the metric, as counts);
+                right = different topics talked about out of all topics (same count as Super Parent on Home) */}
             <section className="notice progress-summary">
-              <ProgressRing done={stats.completed} total={stats.started} />
-              <div style={{ display: "grid", gap: 6 }}>
-                <div>
-                  <span className="legend-dot" style={{ background: "var(--primary)" }} /> {stats.completed} {stats.completed === 1 ? "talk" : "talks"} noted
+              <div className="progress-col">
+                <ProgressRing done={stats.completed} total={stats.started} unit="talks" colour="var(--primary)" label={`${stats.completed} of ${stats.started} talks noted`} />
+                <div className="progress-caption">
+                  <strong>Talks noted</strong>
+                  <span>{stats.inProgress} in progress</span>
+                  {stats.notCompleted > 0 && <span>{stats.notCompleted} ready for another try</span>}
                 </div>
-                <div>
-                  <span className="legend-dot" style={{ background: "var(--border-sage)" }} /> {stats.inProgress} in progress
+              </div>
+              <div className="progress-col">
+                <ProgressRing done={topicsDone} total={TOPICS.length} unit="topics" colour="var(--accent)" label={`${topicsDone} of ${TOPICS.length} topics talked about`} />
+                <div className="progress-caption">
+                  <strong>Topics talked about</strong>
+                  <span>out of all {TOPICS.length}</span>
                 </div>
-                {stats.notCompleted > 0 && (
-                  <div>
-                    <span className="legend-dot" style={{ background: "var(--border)" }} /> {stats.notCompleted} ready for another try
-                  </div>
-                )}
               </div>
             </section>
             <p style={{ fontSize: 14, color: "var(--text-muted)", margin: "8px 2px 0" }}>
-              A topic counts here when you tell us a talk happened, within 14 days of starting it. How it went is yours to keep.
+              A talk counts here when you tell us it happened, within 14 days of starting the topic. How it went is yours to keep.
             </p>
 
             {/* The 14-day journeys running now */}
@@ -155,12 +160,12 @@ export default function JourneyScreen() {
   );
 }
 
-function ProgressRing({ done, total }: { done: number; total: number }) {
+function ProgressRing({ done, total, unit, colour, label }: { done: number; total: number; unit: string; colour: string; label: string }) {
   const r = 34;
   const c = 2 * Math.PI * r;
   const share = total ? done / total : 0;
   return (
-    <div className="progress-ring" role="img" aria-label={`A talk noted on ${done} of ${total} topics started`}>
+    <div className="progress-ring" role="img" aria-label={label}>
       <svg width="88" height="88" viewBox="0 0 88 88" aria-hidden="true">
         <circle cx="44" cy="44" r={r} fill="none" stroke="var(--border)" strokeWidth="8" />
         {/* Nothing drawn at 0, or the rounded line end shows as a dot. */}
@@ -169,7 +174,7 @@ function ProgressRing({ done, total }: { done: number; total: number }) {
           cy="44"
           r={r}
           fill="none"
-          stroke="var(--primary)"
+          stroke={colour}
           strokeWidth="8"
           strokeLinecap="round"
           strokeDasharray={`${c * share} ${c}`}
@@ -180,7 +185,7 @@ function ProgressRing({ done, total }: { done: number; total: number }) {
         <strong>
           {done}/{total}
         </strong>
-        <span>topics</span>
+        <span>{unit}</span>
       </div>
     </div>
   );

@@ -2776,3 +2776,32 @@ a {
     animation: none;
   }
 }
+
+/* Journey: two rings side by side, talks and topics (29 Oct 2026) */
+.progress-summary {
+  justify-content: space-around;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.progress-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+  text-align: center;
+}
+
+.progress-caption {
+  display: grid;
+  gap: 2px;
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+}
+
+.progress-caption strong {
+  color: var(--text);
+  font-weight: 600;
+}
