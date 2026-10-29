@@ -5,6 +5,7 @@ import type { TopicId } from "./topics";
 export type Happened = "yes" | "partly" | "not-yet";
 export type WhoTalked = "me" | "teen" | "equal";
 export type Feeling = "good" | "okay" | "hard";
+export type ChildResponse = "opened-up" | "listened" | "asked" | "little" | "short";
 
 export type Reflection = {
   planId: string;
@@ -14,6 +15,7 @@ export type Reflection = {
   whoTalked?: WhoTalked;
   learned: string;
   feeling?: Feeling;
+  childResponse?: ChildResponse; // after a talk that went well or okay: how the child responded (fixed choice)
   helpOffered: boolean; // a danger sign was spotted and help was offered (the text itself was dropped)
   createdAt: string;
   followUpDue?: string; // 3 days later (FR8)

@@ -9,7 +9,7 @@ import HelpPill from "@/components/HelpPill";
 import { CONFIDENCE_AFTER_QUESTION, recordConfidence } from "@/lib/confidence";
 import { track } from "@/lib/events";
 import { BLOCKERS, type BlockerId } from "@/lib/recovery";
-import { saveReflection, type Feeling, type Happened, type Reflection, type WhoTalked } from "@/lib/reflections";
+import { type ChildResponse, saveReflection, type Feeling, type Happened, type Reflection, type WhoTalked } from "@/lib/reflections";
 import { hasDangerSign } from "@/lib/safety";
 import { finishJourney } from "@/lib/journeyLog";
 import { loadPlan, loadPlans, momentOf, updatePlan, type Plan } from "@/lib/talks";
@@ -32,6 +32,15 @@ const WHO: { value: WhoTalked; label: string }[] = [
   { value: "equal", label: "About equal" },
 ];
 
+// How the child responded, after a talk that went well or okay (Aayushi, 29 Oct 2026). Fixed choices, kind wording.
+const RESPONSES: { value: ChildResponse; label: string }[] = [
+  { value: "opened-up", label: "Opened up 💬" },
+  { value: "listened", label: "Listened well" },
+  { value: "asked", label: "Asked me questions" },
+  { value: "little", label: "Shared a little" },
+  { value: "short", label: "Kept it short" },
+];
+
 const FEELINGS: { value: Feeling; emoji: string; label: string }[] = [
   { value: "good", emoji: "😊", label: "Went well" },
   { value: "okay", emoji: "😐", label: "Okay" },
@@ -47,6 +56,7 @@ export default function ReflectView({ planId }: { planId: string }) {
   const [whoTalked, setWhoTalked] = useState<WhoTalked | null>(null);
   const [learned, setLearned] = useState("");
   const [feeling, setFeeling] = useState<Feeling | null>(null);
+  const [response, setResponse] = useState<ChildResponse | null>(null);
   const [blocker, setBlocker] = useState<BlockerId | null>(null);
   const [afterConfidence, setAfterConfidence] = useState<number | null>(null);
   const [helpOffer, setHelpOffer] = useState(false);
@@ -71,8 +81,10 @@ export default function ReflectView({ planId }: { planId: string }) {
   }
 
   const topicName = TOPICS.find((t) => t.id === plan.topic)!.name;
-  // "If it didn't go well, what got in the way?": asked when it didn't happen, only partly happened, or felt hard.
-  const askBlocker = happened === "not-yet" || happened === "partly" || feeling === "hard";
+  // "What got in the way?": only when it didn't happen, felt hard, or was partly and just okay. Never after
+  // "Went well" (Aayushi, 29 Oct 2026): then we ask how the child responded instead.
+  const askBlocker = happened === "not-yet" || feeling === "hard" || (happened === "partly" && feeling === "okay");
+  const askResponse = feeling === "good" || feeling === "okay";
   const complete =
     happened !== null &&
     (happened === "not-yet"
@@ -108,6 +120,7 @@ export default function ReflectView({ planId }: { planId: string }) {
       whoTalked: whoTalked ?? undefined,
       learned: helpOffered ? "" : learned.trim(),
       feeling: feeling ?? undefined,
+      childResponse: askResponse && response ? response : undefined,
       helpOffered,
       gotInTheWay: askBlocker && blocker ? blocker : undefined,
     });
@@ -122,6 +135,7 @@ export default function ReflectView({ planId }: { planId: string }) {
       happened: happened!,
       ...(whoTalked ? { who_talked: whoTalked } : {}),
       ...(feeling ? { feeling } : {}),
+      ...(askResponse && response ? { child_response: response } : {}),
       help_offered: helpOffered,
     });
     setHelpOffer(false);
@@ -241,6 +255,21 @@ export default function ReflectView({ planId }: { planId: string }) {
             <div className="reflect-optional">
               <div style={{ fontWeight: 700, color: "var(--text)" }}>Want to add what happened?</div>
               <div style={{ fontSize: 14, color: "var(--text-muted)", marginTop: 2 }}>Optional. It helps you remember, and it stays on this phone.</div>
+
+              {askResponse && (
+                <>
+                  <h2 className="section-title">
+                    How did your child respond? <span style={{ fontFamily: "var(--font-ui)", fontSize: 14, color: "var(--text-muted)" }}>(optional)</span>
+                  </h2>
+                  <div className="chips">
+                    {RESPONSES.map((o) => (
+                      <button key={o.value} className={`chip${response === o.value ? " selected" : ""}`} aria-pressed={response === o.value} onClick={() => setResponse(response === o.value ? null : o.value)}>
+                        {o.label}
+                      </button>
+                    ))}
+                  </div>
+                </>
+              )}
 
               <label htmlFor="discussed" className="section-title" style={{ display: "block", fontFamily: "var(--font-display)", color: "var(--text)" }}>
                 What did you say? <span style={{ fontFamily: "var(--font-ui)", fontSize: 14, color: "var(--text-muted)" }}>(optional)</span>

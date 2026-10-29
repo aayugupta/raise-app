@@ -29,6 +29,7 @@ export const EVENTS: Record<string, Record<string, FieldRule>> = {
     happened: ["yes", "partly", "not-yet"],
     who_talked: ["me", "teen", "equal"],
     feeling: ["good", "okay", "hard"],
+    child_response: ["opened-up", "listened", "asked", "little", "short"],
     help_offered: BOOL,
   },
   follow_up_answered: { topic: TOPIC, plan_id: PLAN_ID, matched: BOOL, said_more: ["yes", "little", "not-yet"] },
