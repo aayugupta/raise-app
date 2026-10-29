@@ -13,12 +13,12 @@ export default function Welcome() {
       </div>
 
       <div className="welcome-body">
-        <Logo size={68} />
-        <p className="welcome-tagline">
+        <Logo size={68} animated />
+        <p className="welcome-tagline welcome-fade" style={{ animationDelay: "0.7s" }}>
           Better conversations.
           <br />Brighter tomorrows.
         </p>
-        <p className="welcome-support">Guiding parents to build stronger bonds, one conversation at a time.</p>
+        <p className="welcome-support welcome-fade" style={{ animationDelay: "1s" }}>Guiding parents to build stronger bonds, one conversation at a time.</p>
       </div>
 
       <div className="welcome-bottom">

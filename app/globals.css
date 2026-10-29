@@ -2304,3 +2304,114 @@ a {
   color: var(--primary);
   white-space: nowrap;
 }
+
+/* Welcome: Raise opens with a gentle entrance, and the sprout's leaves sway slowly (29 Oct 2026) */
+.logo-animated .logo-word {
+  display: inline-block;
+  animation: logo-rise 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.logo-animated .logo-sprout {
+  overflow: visible;
+}
+
+.logo-animated .logo-stem {
+  stroke-dasharray: 26;
+  stroke-dashoffset: 26;
+  animation: stem-grow 0.6s 0.35s ease-out forwards;
+}
+
+.logo-animated .logo-leaf {
+  transform-box: fill-box;
+  opacity: 0;
+}
+
+/* Each leaf turns around the point where it meets the stem. */
+.logo-animated .logo-leaf.left {
+  transform-origin: 100% 100%;
+  animation: leaf-open 0.7s 0.75s ease-out forwards, leaf-sway-left 4.5s 1.45s ease-in-out infinite;
+}
+
+.logo-animated .logo-leaf.right {
+  transform-origin: 0% 100%;
+  animation: leaf-open 0.7s 0.9s ease-out forwards, leaf-sway-right 5s 1.6s ease-in-out infinite;
+}
+
+.welcome-fade {
+  animation: welcome-fade-in 0.8s ease-out both;
+}
+
+@keyframes logo-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes stem-grow {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes leaf-open {
+  from {
+    opacity: 0;
+    transform: scale(0.2);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes leaf-sway-left {
+  0%,
+  100% {
+    opacity: 1;
+    transform: rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: rotate(-7deg);
+  }
+}
+
+@keyframes leaf-sway-right {
+  0%,
+  100% {
+    opacity: 1;
+    transform: rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: rotate(6deg);
+  }
+}
+
+@keyframes welcome-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo-animated .logo-word,
+  .logo-animated .logo-stem,
+  .logo-animated .logo-leaf,
+  .welcome-fade {
+    animation: none;
+    opacity: 1;
+    stroke-dashoffset: 0;
+    transform: none;
+  }
+}
