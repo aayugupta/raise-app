@@ -2487,3 +2487,74 @@ a {
   border-color: var(--primary);
   color: var(--on-primary);
 }
+
+/* Planner, after saving: encouragement and the plan at a glance */
+.plan-cheer {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 14px 16px;
+  border-radius: var(--radius-lg);
+  background: var(--surface-sage);
+  border: 1px solid var(--border-sage);
+}
+
+.plan-cheer-icon {
+  font-size: 26px;
+  line-height: 1;
+}
+
+.plan-cheer p {
+  margin: 0;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: var(--fs-md);
+  line-height: 1.45;
+  color: var(--text);
+}
+
+.plan-summary {
+  margin-top: 12px;
+  border-radius: var(--radius);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.plan-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+.plan-key {
+  flex: 0 0 76px;
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+}
+
+.plan-value {
+  flex: 1;
+  min-width: 0;
+  font-weight: 600;
+  color: var(--text);
+  font-size: var(--fs-base);
+}
+
+.plan-first-line {
+  padding: 12px 14px 14px;
+  background: var(--accent-soft);
+}
+
+.plan-first-line p {
+  margin: 4px 0 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 1.35;
+  color: var(--text);
+}

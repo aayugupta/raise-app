@@ -5,13 +5,14 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import FamilySofa from "@/components/FamilySofa";
 import HelpPill from "@/components/HelpPill";
+import TopicArt from "@/components/TopicArt";
 import WalkTogether from "@/components/WalkTogether";
 import { currentFirstLine } from "@/lib/cards";
 import { track } from "@/lib/events";
 import { markPractised, startJourney } from "@/lib/journeyLog";
 import { loadProfile } from "@/lib/profile";
 import { MOMENTS, savePlan, type MomentId, type Plan } from "@/lib/talks";
-import type { TopicId } from "@/lib/topics";
+import { TOPICS, type TopicId } from "@/lib/topics";
 
 const DAYS_AHEAD = 7;
 const MIN_LEAD_MIN = 15; // a plan must be at least 15 minutes away
@@ -105,13 +106,55 @@ export default function PlannerView({
           </div>
           <div className="illustration-panel">{moment === "walk" || moment === "car" ? <WalkTogether /> : <FamilySofa />}</div>
 
-          <h1 style={{ fontSize: 30, lineHeight: 1.15 }}>Your plan is set</h1>
-          <PlanSentence phrase={momentInfo.phrase} day={dayPhrase(day)} time={timeText(start)} firstLine={firstLine} />
+          {/* Encouragement first (Aayushi, 29 Oct 2026): choosing a moment is a real step */}
+          <section className="plan-cheer">
+            <span className="plan-cheer-icon" aria-hidden="true">
+              🌱
+            </span>
+            <p>
+              You&apos;ve just taken a big step. Most parents wait for the “right moment”. You chose one, and that&apos;s how a
+              closer bond with your child begins.
+            </p>
+          </section>
 
-          <p className="notice" style={{ marginTop: 16 }}>
+          <h1 style={{ fontSize: 28, lineHeight: 1.15, marginTop: 20 }}>Your plan is set</h1>
+
+          {/* The plan at a glance */}
+          <section className="plan-summary" aria-label="Your plan">
+            <div className="plan-row">
+              <span className="plan-key">Topic</span>
+              <span className="plan-value" style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <TopicArt id={topic} size={28} />
+                {TOPICS.find((t) => t.id === topic)!.name}
+              </span>
+            </div>
+            <div className="plan-row">
+              <span className="plan-key">Where</span>
+              <span className="plan-value">
+                {momentInfo.icon} {momentInfo.label}
+              </span>
+            </div>
+            <div className="plan-row">
+              <span className="plan-key">When</span>
+              <span className="plan-value">
+                {dayLabel(day)}, {timeText(start)}
+              </span>
+            </div>
+            <div className="plan-row">
+              <span className="plan-key">Reminder</span>
+              <span className="plan-value">
+                {saved.reminder === false ? "Off" : `🔔 On Home, when it's time for your ${momentInfo.calendarTitle.replace(/^Your /, "").toLowerCase()}`}
+              </span>
+            </div>
+            <div className="plan-first-line">
+              <span className="card-label">You&apos;ll start with</span>
+              <p>“{firstLine}”</p>
+            </div>
+          </section>
+          <p style={{ fontSize: "var(--fs-sm)", color: "var(--text-muted)", margin: "10px 2px 0" }}>
             {saved.reminder === false
-              ? "No reminder. Your plan waits in your 14-day journey."
-              : `🔔 When it's time, Home will show “It's time for your ${momentInfo.calendarTitle.replace(/^Your /, "").toLowerCase()}” with your first line. Raise sends no notifications, so nothing pops up for your teen to see.`}
+              ? "Your plan waits in your 14-day journey."
+              : "Raise sends no notifications, so nothing pops up for your teen to see."}
           </p>
 
           {/* Next: see the plan in the 14-day journey (Aayushi, 28 Oct 2026) */}
