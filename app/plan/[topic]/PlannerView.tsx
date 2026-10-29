@@ -157,10 +157,15 @@ export default function PlannerView({
               : "Raise sends no notifications, so nothing pops up for your teen to see."}
           </p>
 
-          {/* Next: see the plan in the 14-day journey (Aayushi, 28 Oct 2026) */}
-          <Link href="/journey" className="btn-primary btn-block" style={{ marginTop: 16 }}>
-            Next
-          </Link>
+          {/* Two ways on (Aayushi, 29 Oct 2026): back to Home, or see the plan in the journey */}
+          <div className="plan-saved-actions">
+            <Link href="/home" className="btn-secondary" style={{ textDecoration: "none" }}>
+              Back to Home
+            </Link>
+            <Link href="/journey" className="btn-primary" style={{ textDecoration: "none" }}>
+              See your journey →
+            </Link>
+          </div>
         </div>
       </main>
     );

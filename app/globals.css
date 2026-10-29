@@ -2562,3 +2562,18 @@ a {
   line-height: 1.35;
   color: var(--text);
 }
+
+/* Planner, after saving: Back to Home and See your journey, side by side */
+.plan-saved-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.plan-saved-actions a {
+  padding-left: 10px;
+  padding-right: 10px;
+  font-size: var(--fs-base);
+  text-align: center;
+}
