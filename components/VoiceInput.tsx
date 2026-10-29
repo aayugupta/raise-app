@@ -13,6 +13,7 @@ type Recognition = {
   continuous: boolean;
   start: () => void;
   stop: () => void;
+  abort?: () => void;
   onresult: ((e: { results: ArrayLike<{ 0: { transcript: string }; isFinal: boolean }> }) => void) | null;
   onerror: ((e: { error: string }) => void) | null;
   onend: (() => void) | null;
@@ -39,12 +40,20 @@ export default function VoiceInput({
   const [error, setError] = useState("");
   const recRef = useRef<Recognition | null>(null);
   const baseRef = useRef("");
+  // True only while words should still land in the box. Off once the parent sends, clears or stops,
+  // so late results from the phone's speech service can never refill the box (29 Oct 2026).
+  const activeRef = useRef(false);
 
   useEffect(() => {
     const w = window as unknown as { SpeechRecognition?: new () => Recognition; webkitSpeechRecognition?: new () => Recognition };
     setSupported(Boolean(w.SpeechRecognition || w.webkitSpeechRecognition));
     return () => recRef.current?.stop();
   }, []);
+
+  // The message was sent (or the box cleared) while still listening: stop at once.
+  useEffect(() => {
+    if (draft === "" && activeRef.current) stopListening();
+  }, [draft]);
 
   if (!supported) return null;
 
@@ -56,14 +65,19 @@ export default function VoiceInput({
     // English (India) also understands Hinglish spoken the Latin way; Hindi gives Devanagari.
     rec.lang = language === "hindi" ? "hi-IN" : "en-IN";
     rec.interimResults = true;
-    rec.continuous = true;
+    // Stops by itself when the parent pauses, instead of listening until tapped again.
+    rec.continuous = false;
     baseRef.current = draft ? draft.replace(/\s*$/, " ") : "";
     rec.onresult = (e) => {
+      if (!activeRef.current) return;
       let heard = "";
       for (let i = 0; i < e.results.length; i++) heard += e.results[i][0].transcript;
       onDraft((baseRef.current + heard).slice(0, maxLength));
     };
     rec.onerror = (e) => {
+      activeRef.current = false;
+      setListening(false);
+      if (e.error === "aborted") return; // we stopped it ourselves
       setError(
         e.error === "not-allowed" || e.error === "service-not-allowed"
           ? "Microphone access is blocked. You can allow it in your browser's settings, or type instead."
@@ -73,15 +87,29 @@ export default function VoiceInput({
       );
       setListening(false);
     };
-    rec.onend = () => setListening(false);
+    rec.onend = () => {
+      activeRef.current = false;
+      setListening(false);
+    };
     recRef.current = rec;
     setError("");
+    activeRef.current = true;
     rec.start();
     setListening(true);
   }
 
+  function stopListening() {
+    activeRef.current = false;
+    const rec = recRef.current;
+    if (rec?.abort) rec.abort();
+    else rec?.stop();
+    setListening(false);
+  }
+
   function onMic() {
     if (listening) {
+      // Tapped to stop: keep what was heard so far, but stop now.
+      activeRef.current = false;
       recRef.current?.stop();
       setListening(false);
       return;
@@ -137,7 +165,7 @@ export default function VoiceInput({
             </>
           ) : listening ? (
             <span>
-              <span className="voice-dot" aria-hidden="true" /> Listening… speak, then tap the mic to stop.
+              <span className="voice-dot" aria-hidden="true" /> Listening… it stops by itself when you pause.
             </span>
           ) : (
             <span>{error}</span>
