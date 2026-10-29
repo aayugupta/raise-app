@@ -113,7 +113,10 @@ export default function Home() {
       <div className="home-layout">
         <div className="home-top">
           {/* Greeting */}
-          <h1 style={{ fontSize: 30, lineHeight: 1.15 }}>Hello {greetName(profile)}</h1>
+          {/* The name in Lora italic, Deep Sage (Aayushi, 29 Oct 2026) */}
+          <h1 className="home-greeting">
+            Hello <em>{greetName(profile)}</em>
+          </h1>
           <div style={{ fontSize: 15, color: "var(--text-muted)", marginTop: 4 }}>One small conversation at a time.</div>
 
           {duePlan && <ReflectReminder plan={duePlan} onLater={() => remindTomorrow(duePlan.id)} />}

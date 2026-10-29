@@ -2869,3 +2869,16 @@ a {
   font-size: var(--fs-sm);
   color: var(--text-muted);
 }
+
+/* Home greeting: "Hello" plus the name in Lora italic, Deep Sage (29 Oct 2026) */
+.home-greeting {
+  font-size: 32px;
+  line-height: 1.15;
+}
+
+.home-greeting em {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  color: var(--primary);
+}
