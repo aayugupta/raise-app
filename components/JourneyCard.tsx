@@ -56,9 +56,12 @@ export default function JourneyCard({ journey, whenLabel }: { journey: Journey; 
           Plan a moment
         </Link>
       )}
-      <Link href={journey.reflectHref} className="journey-reflect">
-        Already talked? Tell us how it went
-      </Link>
+      {/* Not repeated when the main action already is the reflection (step 4) */}
+      {journey.reflectHref !== journey.href && (
+        <Link href={journey.reflectHref} className="journey-reflect">
+          Already talked? Tell us how it went
+        </Link>
+      )}
     </div>
   );
 }

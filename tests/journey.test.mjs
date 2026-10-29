@@ -26,8 +26,8 @@ const j = activeJourneys(
 const byTopic = Object.fromEntries(j.map((x) => [x.topic, x]));
 
 check("planned, time passed → step 4 Reflect", byTopic.stress?.step === 4 && byTopic.stress.href === "/reflect/a");
-check("planned for tomorrow → step 4, see your first line", byTopic["online-safety"]?.step === 4 && byTopic["online-safety"].href === "/card/online-safety");
-check("happening now → step 4 with Talk mode", byTopic.friends?.step === 4 && byTopic.friends.href === "/talk/c");
+check("planned for tomorrow → step 4 asks for the reflection", byTopic["online-safety"]?.step === 4 && byTopic["online-safety"].href === "/reflect/b" && byTopic["online-safety"].action.startsWith("Had your talk"));
+check("happening now → step 4 asks for the reflection", byTopic.friends?.step === 4 && byTopic.friends.href === "/reflect/c");
 check("started from setup, flashcards not opened → step 1 Learn", byTopic.relationships?.step === 1 && byTopic.relationships.href === "/card/relationships");
 check("flashcards read, not practised → step 2 Practise with the coach", byTopic.consent?.step === 2 && byTopic.consent.href === "/coach?topic=consent");
 check("step 2 always offers planning, coach or not", byTopic.consent?.planHref === "/plan/consent?skipPractice=1");

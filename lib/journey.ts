@@ -41,9 +41,11 @@ export function activeJourneys(
     const stage = planStage(p, now);
     if (stage === "done") continue;
     const base = { topic: p.topic, step: 4 as const, stepName: "Reflect" as const, planId: p.id, when: p.when, reflectHref: `/reflect/${p.id}` };
+    // Step 4 always points to what's pending: the reflection (Aayushi, 29 Oct 2026). Before the planned
+    // time it asks if the talk has happened yet; after it, simply "Tell us how it went". Talk mode and the
+    // first line stay on Home's "It's time" reminder.
     if (stage === "check-in") journeys.push({ ...base, action: "Tell us how it went", href: `/reflect/${p.id}` });
-    else if (stage === "now") journeys.push({ ...base, action: "Open Talk mode", href: `/talk/${p.id}` });
-    else journeys.push({ ...base, action: "See your first line", href: `/card/${p.topic}` });
+    else journeys.push({ ...base, action: "Had your talk? Tell us how it went", href: `/reflect/${p.id}` });
   }
 
   // Started but not planned yet: step 1, 2 or 3.
