@@ -2805,3 +2805,44 @@ a {
   color: var(--text);
   font-weight: 600;
 }
+
+/* Home: reflection reminder after a planned moment (29 Oct 2026) */
+.reflect-reminder {
+  margin-top: 16px;
+  padding: 16px;
+  border-radius: var(--radius-lg);
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-border);
+  box-shadow: var(--shadow-sm);
+}
+
+.reflect-reminder .card-label {
+  color: var(--accent-text);
+}
+
+.reflect-reminder-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--fs-lg);
+  margin: 4px 0 4px;
+  color: var(--text);
+}
+
+.reflect-reminder-text {
+  margin: 0 0 12px;
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+}
+
+.reflect-reminder-later {
+  display: block;
+  width: 100%;
+  min-height: var(--tap);
+  margin-top: 4px;
+  background: none;
+  border: none;
+  color: var(--primary);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}

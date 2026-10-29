@@ -37,6 +37,7 @@ export default function Home() {
   const [doneTopics, setDoneTopics] = useState<{ topic: TopicId; at: string }[]>([]);
   const [now, setNow] = useState(() => Date.now());
   const [ready, setReady] = useState(false);
+  const [snoozed, setSnoozed] = useState<Record<string, string>>({});
 
   useEffect(() => {
     const p = loadProfile();
@@ -56,14 +57,33 @@ export default function Home() {
       if (rec.completedAt && !rec.helpOffered && (latest.get(rec.topic) ?? "") < rec.completedAt) latest.set(rec.topic, rec.completedAt);
     }
     setDoneTopics([...latest].map(([topic, at]) => ({ topic, at })).sort((a, b) => b.at.localeCompare(a.at)));
+    try {
+      setSnoozed(JSON.parse(localStorage.getItem(SNOOZE_KEY) ?? "{}"));
+    } catch {}
     setReady(true);
     // Re-check every minute, so "It's time" appears without reloading.
     const timer = setInterval(() => setNow(Date.now()), 60_000);
     return () => clearInterval(timer);
   }, [router]);
 
+  function remindTomorrow(planId: string) {
+    const at = new Date();
+    at.setDate(at.getDate() + 1);
+    at.setHours(8, 0, 0, 0);
+    const next = { ...snoozed, [planId]: at.toISOString() };
+    setSnoozed(next);
+    try {
+      localStorage.setItem(SNOOZE_KEY, JSON.stringify(next));
+    } catch {}
+  }
+
   if (!ready || !profile) return <main style={{ minHeight: "100dvh", background: "var(--bg)" }} />;
 
+  // Reflection reminder (Aayushi, 29 Oct 2026): once a planned moment has passed, the top of Home gently asks
+  // how it went, until the parent reflects or picks "Remind me tomorrow". It never names the topic.
+  const duePlan = [...plans]
+    .sort((a, b) => a.when.localeCompare(b.when))
+    .find((p) => planStage(p, now) === "check-in" && !(snoozed[p.id] && Date.parse(snoozed[p.id]) > now));
   const nowPlans = [...plans].sort((a, b) => a.when.localeCompare(b.when)).filter((p) => planStage(p, now) === "now" && p.reminder !== false);
   // The "It's time" banner already covers plans happening now, so they're not repeated below.
   const allJourneys = activeJourneys(plans, openTopics, now, starts, openJourneySteps());
@@ -90,6 +110,8 @@ export default function Home() {
           {/* Greeting */}
           <h1 style={{ fontSize: 30, lineHeight: 1.15 }}>Hello {greetName(profile)}</h1>
           <div style={{ fontSize: 15, color: "var(--text-muted)", marginTop: 4 }}>One small conversation at a time.</div>
+
+          {duePlan && <ReflectReminder plan={duePlan} onLater={() => remindTomorrow(duePlan.id)} />}
 
           {/* The small journey map: where you are in Raise's five steps (tap for the full map) */}
           {/* Becoming a Super Parent first, then the journey map right below it (Aayushi, 29 Oct 2026) */}
@@ -142,7 +164,7 @@ export default function Home() {
         <aside className="home-side">
           <div className="home-side-next">
             {/* The gentle nudge: have the talk, then tell Raise how it went, and a new topic can follow. */}
-            {journeys.length > 0 && nowPlans.length === 0 && <TalkPrompt journey={journeys[0]} />}
+            {journeys.length > 0 && nowPlans.length === 0 && journeys[0].planId !== duePlan?.id && <TalkPrompt journey={journeys[0]} />}
           </div>
         </aside>
 
@@ -232,6 +254,32 @@ function SuperParentGoal({ done, total }: { done: number; total: number }) {
         </div>
         <p className="goal-message goal-italic">{message}</p>
       </div>
+    </section>
+  );
+}
+
+const SNOOZE_KEY = "raise.reflectSnooze";
+
+// The gentle "how did it go?" at the top of Home, after a planned moment. Names the moment ("Your walk"),
+// never the topic, because a teen might see the screen.
+function ReflectReminder({ plan, onLater }: { plan: Plan; onLater: () => void }) {
+  const m = momentOf(plan);
+  return (
+    <section className="reflect-reminder" role="status" aria-label="Reminder: tell us how it went">
+      <div className="card-label">
+        <span aria-hidden="true">{m.icon}</span> {m.calendarTitle} · {whenText(plan.when)}
+      </div>
+      <div className="reflect-reminder-title">How did it go?</div>
+      <p className="reflect-reminder-text">
+        Take a minute to note it while it&apos;s fresh. It only takes two taps, and it stays on your phone. If it didn&apos;t happen yet,
+        that&apos;s okay too.
+      </p>
+      <Link href={`/reflect/${plan.id}`} className="btn-primary btn-block" style={{ textDecoration: "none" }}>
+        Tell us how it went
+      </Link>
+      <button type="button" className="reflect-reminder-later" onClick={onLater}>
+        Remind me tomorrow
+      </button>
     </section>
   );
 }
