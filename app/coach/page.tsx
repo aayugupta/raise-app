@@ -211,9 +211,6 @@ export default function Coach() {
                 ? "The AI plays your child. Say your first line and see how it goes. You'll get a short tip after each reply."
                 : "Ask anything about this talk: how to start, what to say, what if it goes wrong."}
             </p>
-            <Link href={`/plan/${topicMeta.id}`} className={`btn-block ${practised ? "btn-primary" : "btn-secondary"}`} style={{ marginTop: 12, textAlign: "center", textDecoration: "none" }}>
-              {practised ? "Next: plan a moment →" : "Plan a moment"}
-            </Link>
           </section>
         )}
 
@@ -357,6 +354,18 @@ export default function Coach() {
               </span>
             )}
           </div>
+        )}
+
+        {/* When the parent has practised enough: the way on to step 3, right where they're typing */}
+        {topicMeta && (
+          <Link
+            href={`/plan/${topicMeta.id}${practised ? "" : "?skipPractice=1"}`}
+            onClick={() => markPractised(topicMeta.id, !practised)}
+            className={`step3-bar${practised ? " ready" : ""}`}
+          >
+            <span>{practised ? "Practised enough?" : "Done practising?"}</span>
+            <strong>Move to Step 3: Plan a moment →</strong>
+          </Link>
         )}
 
         <form

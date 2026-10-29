@@ -2438,3 +2438,39 @@ a {
     padding-bottom: calc(16px + env(safe-area-inset-bottom));
   }
 }
+
+/* Coach practice: "Move to Step 3: Plan a moment", sticky just above the message box */
+.step3-bar {
+  position: sticky;
+  bottom: calc(76px + 76px + env(safe-area-inset-bottom));
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 8px 0 0;
+  padding: 10px 14px;
+  border-radius: 14px;
+  background: var(--surface-sage);
+  border: 1px solid var(--border-sage);
+  color: var(--text);
+  font-size: var(--fs-sm);
+  text-decoration: none;
+  box-shadow: var(--shadow-sm);
+}
+
+.step3-bar strong {
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.step3-bar.ready {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--on-primary);
+}
+
+.step3-bar.ready strong {
+  color: var(--on-primary);
+}
