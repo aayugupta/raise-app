@@ -301,9 +301,20 @@ a {
   line-height: 1;
 }
 
+/* The sprout sits where the dot of the "i" would be (dotless ı underneath). */
+.logo-i {
+  position: relative;
+  display: inline-block;
+}
+
 .logo-sprout {
-  margin-bottom: -0.08em;
-  margin-left: 0.35em;
+  position: absolute;
+  left: 50%;
+  bottom: 0.66em;
+  width: 0.5em;
+  height: 0.37em;
+  transform: translateX(-46%);
+  overflow: visible;
 }
 
 .logo-word {

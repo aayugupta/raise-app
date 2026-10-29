@@ -5,7 +5,8 @@ import "./globals.css";
 // Raise design system (29 Oct 2026): Lora for emotional headlines and reflective lines,
 // DM Sans for everything functional (body, buttons, labels, navigation, forms).
 const display = Lora({ subsets: ["latin"], weight: ["500", "600"], style: ["normal", "italic"], variable: "--font-lora" });
-const ui = DM_Sans({ subsets: ["latin"], weight: ["400", "500", "600", "700"], variable: "--font-dmsans" });
+const ui = DM_Sans({ subsets: ["latin", "latin-ext"], // latin-ext: the dotless ı in the Raise logo
+   weight: ["400", "500", "600", "700"], variable: "--font-dmsans" });
 // Caveat: the handwritten-style notes on the flashcards (29 Oct 2026).
 const hand = Caveat({ subsets: ["latin"], weight: ["500", "600"], variable: "--font-caveat" });
 
