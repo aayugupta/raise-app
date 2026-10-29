@@ -9,13 +9,25 @@ import { track } from "@/lib/events";
 import { loadProfile } from "@/lib/profile";
 import { BLOCKERS, REPAIR_LINE, SOFTER_RESTART, type BlockerId } from "@/lib/recovery";
 import { updateReflection } from "@/lib/reflections";
-import { addOpenTopic, loadPlan, type Plan } from "@/lib/talks";
+import { addOpenTopic, loadPlan, momentOf, type Plan } from "@/lib/talks";
+import { whenText } from "@/components/JourneyCard";
 import { TOPICS } from "@/lib/topics";
 
 // Never a "failed" label. A missed talk gets an easier next step; a hard talk gets a repair line.
-export default function RecoverView({ planId, why, picked }: { planId: string; why: "not-yet" | "repair"; picked?: string }) {
+export default function RecoverView({
+  planId,
+  why,
+  picked,
+  nextPlanId,
+}: {
+  planId: string;
+  why: "not-yet" | "repair";
+  picked?: string;
+  nextPlanId?: string; // "Not yet": the new time Raise already picked
+}) {
   const router = useRouter();
   const [plan, setPlan] = useState<Plan | null | undefined>(undefined);
+  const [nextPlan, setNextPlan] = useState<Plan | null>(null);
   const [language, setLanguage] = useState<Language>("hinglish");
   // The reason may already have been picked on the Reflection screen.
   const [blocker, setBlocker] = useState<BlockerId | null>(BLOCKERS.find((b) => b.id === picked)?.id ?? null);
@@ -23,12 +35,14 @@ export default function RecoverView({ planId, why, picked }: { planId: string; w
   useEffect(() => {
     const p = loadPlan(planId) ?? null;
     setPlan(p);
+    const n = nextPlanId ? loadPlan(nextPlanId) : undefined;
+    setNextPlan(n && !n.reflectedAt && !n.closedAt ? n : null);
     const saved = loadProfile()?.language;
     if (saved) setLanguage(saved);
     if (p && why === "repair") track("recovery_chosen", { topic: p.topic, plan_id: planId, reason: "repair" });
     const pickedId = BLOCKERS.find((b) => b.id === picked)?.id;
     if (p && why === "not-yet" && pickedId) track("recovery_chosen", { topic: p.topic, plan_id: planId, reason: pickedId });
-  }, [planId, why, picked]);
+  }, [planId, why, picked, nextPlanId]);
 
   if (plan === undefined) return <main style={{ minHeight: "100dvh", background: "var(--bg)" }} />;
   if (plan === null) {
@@ -63,7 +77,8 @@ export default function RecoverView({ planId, why, picked }: { planId: string; w
     router.push("/home");
   }
 
-  const planAgainHref = `/plan/${plan.topic}${chosen?.suggestMoment ? `?moment=${chosen.suggestMoment}` : ""}`;
+  const planQuery = [chosen?.suggestMoment ? `moment=${chosen.suggestMoment}` : "", nextPlan ? `replace=${nextPlan.id}` : ""].filter(Boolean).join("&");
+  const planAgainHref = `/plan/${plan.topic}${planQuery ? `?${planQuery}` : ""}`;
 
   return (
     <main style={{ minHeight: "100dvh", background: "var(--bg)" }}>
@@ -133,7 +148,24 @@ export default function RecoverView({ planId, why, picked }: { planId: string; w
           </>
         )}
 
-        {(why === "repair" || chosen) && (
+        {/* Not yet: Raise has already moved the talk (Aayushi, 29 Oct 2026). Keep that time, or pick another. */}
+        {why === "not-yet" && nextPlan && (askedBefore || chosen) && (
+          <section className="next-try" aria-live="polite">
+            <div className="card-label">
+              <span aria-hidden="true">{momentOf(nextPlan).icon}</span> We&apos;ve moved your talk
+            </div>
+            <div className="next-try-when">{whenText(nextPlan.when)}</div>
+            <p className="next-try-text">We&apos;ll remind you here on Home. After it, tell us how it went.</p>
+            <Link href="/home" className="btn-primary btn-block" style={{ textDecoration: "none" }}>
+              Okay, sounds good
+            </Link>
+            <Link href={planAgainHref} className="btn-secondary btn-block" style={{ marginTop: 10, textDecoration: "none" }}>
+              Plan again, another time
+            </Link>
+          </section>
+        )}
+
+        {(why === "repair" || (chosen && !nextPlan)) && (
           <div style={{ marginTop: 24 }}>
             <Link href={planAgainHref} className="btn-primary btn-block">
               Plan again

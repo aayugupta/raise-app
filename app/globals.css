@@ -2846,3 +2846,26 @@ a {
   font-weight: 600;
   cursor: pointer;
 }
+
+/* Recovery after "Not yet": the new time Raise picked (29 Oct 2026) */
+.next-try {
+  margin-top: 20px;
+  padding: 16px;
+  border-radius: var(--radius-lg);
+  background: var(--surface-sage);
+  border: 1px solid var(--border-sage);
+}
+
+.next-try-when {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--fs-lg);
+  color: var(--text);
+  margin: 4px 0 2px;
+}
+
+.next-try-text {
+  margin: 0 0 14px;
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+}

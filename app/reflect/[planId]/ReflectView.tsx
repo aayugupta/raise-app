@@ -12,7 +12,8 @@ import { BLOCKERS, type BlockerId } from "@/lib/recovery";
 import { type ChildResponse, saveReflection, type Feeling, type Happened, type Reflection, type WhoTalked } from "@/lib/reflections";
 import { hasDangerSign } from "@/lib/safety";
 import { finishJourney } from "@/lib/journeyLog";
-import { loadPlan, loadPlans, momentOf, updatePlan, type Plan } from "@/lib/talks";
+import { loadPlan, loadPlans, momentOf, savePlan, updatePlan, type Plan } from "@/lib/talks";
+import { nextTryTime } from "@/lib/reschedule";
 import { TOPICS, type TopicId } from "@/lib/topics";
 
 // Reflection (Aayushi's simplified flow, 28 Oct 2026): did it happen and how it went (two taps, enough to save),
@@ -95,7 +96,10 @@ export default function ReflectView({ planId }: { planId: string }) {
     updatePlan(planId, { closedAt: new Date().toISOString() });
     saveReflection({ planId, topic: plan!.topic, happened: "not-yet", discussed: "", learned: "", helpOffered: false, gotInTheWay: blocker ?? undefined });
     track("reflection_saved", { topic: plan!.topic, plan_id: planId, happened: "not-yet", help_offered: false });
-    router.push(`/recover/${planId}?why=not-yet${blocker ? `&blocker=${blocker}` : ""}`);
+    // The talk moves to a new time by itself, so it never just sits open (Aayushi, 29 Oct 2026).
+    const next = savePlan({ topic: plan!.topic, moment: plan!.moment, when: nextTryTime(plan!.when).toISOString(), reminder: plan!.reminder });
+    track("plan_set", { topic: plan!.topic, plan_id: next.id, moment: plan!.moment });
+    router.push(`/recover/${planId}?why=not-yet&next=${next.id}${blocker ? `&blocker=${blocker}` : ""}`);
   }
 
   function submit() {

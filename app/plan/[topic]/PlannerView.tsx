@@ -11,7 +11,7 @@ import { currentFirstLine } from "@/lib/cards";
 import { track } from "@/lib/events";
 import { markPractised, startJourney } from "@/lib/journeyLog";
 import { loadProfile } from "@/lib/profile";
-import { MOMENTS, savePlan, type MomentId, type Plan } from "@/lib/talks";
+import { MOMENTS, loadPlan, savePlan, updatePlan, type MomentId, type Plan } from "@/lib/talks";
 import { TOPICS, type TopicId } from "@/lib/topics";
 
 const DAYS_AHEAD = 7;
@@ -53,10 +53,12 @@ export default function PlannerView({
   topic,
   suggestedMoment,
   skippedPractice = false,
+  replacePlanId,
 }: {
   topic: TopicId;
   suggestedMoment?: MomentId;
   skippedPractice?: boolean;
+  replacePlanId?: string; // "Pick another time" after Not yet: the time Raise picked is replaced by this one
 }) {
   const router = useRouter();
   const [firstLine, setFirstLine] = useState("");
@@ -90,6 +92,10 @@ export default function PlannerView({
   function save() {
     if (!moment || !valid) return;
     const plan = savePlan({ topic, moment, when: when.toISOString(), reminder });
+    const replaced = replacePlanId ? loadPlan(replacePlanId) : undefined;
+    if (replaced && replaced.topic === topic && !replaced.reflectedAt && !replaced.closedAt) {
+      updatePlan(replaced.id, { closedAt: new Date().toISOString() });
+    }
     startJourney(topic);
     track("plan_set", { topic, plan_id: plan.id, moment });
     setSaved(plan);

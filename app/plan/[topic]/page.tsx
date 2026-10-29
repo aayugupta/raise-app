@@ -10,11 +10,11 @@ export default async function Plan({
   searchParams,
 }: {
   params: Promise<{ topic: string }>;
-  searchParams: Promise<{ moment?: string; skipPractice?: string }>;
+  searchParams: Promise<{ moment?: string; skipPractice?: string; replace?: string }>;
 }) {
   const { topic } = await params;
-  const { moment, skipPractice } = await searchParams;
+  const { moment, skipPractice, replace } = await searchParams;
   if (!isTopicId(topic)) notFound();
   const suggested = MOMENTS.some((m) => m.id === moment) ? (moment as MomentId) : undefined;
-  return <PlannerView topic={topic} suggestedMoment={suggested} skippedPractice={skipPractice === "1"} />;
+  return <PlannerView topic={topic} suggestedMoment={suggested} skippedPractice={skipPractice === "1"} replacePlanId={replace} />;
 }

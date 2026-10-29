@@ -83,8 +83,13 @@ export default function Home() {
   // how it went, until the parent reflects or picks "Remind me tomorrow". It never names the topic.
   const duePlan = [...plans]
     .sort((a, b) => a.when.localeCompare(b.when))
-    .find((p) => planStage(p, now) === "check-in" && !(snoozed[p.id] && Date.parse(snoozed[p.id]) > now));
-  const nowPlans = [...plans].sort((a, b) => a.when.localeCompare(b.when)).filter((p) => planStage(p, now) === "now" && p.reminder !== false);
+    .find((p) => {
+      const stage = planStage(p, now);
+      // From 30 minutes after the planned time (Aayushi, 29 Oct 2026), not only once the reminder window closes.
+      const due = stage === "check-in" || (stage === "now" && now > Date.parse(p.when) + REFLECT_AFTER_MS);
+      return due && !(snoozed[p.id] && Date.parse(snoozed[p.id]) > now);
+    });
+  const nowPlans = [...plans].sort((a, b) => a.when.localeCompare(b.when)).filter((p) => planStage(p, now) === "now" && p.reminder !== false && p.id !== duePlan?.id);
   // The "It's time" banner already covers plans happening now, so they're not repeated below.
   const allJourneys = activeJourneys(plans, openTopics, now, starts, openJourneySteps());
   const journeys = allJourneys.filter((j) => !nowPlans.some((p) => p.id === j.planId));
@@ -259,6 +264,7 @@ function SuperParentGoal({ done, total }: { done: number; total: number }) {
 }
 
 const SNOOZE_KEY = "raise.reflectSnooze";
+const REFLECT_AFTER_MS = 30 * 60_000;
 
 // The gentle "how did it go?" at the top of Home, after a planned moment. Names the moment ("Your walk"),
 // never the topic, because a teen might see the screen.
