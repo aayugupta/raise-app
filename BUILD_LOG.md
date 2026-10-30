@@ -4,6 +4,217 @@ What we built, what broke, and how we fixed it. Newest entries at the top.
 
 ---
 
+## 2026-10-30 — Live tracking: the metric in Supabase, the acquisition log in Vercel
+
+**Built**
+- **Supabase** project `raise` (Free plan, Mumbai). The setup file `supabase/schema.sql` was run: the `events` table (locked, so only Raise's server can write to it) and 4 reports: `funnel`, `topic_outcomes`, `completion_rate` (the Completed Conversation Rate) and `confidence_change`.
+- Vercel now holds `SUPABASE_URL` and `SUPABASE_SERVICE_KEY` beside `GEMINI_API_KEY` and `ENGINE_PASSCODE`, then was redeployed.
+- **Vercel Web Analytics** for the acquisition log: `<Analytics />` in `app/layout.tsx`. It counts anonymous visitors, pages, devices and where visitors came from (tagged links like `?utm_source=whatsapp`), with no cookies. The Privacy screen says so.
+
+**Decided**
+- Acquisition (who came, from where) = Vercel Analytics. What parents did, and whether talks happened = Supabase. No login (product rule kept); the random anonymous ID counts parents.
+
+**Broke**
+- Supabase asked for a new organisation and three Data API options first; the setup file looked "empty" in the Table Editor until it had been run.
+
+**Fix**
+- Walked through it step by step: Personal organisation, Data API on, expose new tables on, automatic RLS on, then the setup file in the SQL Editor ("Success. No rows returned").
+
+**Checked**
+- Aayushi used the live app on her phone: new rows arrived in Supabase's `events` table, and visits showed in Vercel Analytics. `npm test` 12/12, build passes.
+
+**Next**
+- Clear test rows from Supabase before sharing (`delete from public.events;`), review the card wording, then share tagged links with parents.
+
+---
+
+## 2026-10-30 — Fixes from Aayushi's phone test, and the bell
+
+**Built**
+- **Bell on Home** (`components/NotificationBell.tsx`): top right, a soft dot (never a number) when something waits. Tap → "Your reminders": planned moments ("How did your walk go?", "It's time for your walk", "Coming up: your walk"; named by the moment, never the topic), each open topic's next step, and the setup pick. Tap outside or Escape closes it.
+
+**Broke** (found on her phone)
+1. Flashcard scrolling felt sticky and jumpy.
+2. The flashcards' "Next: practise with AI Coach" bar sat too high.
+3. The AI Coach message box floated about 60px above the tab bar.
+4. Voice input: after sending, the spoken message came back into the box, and the mic kept listening after she stopped speaking.
+
+**Fix**
+1. The card deck could turn into its own up-down scroller when the next card was taller, trapping the finger. It now never scrolls vertically, and its height only changes after a swipe has settled.
+2. Less padding around the bar and its links; it sits about 25px lower.
+3. The "coach is AI" line moved up beside the privacy note; the box now rests on the tab bar.
+4. Voice listens for one message and stops by itself at a pause. Sending or clearing the box stops it at once, and late words from the speech service are ignored.
+
+**Checked**
+- 375px phone size for every fix. Voice tested with a stand-in speech service (the browser here blocks microphones): words appear, Send empties the box, listening stops, late words ignored. Aayushi confirmed on her phone. `npm test` 12/12.
+- My earlier scrolling test had quietly started a Stress journey in her data; removed.
+
+---
+
+## 2026-10-29 — Deployed: GitHub and Vercel
+
+**Built**
+- Code pushed to **github.com/aayugupta/raise-app** (public, Aayushi's choice).
+- Deployed on **Vercel**: **https://raise-app-xi.vercel.app**. Every push to `main` now redeploys by itself.
+
+**Decided**
+- Deploy first, so friends can test; Supabase right after, before real parents.
+- Public code is safe: checked every tracked file for keys, emails, phone numbers and personal data before pushing. `.env.local` is never committed.
+
+**Broke**
+- Nothing. A test production build was run on the computer first to catch errors before Vercel.
+
+**Checked**
+- Live site: Welcome, Setup, Help and Privacy load; Gemini answered a Hinglish flashcard request and an AI Coach question through Vercel; the content engine refuses a wrong passcode.
+
+---
+
+## 2026-10-29 — Two new topics: Gender and identity, Adult content and 18+ shows
+
+**Built**
+- **Card 7, Gender and identity** (`gender`): gender roles, respect, teasing at school, and a safe home whoever the child is or loves (LGBTQ+ included). "Why now" cites the Supreme Court (Navtej Singh Johar 2018, NALSA 2014). Rainbow-and-heart picture.
+- **Card 8, Adult content and 18+ shows** (`adult`): what's real vs what's shown in 18+ films and web series, respect and consent, no shame, no bans. "Why now": 5 of 12 teens in our survey learn from web series and films (shown as a picture), plus a US figure (73%) flagged for Aayushi's decision. Screen-and-play picture.
+- 8 topics in all; Super Parent ⭐ now at 8 (nothing already earned is lost).
+- Setup words: "gender", "LGBTQ", "adult content", "18+", "web series" now point to the new topics.
+
+**Broke**
+- The card safety filter blocked the words "gay", "lesbian" and "transgender" on every card, so the Gender card (and the Coach) couldn't talk about the topic at all.
+
+**Fix**
+- Naming identities respectfully is now allowed; judging or "fixing" them is still blocked ("cure", "conversion", "a disease", slurs, and "just a phase" anywhere except Don't say). "Find out / change my child" requests are refused and offered the Gender card instead of Stress.
+
+**Checked**
+- New tests for each rule; `npm test` 12/12. Real Gemini cards for both topics passed every safety check. Phone size; data restored after testing.
+
+**Also**
+- Flashcard 1 had a big blank gap: every card was stretched to the tallest one. Each card is now only as tall as its own content.
+
+---
+
+## 2026-10-29 — Closing the loop: reminders, reflection and "Not yet"
+
+**Built**
+- **"How did it go?" reminder** at the top of Home, from 30 minutes after a planned time: "Tell us how it went" or "Remind me tomorrow" (8 am next day). Names the moment, never the topic.
+- **"Not yet" moves the talk by itself** (`lib/reschedule.ts`): one hour later, rounded to the quarter hour, never 10 pm–7 am (then the plan's usual time on the next day). Recovery says "We've moved your talk" with "Okay, sounds good" or "Plan again, another time" (which replaces the automatic plan).
+- **Reflection:** after "Went well" or "Okay", an optional "How did your child respond?" (Opened up, Listened well, Asked me questions, Shared a little, Kept it short). "What got in the way?" only for Hard, or Partly + Okay.
+- **Journey screen:** two rings, talks noted (e.g. 4/6) and topics talked about (e.g. 2/8, matching Super Parent).
+- **Journey cards:** "3 of 4 steps done · Next: Reflect · Your talk: Today, 6:30 pm".
+
+**Broke**
+- "Step 4 of 4 · Reflect" read as finished while step 4 was still pending.
+- The step bar turned fully green at step 4.
+- "What got in the way?" showed even after "Went well", and was asked again on the recovery screen.
+- A change to count only finished talks in the left ring was tried and undone at Aayushi's request.
+
+**Fix**
+- Wording now says what's done and what's next; green only for finished steps, terracotta for the one pending.
+- The blocker question only shows when it fits, and is never asked twice.
+
+**Checked**
+- `tests/reschedule.test.mjs` (9 cases, including late night and early morning). Full path at phone size with a test plan: Home reminder → Not yet → new time → "How did it go?". Data restored.
+
+---
+
+## 2026-10-29 — AI Coach: speak instead of type
+
+**Built**
+- Mic button next to the message box (`components/VoiceInput.tsx`), using the phone's own speech-to-text (Google / Apple). Hindi uses hi-IN; English and Hinglish use en-IN.
+- One-time note before first use: "Your voice goes to your phone's speech service (Google or Apple) to turn it into text. Raise never records or stores it." Words land in the box to check before sending, then go through the same safety checks. Hidden on browsers without speech support. Privacy screen updated.
+
+**Broke**
+- After returning to the Coach through the tab bar, the "Plan a moment" card offered every open topic instead of the one just practised.
+
+**Fix**
+- Every coach message now remembers its topic.
+
+---
+
+## 2026-10-29 — Home and flashcard polish
+
+**Built**
+- **Home:** concise Super Parent at the top with a compact dotted journey map below; carousel higher; two columns on wide screens. Greeting "Hello Mumma 👩🏽" in Lora italic, Deep Sage (guardians: "Hello there").
+- **Flashcards:** 6 "Don't say" lines per topic, from things Indian parents really say ("Log kya kahenge?", "Boys don't cry, be a man", "This phone has spoiled you"), each with a short reason; and 6 "Say" lines ("Your marks don't decide how much we love you").
+- **Welcome:** the sprout's two leaves replace the dot on the "ı" in Raise, with a gentle entrance and slowly swaying leaves. New line: "For the talks that matter most with your child, we help you find the first words."
+- **Planner:** the "Raise suggests" card removed. After saving: encouragement, a plan summary, and "Back to Home" / "See your journey →".
+- **Coach:** "Clear this chat" (left) and "Move to Step 3 →" (right), just below the message box.
+
+**Broke**
+- Welcome scrolled on short phones.
+- Pictures in illustration panels were cropped (only the heads of the walking picture showed).
+- "Have your talk about…" on Home was wrong English.
+
+**Fix**
+- Tighter Welcome layout under 700px tall. Pictures now scale to fit. Reworded to "Have you talked about <topic>?" with "Yes, tell us how it went".
+
+**Checked**
+- Welcome with no scrolling at 320×568, 360×640, 375×667, 390×844, 412×915. All 6 AI cards checked against the new 6 Say / 6 Don't say shape.
+
+---
+
+## 2026-10-28 — The 4-step journey, AI Coach practice, celebration and visuals
+
+**Built**
+- **4-step topic journey** (`lib/journey.ts`): 1 Learn (flashcards) → 2 Practise with the AI Coach ("Ask a doubt" or "Role-play", where the AI plays the child) → 3 Plan a moment → 4 Reflect. "Already talked? Tell us how it went" works from any step. Topics stay open until a talk is logged ("Still open" after day 14).
+- **AI Coach:** check-in buttons "✓ That helps, I'm ready" / "I have another question" that send a message the Coach answers; a gentle close; then "Next · Step 3 of 4: Plan a moment". Practice offers the suggested first line or the parent's own.
+- **Celebration** when a topic is completed: "Yayy! You're one step closer to becoming your child's best friend" with confetti; after a hard talk, a gentler 💛 version with softly falling leaves.
+- **Super Parent** goal bar (Aayushi's exception to the no-badges rule), later shown as a sprout that grows one leaf per topic.
+- **Human touch:** all base cards rewritten in a warm parent's voice; card 1 runs why this matters → first line → assuring line; small pictures and handwritten-style notes on each flashcard.
+- **Infographics:** each card's research number drawn as a picture; topic drawings instead of emoji; confidence gauge on Journey.
+- **Journey map** "Here's how it works" once after setup, plus a small version on Home. "Your chosen topic" card on Home. Carousel moves by itself. "Done" topics and an "Up next" suggestion.
+- **Design system refresh:** Deep Sage, Warm Ivory, Soft Terracotta, Pale Sage, Charcoal; Lora + DM Sans; tokens in `app/globals.css`.
+- Setup asks the language again (Hinglish preselected). "When to get help" in calm red. First tab renamed "Home".
+
+**Broke**
+- With chat history, the AI copied earlier plain-text replies and stopped answering in JSON, so parents got "I couldn't answer that one well".
+- The AI wrote "Don't say" reasons to the child ("you") instead of to the parent, and in English on Hinglish cards.
+
+**Fix**
+- Earlier replies are sent back in the same JSON shape, JSON inside extra text is read, and plain text is accepted after the same rule checks. One automatic retry when Gemini is busy.
+- Prompt rules: reasons speak to the parent about the teen ("they"), in the family's language.
+
+**Checked**
+- All 16 screens fit 320px with no sideways scroll. All AI cards pass the safety checks. Tests added for the 4 steps, role-play, the check-in buttons and topics past day 14.
+
+---
+
+## 2026-10-28 — Rebuilt from the simplified 10-screen flow
+
+**Built**
+- **Welcome + 3-step setup:** "Better conversations. Brighter tomorrows."; about you (Mother / Father / Guardian); about your child (age 12–14 / 15–16 / 17–19 + gender); confidence 1–5 + first topic or "Skip". Home greets "Hello Mumma / Papa".
+- **Bottom bar** Home · AI Coach · Journey · Help · Profile, and the new **Home** (carousel, 14-day journey with "Day 5 of 14", "It's time" reminder).
+- **Topic flashcards:** the Talk Card as 4 swipeable cards (how to begin, 10 gentle questions, say / don't say, if your child reacts), safety promise on each.
+- **Plan the talk** (in-app reminder only, calendar removed) and **Reflection** (two taps; the rest optional).
+- **Journey tab** and the **new metric**: Completed Conversation Rate = topics with a talk logged within 14 days ÷ topics started (`lib/metric.ts`, `lib/journeyLog.ts`, Supabase views rewritten).
+- **AI Coach** (`app/coach`, `app/api/coach`): real Gemini, safety checks on every message in and out, dismissible "Would you like help from a professional?" for serious concerns, chat kept on the phone only.
+- Back to the docs' 6 topics (Study & future and Screen time parked).
+
+**Decided**
+- Aayushi's simplified wireframe replaces the 14-screen brainstorm (CLAUDE.md, 28 Oct). A logged talk counts even if it went badly.
+
+**Checked**
+- The 30-message launch test now also runs through the Coach: 100% of danger signs get the help offer. Tests for the metric, day count and journeys.
+
+---
+
+## 2026-10-27 — Profile screen
+
+**Built**
+- Every setup answer can be edited, and Talk Cards refresh to fit. "Clear my data from this phone" with a confirm step (no accounts, so no log out). Links to reminders, privacy, help and about.
+
+**Broke**
+- Long labels squeezed onto three lines.
+
+**Fix**
+- Labels reflowed.
+
+**Checked**
+- Language changed to English → a new English card. Clear data → back to Welcome with nothing left.
+
+**Decided**
+- Build log paused at Aayushi's request from here; these entries were written later from the Git history (30 Oct 2026).
+
+---
+
 ## 2026-10-27 — New Welcome screen (brainstorm screen 1)
 
 **Built**
