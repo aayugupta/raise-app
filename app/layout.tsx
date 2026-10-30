@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Caveat, DM_Sans, Lora } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 // Raise design system (29 Oct 2026): Lora for emotional headlines and reflective lines,
@@ -24,7 +25,10 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${display.variable} ${ui.variable} ${hand.variable}`}>
-      <body>{children}</body>
+      <body>
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }
