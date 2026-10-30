@@ -28,7 +28,7 @@ The research and decisions live in `docs/` (Steps 1–4; also bundled in `docs/r
 | AI | **Google Gemini, free tier**. The API key lives only on the server (Vercel), never in the browser | — |
 | Data | **Private notes stay on the phone** (browser storage). **Only anonymous events** go to Supabase | "Account optional after first card" — no accounts in this MVP |
 | Reminders | **"Add to calendar" + in-app reminders.** No WhatsApp, no push notifications | "Notification 15 min before" |
-| Hosting | **GitHub + Vercel**, on a public link. Live since 29 Oct 2026: **https://raise-app-xi.vercel.app** (code: github.com/aayugupta/raise-app, public). Every push to `main` redeploys. Vercel has `GEMINI_API_KEY` and `ENGINE_PASSCODE`; Supabase keys not yet | — |
+| Hosting | **GitHub + Vercel**, on a public link. Live since 29 Oct 2026: **https://raise-app-xi.vercel.app** (code: github.com/aayugupta/raise-app, public). Every push to `main` redeploys. Vercel has `GEMINI_API_KEY`, `ENGINE_PASSCODE`, `SUPABASE_URL` and `SUPABASE_SERVICE_KEY` (Supabase project `raise`, Mumbai, set up 30 Oct 2026). **Acquisition** = Vercel Web Analytics (visitors, pages, sources via `?utm_source=whatsapp` etc., no cookies; `<Analytics />` in `app/layout.tsx`); **in-app funnel and metric** = Supabase events | — |
 | Users | **Parents only.** No teen involvement of any kind | — |
 | Scope | **Thin MVP**, not the full v1 | The 11-feature v1 is the long-term plan |
 
