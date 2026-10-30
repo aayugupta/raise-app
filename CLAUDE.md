@@ -10,7 +10,7 @@ Raise is Aayushi's capstone for the Airtribe AI-First PM course. It helps **pare
 - **Ask instead of assuming.** When something is unclear or a choice is hers to make, ask.
 - She shares a design for each screen. **Build each screen from her design**; don't invent a visual style ahead of it.
 - **No app code without her approval of the plan**, and work one screen at a time.
-- ~~After every work session, update `BUILD_LOG.md`~~ **Paused (27 Oct 2026, Aayushi's request): don't update `BUILD_LOG.md` for now.** **Caught up on 30 Oct 2026** at her request: entries from 27 Oct (Profile) to 30 Oct (live tracking) were written from the Git history. Still paused for new work: write further entries only when she asks, from the commit messages.
+- **After every work session, update `BUILD_LOG.md`** (newest entry at the top: Built / Broke / Fix / Checked, plus Decided / Next when useful). Resumed 30 Oct 2026 at Aayushi's request, after the log was caught up from the Git history.
 
 ## Source of truth
 
@@ -191,4 +191,4 @@ A **completed conversation** = a topic the parent planned, started in the planne
 - Keep secrets (Gemini key, Supabase keys) out of the code and out of GitHub; they go in Vercel's settings and a local `.env.local` that is never committed.
 - Run `npm test` after any change to rules, safety checks or the metric. It runs every `tests/*.test.mjs` file and fails on any failure or crash. Add a test for every new safety rule.
 - Base Talk Cards live in `content/base-talk-cards.md` (Aayushi edits this). `scripts/build-cards.mjs` turns it into `lib/base-cards.json` before every dev/build run, and refuses a card with missing parts.
-- Build log: paused (see "Who I'm working with"). Write clear Git commit messages instead, so the log can be written later.
+- Build log: update `BUILD_LOG.md` after every work session (see "Who I'm working with"), and keep writing clear Git commit messages.
